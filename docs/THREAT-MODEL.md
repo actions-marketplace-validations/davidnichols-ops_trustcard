@@ -65,6 +65,56 @@ these are the classes the adversarial suite (`test/adversarial.test.js`,
 | 18 | **Revocation expiry attack** (wait for a revocation to "expire," then reuse the key) | Closed by design: `verifyRevocationCertificate` performs **no** expiry check. A revocation is permanent the moment it verifies. | None — this asymmetry (rotation expires, revocation doesn't) is the control. |
 | 19 | **TOCTOU between descriptor fetch and invocation** | Gate 1 binds the descriptor at session scope; Gate 2 re-asserts the same capabilityDigest at call time; a mutation between gates changes the digest → Gate 2 denies | Same residual as #2 — a server that neither binds nor notifies, mutating in the gap between Gate 2 and the actual transport send. Bounded by receipts. |
 
+## v2.3 attack scenarios → controls
+
+v2.3 adds per-agent OAuth 2.1 auth scope enforcement at the proxy layer. The
+proxy validates the caller's bearer token against per-tool `requiredScopes`
+before forwarding the call to the server, then strips auth metadata so the
+server never sees the raw token.
+
+| # | Attack | Control | Residual risk |
+|---|---|---|---|
+| 20 | **Unauthorized tool access** (agent calls a tool outside its scope) | `checkCall` validates `authToken.scopes` against `requiredScopes` per tool. Insufficient scopes → call blocked. Wildcard `*` and `prefix:*` supported. | A token with overly broad scopes (e.g. `*`) passes every check. Scope design is the operator's responsibility, not trustcard's. |
+| 21 | **Token replay across agents** (agent A's token stolen and reused by agent B) | Token carries `subject` claim; proxy binds the token to the calling agent. `stripAuth` removes the token before forwarding so the server can't leak it. | A stolen token presented from the same subject with the same scopes is indistinguishable from the legitimate caller. This is a token-custody problem, not a trustcard gap. Mitigation: short token TTL, IdP-side revocation. |
+| 22 | **Forged dev-mode token** (attacker fabricates a HMAC-SHA256 token) | `DevIssuer.verify` checks the HMAC against the shared secret. Wrong secret → invalid token → call blocked. | The shared secret is the trust root for dev-mode. If the secret leaks, all dev-mode tokens are forgeable. Mitigation: rotate the secret, use a real IdP for production. |
+| 23 | **IdP introspection bypass** (attacker tricks the proxy into skipping introspection) | `TokenValidator` tries dev-issuer first (fast path), falls back to IdP introspection. If introspection returns `active:false` or the token is unknown to both, the call is blocked. | If the IdP itself is compromised, it can return `active:true` for a forged token. This is an IdP-trust problem. Mitigation: use a reputable IdP, pin the introspection endpoint TLS cert. |
+| 24 | **Auth metadata leakage** (token exposed to the server via `_meta`) | `stripAuth` removes `_meta.auth` from the request before forwarding. The server receives the call as if no auth was present. | If the server requires the token for its own authorization (e.g. GitHub API calls), the operator must configure server-side auth separately. trustcard's job is to enforce *proxy-level* scope, not to manage server-side credentials. |
+| 25 | **Scope confusion** (agent presents a scope that looks like a prefix but isn't) | `scopeSatisfies` uses exact string matching for non-wildcard scopes. `files:write` does NOT satisfy `files:w`. Only `*` and `prefix:*` (trailing colon-star) are wildcards. | None — the matching is deterministic and tested. Operator confusion from poorly named scopes is a policy-design problem. |
+
+## Trust boundary
+
+```
+  UNTRUSTED                          TRUSTED-BUT-VERIFIED
+  ─────────                          ────────────────────
+
+  Agent ──[bearer token]──► trustcard proxy ──[stripped request]──► MCP server
+                              │                      │
+                         Gate 2: scope          Gate 1: identity
+                         (per-invocation)       (per-session + per-list)
+```
+
+**The trust boundary begins at the agent's token and ends at the server's tool
+execution.** trustcard sits between them.
+
+- **Before the proxy (untrusted):** the agent, its token, and the request
+  metadata. The token is validated but never trusted to be truthful about
+  anything beyond what its signature/introspection proves.
+- **Inside the proxy (the boundary):** Gate 2 (scope enforcement) and Gate 1
+  (identity continuity) run here. This is where the decision to allow or deny
+  is made.
+- **After the proxy (trusted-but-verified):** the server and its tools. The
+  server is trusted to execute the tool but verified to not have changed its
+  toolset since the last pin. Auth metadata is stripped before this point.
+
+**What crosses the boundary:**
+- Inbound: the agent's request + bearer token (validated, then stripped)
+- Outbound: the server's response + receipts (signed, chained, auditable)
+
+**What does NOT cross the boundary:**
+- The raw bearer token (stripped by `stripAuth` before forwarding)
+- The proxy's internal state (pin store, decision cache, receipt chain)
+- The operator's signing keys (never leave the proxy process)
+
 ## Explicit non-goals
 
 - **Runtime behavior of a tool.** trustcard pins the *contract* (definition),
@@ -78,5 +128,6 @@ these are the classes the adversarial suite (`test/adversarial.test.js`,
 ## The one-sentence version
 
 trustcard guarantees that **the tool an agent calls is bit-for-bit the tool a
-known publisher signed and the client pinned** — or it stops the call and says
-exactly what changed. It does not guarantee the tool is *good*.
+known publisher signed and the client pinned, and that the agent is authorized
+to call it** — or it stops the call and says exactly what changed or what scope
+was missing. It does not guarantee the tool is *good*.
