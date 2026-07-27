@@ -18,9 +18,11 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { verifyExistence, batchVerifyExistence } from '../lib/existence.js';
 import { runHealthcheck } from '../lib/checks.js';
+import { existenceToEvidence } from '../lib/evidence-adapters.js';
+import { EvidenceStore } from '../lib/evidence-store.js';
 
 function parseArgs() {
-  const args = { sample: null, existenceOnly: false, full: false, registryFile: null, out: null };
+  const args = { sample: null, existenceOnly: false, full: false, registryFile: null, out: null, evidenceStore: null };
   const raw = process.argv.slice(2);
   for (let i = 0; i < raw.length; i++) {
     if (raw[i] === '--sample' && raw[i + 1]) args.sample = parseInt(raw[++i], 10);
@@ -28,6 +30,7 @@ function parseArgs() {
     if (raw[i] === '--full') args.full = true;
     if (raw[i] === '--registry-file' && raw[i + 1]) args.registryFile = raw[++i];
     if (raw[i] === '--out' && raw[i + 1]) args.out = raw[++i];
+    if (raw[i] === '--evidence-store' && raw[i + 1]) args.evidenceStore = raw[++i];
   }
   return args;
 }
@@ -95,9 +98,17 @@ async function main() {
   const startedAt = new Date().toISOString();
   const results = [];
 
+  // Evidence store (optional)
+  let store = null;
+  if (args.evidenceStore) {
+    store = new EvidenceStore(args.evidenceStore, { loadIndex: false });
+    process.stderr.write(`  Evidence store: ${args.evidenceStore}\n`);
+  }
+
   // Phase 1: Existence verification
   process.stderr.write(`\nPhase 1: Existence verification (${target.length} servers)...\n`);
   let existenceOk = 0, existenceFail = 0;
+  let evidenceEmitted = 0, evidenceErrors = 0;
 
   for (let i = 0; i < target.length; i++) {
     const server = target[i];
@@ -128,11 +139,30 @@ async function main() {
       errors: existence.errors,
     });
 
+    // Emit evidence records if store is configured
+    if (store) {
+      try {
+        const records = existenceToEvidence(existence, server);
+        if (records.length > 0) {
+          store.appendBatch(records);
+          evidenceEmitted += records.length;
+        }
+      } catch (e) {
+        evidenceErrors++;
+        if (evidenceErrors <= 3) {
+          process.stderr.write(`\n  evidence error: ${e.message}\n`);
+        }
+      }
+    }
+
     // Small delay to respect rate limits
     if (server.repoUrl) await new Promise(r => setTimeout(r, 150));
   }
 
   process.stderr.write(`\n  Existence: ${existenceOk} verified, ${existenceFail} failed\n`);
+  if (store) {
+    process.stderr.write(`  Evidence: ${evidenceEmitted} records emitted, ${evidenceErrors} errors\n`);
+  }
 
   // Phase 2: Runtime scan (skip if --existence-only)
   if (!args.existenceOnly) {
