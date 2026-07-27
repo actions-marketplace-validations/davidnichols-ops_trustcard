@@ -1,5 +1,61 @@
 # Changelog
 
+## [3.0.0] — 2026-07-27
+
+Evidence substrate: the atomic primitive for MCP ecosystem observation. This
+release ships two major additions over 2.2.1 — per-agent auth scope enforcement
+(previously committed as 2.3.0 but unpublished) and the v3.0 evidence layer.
+
+### Added — Evidence substrate
+
+- **`lib/evidence.js`** — evidence record format: signed, content-addressed
+  observations with predicate vocabulary, subject identity, confidence, and
+  tamper-evident chaining via `manifestDigest`.
+- **`lib/evidence-predicates.js`** — controlled vocabulary of 20+ observation
+  predicates (`server-exists`, `server-responds`, `schema-duplicate`,
+  `tool-count-changed`, etc.) with URN-style namespacing.
+- **`lib/evidence-store.js`** — append-only JSONL store with day-partitioned
+  files, in-memory index, digest verification, contradiction detection, and
+  export to NDJSON.
+- **`lib/evidence-adapters.js`** — adapters that convert probe outputs
+  (existence checks, healthchecks, registry scans) into evidence records.
+- **`lib/existence.js`** — Layer 1 existence verification: resolves a server
+  spec to a package, repo, and runtime endpoint, classifying what exists vs
+  what claims to exist.
+- **`lib/client-http.js`** — HTTP/SSE MCP client for probing remote servers.
+- **CLI `evidence` subcommand** — `query`, `history`, `stats`, `verify`,
+  `export`, `contradictions` for inspecting evidence stores.
+- **`scripts/scan-ecosystem.mjs`** — universal discovery scanner that crawls
+  the npm registry for MCP servers and records existence evidence.
+- **`scripts/crawl-registry.mjs`** — registry crawler that enumerates
+  `@modelcontextprotocol/*` packages and MCP-tagged packages.
+
+### Added — Auth scope enforcement (from unpublished 2.3.0)
+
+- **`lib/auth.js`** — `DevIssuer` (HMAC-SHA256 JWT-like tokens for local dev),
+  `IdpIntrospector` (RFC 7662 OAuth 2.1 token introspection), `TokenValidator`,
+  `scopeSatisfies` (wildcard scope matching).
+- **`requiredScopes` in manifest** — tools can declare required OAuth scopes;
+  `checkCall` validates the caller's token against them.
+- **`requireScopes` Gate 2 rule** — policy predicate for programmatic scope
+  enforcement via the Guard.
+- **Proxy auth flags** — `--auth-secret`, `--auth-introspect`, `--auth-client-id`,
+  `--auth-client-secret`, `--auth-token-env`.
+- **CLI `auth-issue` and `auth-verify`** subcommands.
+
+### Tests
+
+- 456 total (326 original + 43 auth + 81 evidence + 34 store + 15 adapters):
+  evidence record format, predicate vocabulary, store append/verify/query/
+  export/contradictions, adapter conversion, auth scope matching, token
+  validation, introspection, proxy auth stripping.
+
+### Breaking changes
+
+None. All additions are new modules and CLI subcommands. Existing v2.x
+manifests, pins, and receipts are unchanged. `interfaceDigest()` remains
+byte-equal to `toolDigest()`.
+
 ## [2.3.0] — 2026-07-22
 
 Per-agent auth scope enforcement. Tools can now declare `requiredScopes` in
