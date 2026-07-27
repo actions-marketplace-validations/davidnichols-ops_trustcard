@@ -1,0 +1,4216 @@
+{
+  "name": "MCP Ecosystem Scan",
+  "description": "Reproducible ecosystem scan combining registry crawl, Layer 1 existence verification, and runtime health checks.",
+  "schemaVersion": "0.1",
+  "scannedAt": "2026-07-27T20:06:02.570Z",
+  "completedAt": "2026-07-27T20:14:59.572Z",
+  "registrySource": "/Users/david/Projects/trustcard/data/mcp-registry-2026-07-27.json",
+  "sampleSize": 100,
+  "summary": {
+    "totalScanned": 100,
+    "existence": {
+      "repositoryVerified": 58,
+      "packageVerified": 12,
+      "publisherVerified": 61
+    },
+    "transport": {
+      "stdio": 49,
+      "remote": 44,
+      "both": 5,
+      "unknown": 2
+    },
+    "runtime": {
+      "scanned": 83,
+      "failed": 17,
+      "avgScore": 53,
+      "handshakePass": 29,
+      "handshakeFail": 30,
+      "handshakeConfig": 19
+    }
+  },
+  "servers": [
+    {
+      "serverName": "io.github.CSOAI-ORG/gos-claim-validator-mcp",
+      "version": "1.0.3",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/CSOAI-ORG/gos-claim-validator-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.closermethod/personal-brand-mcp",
+      "version": "1.0.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/closermethod/personal-brand-mcp",
+      "npmSpec": "personal-brand-mcp@1.0.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-14T14:06:44Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "1.0.1",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 88,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "personal-brand-mcp",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.cuthongthai-vn/vimo-stock-intelligence",
+      "version": "1.2.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/cuthongthai-vn/vimo-mcp-server",
+      "npmSpec": "@vimo.cuthongthai.vn/mcp-server@1.2.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-04-25T03:39:34Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 22,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "vimo-financial-intelligence",
+          "version": "1.2.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.kaleckh/authproof",
+      "version": "0.3.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/kaleckh/AgentAuth",
+      "npmSpec": "@authproof/mcp-server@0.3.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 31,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "dev.dungbeetle/mcp",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/DungbeetleTech/cloud",
+      "npmSpec": "dungbeetle-mcp@0.1.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.0",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Apoth3osis-ai/agent-payment-mcp",
+      "version": "1.1.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Apoth3osis-ai/agent-payment-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.Kentucky-ai/opentakeoff",
+      "version": "0.9.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Kentucky-ai/opentakeoff",
+      "npmSpec": "opentakeoff-mcp@0.9.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 32,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-27T17:09:36Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "0.9.0",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 81,
+        "maxScore": 100,
+        "tools": 20,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "opentakeoff",
+          "version": "0.9.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.CryptoAPIs-io/mcp-hd-wallet",
+      "version": "0.3.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-hd-wallet",
+      "npmSpec": "@cryptoapis-io/mcp-hd-wallet@0.3.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-03-13T11:05:55Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.dalisecurity/fray",
+      "version": "3.0.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/dalisecurity/fray",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.dann26parr69/auravms-mcp",
+      "version": "0.1.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/dann26parr69/auravms-mcp",
+      "npmSpec": "auravms-mcp@0.1.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-07T13:00:30Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.2",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Dave-London/go",
+      "version": "0.7.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Dave-London/Pare",
+      "npmSpec": "@paretools/go@0.7.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 135,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-21T03:45:38Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 88,
+        "maxScore": 100,
+        "tools": 10,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "@paretools/go",
+          "version": "0.7.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "eu.ansvar/namibian-law-mcp",
+      "version": "1.0.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Ansvar-Systems/namibian-law-mcp",
+      "npmSpec": "@ansvar/namibian-law-mcp@1.0.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 21,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "WARN",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Fluke-Studio/uk-business-intelligence",
+      "version": "0.1.3",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Fluke-Studio/uk-business-intelligence-mcp",
+      "npmSpec": "uk-business-intelligence-mcp@0.1.3",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.3",
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 87,
+        "maxScore": 100,
+        "tools": 1,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "uk-business-intelligence",
+          "version": "0.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Braynexservices/nigeria-quidax-crypto",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Braynexservices/nigeria-mcp",
+      "npmSpec": "@braynexservices/nigeria-mcp-quidax-crypto@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-19T12:37:28Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 88,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "nigeria-mcp-quidax-crypto",
+          "version": "0.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.arifulislamat/database-mcp-libsql",
+      "version": "0.4.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/arifulislamat/database-mcp",
+      "npmSpec": "@database-mcp/libsql@0.4.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 4,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-19T07:33:06Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.CWhittemore1010/penni-mcp",
+      "version": "1.0.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/CWhittemore1010/penni-mcp",
+      "npmSpec": "penni-mcp@1.0.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-04-18T00:40:35Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "1.0.1",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Servosity/microsoft-graph-mcp",
+      "version": "0.2.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/servosity/msp-skills",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 15,
+        "repositoryLanguage": "Go",
+        "repositoryPushedAt": "2026-07-23T17:22:00Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.Hebline/mcp-server",
+      "version": "0.2.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Hebline/mcp-server",
+      "npmSpec": "@hebline.ai/mcp-server@0.2.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-03-31T19:08:38Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 90,
+        "maxScore": 100,
+        "tools": 3,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "hebline",
+          "version": "0.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.GavinLucas/docker-mcp-server",
+      "version": "2.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/GavinLucas/docker-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 5,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-25T06:47:49Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-mismatch"
+      },
+      "errors": [
+        "publisher: registry claims owner \"GavinLucas\" but repo owner is \"L337-org\""
+      ],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.ConnorBritain/mssql",
+      "version": "0.4.5",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": "@connorbritain/mssql-mcp-server@0.4.5",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 57,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "WARN",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.SamYuan1990/i18n-agent-action",
+      "version": "mcp",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.daedalus/mcp-exa",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/daedalus/mcp-exa",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-04-21T19:26:24Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.PierreJanineh/tech-debt-mcp",
+      "version": "2.1.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/PierreJanineh/TechDebtMCP",
+      "npmSpec": "tech-debt-mcp@2.1.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 7,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-26T05:41:26Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "2.1.0",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 85,
+        "maxScore": 100,
+        "tools": 16,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "tech-debt-mcp",
+          "version": "2.3.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.ArturLys/ao3-mcp",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/ArturLys/ao3-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-24T17:50:05Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.Copenhagen0x/solana-security-mcp",
+      "version": "1.5.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Copenhagen0x/solana-security-standard",
+      "npmSpec": "@jelleo/solana-security-mcp@1.5.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 36,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-15T09:34:29Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 90,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "solana-security-standard",
+          "version": "1.5.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Rheopyrin/ox-mcp",
+      "version": "0.1.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Rheopyrin/ox-mcp",
+      "npmSpec": "@rheopyrin/ox-mcp@0.1.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-19T15:06:11Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Servation/memora-mcp",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Servation/memora-mcp",
+      "npmSpec": "@servation/memora-mcp@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-24T04:37:34Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 31,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.CSOAI-ORG/regex-ai-mcp",
+      "version": "1.0.4",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/CSOAI-ORG/regex-ai-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-25T13:22:40Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "dev.waxberry/live-translate-mcp",
+      "version": "0.1.6",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/waxberry-dev/live-translate-mcp",
+      "npmSpec": "live-translate-mcp@0.1.6",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-06-17T08:51:51Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.6",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 26,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.US1929/switchai",
+      "version": "1.0.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/US1929/switchai",
+      "npmSpec": "@us1929/switchai-mcp@1.0.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-06-26T19:21:46Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 90,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "switchai",
+          "version": "1.0.0",
+          "description": "SwitchAI — Confronto tariffe Luce/Gas e sottoscrizione per il mercato italiano. Dati reali da oltre 44 offerte dei principali fornitori. switchai.it"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.davidmosiah/agent-seo-engine",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/davidmosiah/agent-seo-engine",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-03T12:11:21Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.AryanBV/pdf-toolkit-mcp",
+      "version": "0.3.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/AryanBV/pdf-toolkit-mcp",
+      "npmSpec": "@aryanbv/pdf-toolkit-mcp@0.3.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 9,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-22T05:56:14Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 77,
+        "maxScore": 100,
+        "tools": 22,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "pdf-toolkit-mcp",
+          "version": "0.3.1"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.cyanheads/eia-mcp-server",
+      "version": "0.1.7",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/cyanheads/eia-mcp-server",
+      "npmSpec": "@cyanheads/eia-mcp-server@0.1.7",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-06-20T11:10:22Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 11,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "FAIL",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.CSOAI-ORG/project-management-ai-mcp",
+      "version": "1.0.4",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/CSOAI-ORG/project-management-ai-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-06-26T05:40:53Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.Antonytm/mcp-sitecore-server",
+      "version": "1.3.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Antonytm/mcp-sitecore-server",
+      "npmSpec": "@antonytm/mcp-sitecore-server@1.3.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 48,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-22T11:16:08Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 77,
+        "maxScore": 100,
+        "tools": 153,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "Sitecore MCP Server: @antonytm/mcp-sitecore-server 1.3.2",
+          "description": "Modle Context Protocol for Sitecore",
+          "version": "0.0.1"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.cyanheads/pixoo-mcp-server",
+      "version": "1.0.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/cyanheads/pixoo-mcp-server",
+      "npmSpec": "@cyanheads/pixoo-mcp-server@1.0.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 5,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-06-16T00:26:58Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 26,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.devhelmhq/mcp-server",
+      "version": "1.0.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/devhelmhq/mcp-server",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-22T20:48:54Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.derNif/payanagent",
+      "version": "0.3.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/derNif/payanagent",
+      "npmSpec": "@payanagent/mcp@0.3.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-24T17:24:07Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 81,
+        "maxScore": 100,
+        "tools": 9,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "payanagent",
+          "version": "0.3.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Forge-Space/ui-mcp",
+      "version": "0.25.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Forge-Space/ui-mcp",
+      "npmSpec": "@forgespace/ui-mcp@0.25.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 2,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-04-20T04:30:25Z",
+        "repositoryArchived": true,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 75,
+        "maxScore": 100,
+        "tools": 38,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "uiforge",
+          "version": "0.25.0"
+        },
+        "checks": {
+          "installability": "WARN",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.cyanheads/federal-reserve-mcp-server",
+      "version": "0.2.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/cyanheads/federal-reserve-mcp-server",
+      "npmSpec": "@cyanheads/federal-reserve-mcp-server@0.2.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-06-20T19:05:32Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.RCS-kz/bitrix24-mcp",
+      "version": "1.0.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/RCS-kz/bitrix24-mcp",
+      "npmSpec": "@rcs-kz/bitrix24-mcp@1.0.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-04-30T14:27:13Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 31,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Rinava/umbryn-mcp",
+      "version": "0.2.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Rinava/umbryn-mcp",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-25T12:02:29Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.Artexis10/exomem",
+      "version": "0.34.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Artexis10/exomem",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 8,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-27T14:48:44Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.drewburchfield/help-scout-mcp",
+      "version": "1.7.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/drewburchfield/help-scout-mcp-server.git",
+      "npmSpec": "help-scout-mcp-server@1.7.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 46,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-20T00:12:54Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "1.7.0",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.FastAlertNow/mcp-server",
+      "version": "1.3.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/FastAlertNow/mcp-server",
+      "npmSpec": "fastalert-mcp-server@1.3.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-02-16T09:59:50Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "1.3.1",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 26,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Ratnaditya-J/spineframe",
+      "version": "1.1.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Ratnaditya-J/spineframe",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.darrenjrobinson/microsoft-ai-roundup",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/darrenjrobinson/microsoft-ai-roundup-mcp",
+      "npmSpec": "microsoft-ai-roundup-mcp@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-21T09:47:21Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.1",
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 26,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Trusty-Squire/mcp",
+      "version": "1.0.33",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Trusty-Squire/trusty-squire",
+      "npmSpec": "@trusty-squire/mcp@1.0.33",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-27T19:33:03Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 31,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Rswcf/deepviews",
+      "version": "1.0.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Rswcf/v0-valuation-tool",
+      "npmSpec": "deepviews-mcp@1.0.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "1.0.3",
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 95,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "deepviews-terminal",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.pipeworx-io/arcgis-sarpycounty",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/pipeworx-io/mcp-arcgis-sarpycounty",
+      "npmSpec": null,
+      "remoteUrl": "https://gateway.pipeworx.io/arcgis-sarpycounty/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-06-26T01:02:27Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 34,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "pipeworx-gateway",
+          "version": "0.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "app.roamward/roamward-mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://www.roamward.app/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "roamward-mcp",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "cz.salesbot/linkedin-mcp-server",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Kubis010/linkedin-mcp-server-salesbot",
+      "npmSpec": null,
+      "remoteUrl": "https://app.salesbot.cz/api/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-07-27T09:57:03Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 90,
+        "maxScore": 100,
+        "tools": 48,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "salesagent-mcp",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "WARN"
+        }
+      }
+    },
+    {
+      "serverName": "com.transcriptapi/youtube-transcript-and-youtube-search",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/ZeroPointRepo/youtube-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://transcriptapi.com/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 7,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-20T13:03:23Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.tofubofu/ai-visibility",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://tofubofu.com/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.thenextgennexus/chinese-social-signals-mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://nexgendata--chinese-social-signals-mcp.apify.actor/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "eu.iban-test.www/iban-validation",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://www.iban-test.eu/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 86,
+        "maxScore": 100,
+        "tools": 9,
+        "handshake": "PASS",
+        "protocolVersion": "2025-11-25",
+        "serverInfo": {
+          "name": "IBAN Validation MCP",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "WARN"
+        }
+      }
+    },
+    {
+      "serverName": "app.wishpool/luxembourg-invoice-mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/junter1989k-ai/luxembourg-invoice-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://inv-lu.wishpool.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "app.wishpool/south-africa-payments-mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/junter1989k-ai/south-africa-payments-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp-za.wishpool.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "br.com.music360.app/mcp-server",
+      "version": "1.2.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/music360app/music360app",
+      "npmSpec": null,
+      "remoteUrl": "https://app.music360.com.br/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 69,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "music360-mcp",
+          "version": "1.2.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "WARN",
+          "latency": "FAIL"
+        }
+      }
+    },
+    {
+      "serverName": "app.thoughtspot/mcp-server",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/thoughtspot/mcp-server",
+      "npmSpec": null,
+      "remoteUrl": "https://agent.thoughtspot.app/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 33,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-27T20:05:49Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "app.warplink/warplink",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.warplink.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.thenextgennexus/legal-mcp-server",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://nexgendata-mcp-proxy.steve-corbeil.workers.dev/legal-mcp-server/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 1,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "Legal & Court Records MCP Server",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.SevaSk/nova-scotia-data-explorer",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/SevaSk/scotiasignal-frontend",
+      "npmSpec": null,
+      "remoteUrl": "https://scotiasignal.ca/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "nova-scotia-open-data",
+          "version": "1.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "app.wishpool/lithuania-payments-mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/junter1989k-ai/lithuania-payments-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp-lt.wishpool.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.unifapi/mcp",
+      "version": "0.1.2",
+      "transport": "remote",
+      "repoUrl": "https://github.com/unifapi-agent/unifapi-mcp-server",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.unifapi.com",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-31T16:17:27Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Tanbir404/zephex",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://zephex.dev/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 10,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "zephex",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.trycloudflare.clients-involving-billion-headers/agent-web-actions",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://clients-involving-billion-headers.trycloudflare.com:5001",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "app.savedthat/savedthat",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://savedthat.app/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "savedthat",
+          "title": "SavedThat",
+          "version": "1.0.1",
+          "icons": [
+            {
+              "src": "https://savedthat.app/logo/mark-transparent-512.png",
+              "mimeType": "image/png",
+              "sizes": "512x512"
+            },
+            {
+              "src": "https://savedthat.app/logo/mark.svg",
+              "mimeType": "image/svg+xml",
+              "sizes": "any"
+            }
+          ]
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.MastadoonPrime/agent-memory",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/MastadoonPrime/agent-memory",
+      "npmSpec": null,
+      "remoteUrl": "https://agent-memory-production-6506.up.railway.app/sse",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-05-04T18:03:52Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Lfaykus/flatway-estimate",
+      "version": "1.2.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.flatway.fr/sse",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-user-exists"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.smithery/DynamicEndpoints-m365-core-mcp",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/DynamicEndpoints/m365-core-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://server.smithery.ai/@DynamicEndpoints/m365-core-mcp/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "dev.arlet/mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/NexaScience/arlet",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.arlet.dev/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.LeadFox-Shay/leadfoxconnect",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/LeadFox-Shay/leadfoxconnect",
+      "npmSpec": null,
+      "remoteUrl": "https://app.leadfoxconnect.com/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-04-26T06:34:26Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "es.carteleracines/cartelera",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/surferkoala/cartelera-cines",
+      "npmSpec": null,
+      "remoteUrl": "https://www.carteleracines.es/mcp_server.php",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 11,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "cartelera-mcp-php",
+          "title": "CarteleraCines.es",
+          "version": "1.1.0",
+          "websiteUrl": "https://www.carteleracines.es/"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.userbrain/mcp",
+      "version": "1.5.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.userbrain.com/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "app.ofia/latex",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://ofia.app/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.AgentNOMOS/nomos-crossborder-broker",
+      "version": "0.2.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/AgentNOMOS/nomos-crossborder-broker",
+      "npmSpec": null,
+      "remoteUrl": "https://tooloracle.io/mcp/nomos",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-06-03T10:49:14Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 5,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "nomos-crossborder-broker",
+          "version": "0.2.0",
+          "description": "NOMOS Cross-Border Broker MCP — preflight, market scan, x402 quote, evidence receipts"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "app.wishpool/malaysia-invoice-mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/junter1989k-ai/malaysia-invoice-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://inv-my.wishpool.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Astrotomic/archivist-ai",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Astrotomic/mcp.myarchivist.ai",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.myarchivist.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": "PHP",
+        "repositoryPushedAt": "2026-07-27T10:42:49Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.blinkpdf/blinkpdf",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.blinkpdf.io/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.thenextgennexus/news-mcp-server",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://nexgendata-mcp-proxy.steve-corbeil.workers.dev/news-mcp-server/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 5,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "News & Media MCP Server",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.microsoft/workiq-odspremoteserver",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/bap-microsoft/MCP-Platform/",
+      "npmSpec": null,
+      "remoteUrl": "https://agent365.svc.cloud.microsoft/agents/tenants/{tenant_id}/servers/mcp_ODSPRemoteServer",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.floot/floot",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.floot.com/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.thenextgennexus/github-mcp-server",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://nexgendata-mcp-proxy.steve-corbeil.workers.dev/github-mcp-server/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "GitHub MCP Server",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.data-apis.api/sec-event-intelligence",
+      "version": "0.1.10",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.data-apis.com/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 11,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "sec-event-intelligence-mcp",
+          "title": "SEC Filing MCP Server",
+          "version": "0.1.10",
+          "websiteUrl": "https://api.data-apis.com"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.Br0ski777/airdrop-checker",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Br0ski777/airdrop-checker-x402",
+      "npmSpec": null,
+      "remoteUrl": "https://airdrop-checker.api.klymax402.com/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-19T00:53:06Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "airdrop-checker",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.lowvyn/mcp",
+      "version": "0.1.2",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.lowvyn.com/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "FAIL",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "lowvyn",
+          "version": "0.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "app.wishpool/mexico-invoice-mcp",
+      "version": "0.2.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/junter1989k-ai/mexico-invoice-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://inv-mx.wishpool.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.livingmeta/ai-in-research",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://ai-in-research.livingmeta.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "com.gettreatmenthelp/gettreatmenthelp",
+      "version": "1.1.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Crindo2/gth-mcp-server",
+      "npmSpec": null,
+      "remoteUrl": "https://gth-mcp-server.pages.dev/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-04T01:34:54Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "gettreatmenthelp",
+          "version": "1.1.1",
+          "description": "Find US addiction treatment facilities. 12,338 curated, SAMHSA-sourced. Filter by location, treatment type, and insurance accepted."
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.NicolasPrimeau/artel",
+      "version": "0.17.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/NicolasPrimeau/artel",
+      "npmSpec": null,
+      "remoteUrl": "https://{artel_host}/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 7,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-26T21:39:36Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.MarcioKorpHub/contazz-autopilot",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/MarcioKorpHub/contazz-autopilot-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://appcontazz.com/api/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-19T03:56:41Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 61,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "contazz-autopilot",
+          "version": "1.0.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.LogicLabsAI/ultramemory-mcp",
+      "version": "1.9.12",
+      "transport": "remote",
+      "repoUrl": "https://github.com/LogicLabsAI/ultramemory-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://api.ultramemory.us/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-25T04:20:14Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.benseverndev-oss/infermap",
+      "version": "0.6.0",
+      "transport": "both",
+      "repoUrl": "https://github.com/benseverndev-oss/infermap",
+      "npmSpec": null,
+      "remoteUrl": "https://infermap-mcp-production.up.railway.app/mcp/",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-05-01T14:10:40Z",
+        "repositoryArchived": true,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "xyz.signomy/civitae",
+      "version": "1.1.2",
+      "transport": "both",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://signomy.xyz/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.viralnote/mcp-server",
+      "version": "0.2.4",
+      "transport": "both",
+      "repoUrl": "https://github.com/viralnote/mcp-server",
+      "npmSpec": "@viralnote/mcp-server@0.2.4",
+      "remoteUrl": "https://dashboard.viralnote.app/api/mcp/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-17T19:49:00Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "io.github.thriftell/budgetary",
+      "version": "0.1.1",
+      "transport": "both",
+      "repoUrl": "https://github.com/thriftell/budgetary-clients",
+      "npmSpec": "@budgetary/mcp@0.1.1",
+      "remoteUrl": "https://api.budgetary.tools/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-22T19:52:05Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 1,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "budgetary",
+          "version": "v1"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.mux/mcp",
+      "version": "12.8.0",
+      "transport": "both",
+      "repoUrl": "https://github.com/muxinc/mux-node-sdk",
+      "npmSpec": "@mux/mcp@12.8.0",
+      "remoteUrl": "https://mcp.mux.com",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 180,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-25T00:29:58Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "mux",
+          "version": "14.1.0"
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "com.usedailyai/launchd-drift-recovery",
+      "version": "0.1.0",
+      "transport": "unknown",
+      "repoUrl": "https://github.com/dailyaiagents-cpu/dailyai-os",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Shell",
+        "repositoryPushedAt": "2026-05-12T09:00:13Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "io.github.DioNanos/mcp-memory-rs",
+      "version": "0.2.1",
+      "transport": "unknown",
+      "repoUrl": "https://github.com/DioNanos/mcp-memory-rs",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": true
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Rust",
+        "repositoryPushedAt": "2026-07-18T11:07:15Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "github-repo-match"
+      },
+      "errors": [],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    }
+  ]
+}
