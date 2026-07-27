@@ -25,6 +25,8 @@ import { buildManifest, signManifest, verifyManifest, generatePublisherKeypair, 
 import { diffToolsets, CHANGE_LEVEL } from "../lib/diff.js";
 import { PinStore } from "../lib/pin.js";
 import { printFingerprint, printDiff } from "../lib/report.js";
+import { EvidenceStore } from "../lib/evidence-store.js";
+import { EVIDENCE_LAYERS } from "../lib/evidence-predicates.js";
 
 const exec = promisify(execCb);
 
@@ -44,7 +46,7 @@ function opt(name, fallback = undefined) {
   return i !== -1 ? argv[i + 1] : fallback;
 }
 function positional(skip = 1) {
-  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout"]);
+  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir"]);
   const out = [];
   for (let i = skip; i < argv.length; i++) {
     const a = argv[i];
@@ -82,6 +84,14 @@ Health scorecard (scanner):
   mcp-trustcard auth-issue --subject <id> --scopes <s1,s2> --secret <hex>  # issue a dev-mode token
   mcp-trustcard auth-verify <token> --secret <hex>  # verify a dev-mode token
   mcp-trustcard <spec>                         # shorthand for scan
+
+Evidence substrate (observatory):
+  mcp-trustcard evidence query --subject <name> [--predicate <p>] [--layer <n>] [--json]
+  mcp-trustcard evidence history --subject <name> [--since <date>]
+  mcp-trustcard evidence stats [--json]
+  mcp-trustcard evidence verify                 # integrity check all evidence
+  mcp-trustcard evidence export [--since <date>] [--json-out <file>]
+  mcp-trustcard evidence contradictions --subject <name>
 
 Options: --json  --no-color  --pins <path>  --env-file <f>  --cwd <dir>
          --strict  --threshold <n>  --parallel <n>  -h/--help`);
@@ -712,6 +722,208 @@ function inspectPinStore(data, file) {
   }
 }
 
+// ─── Evidence substrate commands ──────────────────────────────────
+
+function evidenceDir() {
+  return opt("--evidence-dir") || "data/evidence";
+}
+
+async function cmdEvidence() {
+  const sub = argv[1];
+  if (!sub) {
+    console.log("Usage: mcp-trustcard evidence <query|history|stats|verify|export|contradictions>");
+    process.exit(2);
+  }
+
+  const dir = evidenceDir();
+  const store = new EvidenceStore(dir);
+
+  switch (sub) {
+    case "query": {
+      const subject = opt("--subject");
+      const predicate = opt("--predicate");
+      const layer = opt("--layer") !== undefined ? parseInt(opt("--layer"), 10) : undefined;
+      const since = opt("--since");
+      const until = opt("--until");
+      const asJson = flag("--json");
+
+      const filters = {};
+      if (subject) filters.subject = subject;
+      if (predicate) filters.predicate = predicate;
+      if (layer !== undefined && !isNaN(layer)) filters.layer = layer;
+      if (since) filters.since = since;
+      if (until) filters.until = until;
+
+      const records = store.query(filters);
+
+      if (asJson) {
+        console.log(JSON.stringify(records, null, 2));
+      } else {
+        if (records.length === 0) {
+          console.log(dim("No evidence records found."));
+          return;
+        }
+        console.log(bold(`Evidence records (${records.length}):`));
+        for (const r of records) {
+          const layerName = EVIDENCE_LAYERS[r.claim.layer] ?? "?";
+          const val = r.claim.value === null ? dim("null") : JSON.stringify(r.claim.value);
+          console.log(
+            `  ${r.timestamp}  ${blue(layerName.padEnd(10))}  ${r.claim.predicate.padEnd(35)}  ${val.slice(0, 60)}  conf=${r.claim.confidence}`
+          );
+        }
+      }
+      break;
+    }
+
+    case "history": {
+      const subject = opt("--subject");
+      if (!subject) {
+        console.error("--subject is required for history");
+        process.exit(2);
+      }
+      const since = opt("--since");
+      const records = store.query({ subject, since });
+
+      if (records.length === 0) {
+        console.log(dim(`No evidence history for "${subject}".`));
+        return;
+      }
+
+      console.log(bold(`Evidence history for "${subject}" (${records.length} records):`));
+      let lastDate = "";
+      for (const r of records) {
+        const date = r.timestamp.slice(0, 10);
+        const time = r.timestamp.slice(11, 19);
+        if (date !== lastDate) {
+          console.log(dim(`\n  ${date}`));
+          lastDate = date;
+        }
+        const layerName = EVIDENCE_LAYERS[r.claim.layer] ?? "?";
+        const val = r.claim.value === null ? dim("null (observation failed)") : JSON.stringify(r.claim.value);
+        console.log(`    ${time}  ${blue(layerName.padEnd(10))}  ${r.claim.predicate.padEnd(35)}  ${val.slice(0, 80)}`);
+        if (r.claim.payload?.error) {
+          console.log(dim(`              error: ${r.claim.payload.error}`));
+        }
+      }
+      break;
+    }
+
+    case "stats": {
+      const stats = store.stats();
+      const asJson = flag("--json");
+
+      if (asJson) {
+        console.log(JSON.stringify(stats, null, 2));
+        return;
+      }
+
+      if (stats.totalRecords === 0) {
+        console.log(dim("Evidence store is empty."));
+        return;
+      }
+
+      console.log(bold("Evidence Store Statistics"));
+      console.log(`  Total records:  ${stats.totalRecords}`);
+      console.log(`  Total files:    ${stats.totalFiles}`);
+      console.log(`  Subjects:       ${stats.bySubject}`);
+      console.log("");
+      console.log(bold("  By layer:"));
+      for (const [layer, count] of Object.entries(stats.byLayer).sort((a, b) => a[0] - b[0])) {
+        console.log(`    Layer ${layer} (${EVIDENCE_LAYERS[layer] ?? "?"}):  ${count}`);
+      }
+      console.log("");
+      console.log(bold("  By predicate (top 10):"));
+      const sortedPreds = Object.entries(stats.byPredicate).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      for (const [pred, count] of sortedPreds) {
+        console.log(`    ${pred.padEnd(40)}  ${count}`);
+      }
+      console.log("");
+      console.log(bold("  By observer:"));
+      for (const [obs, count] of Object.entries(stats.byObserver)) {
+        console.log(`    ${obs.padEnd(25)}  ${count}`);
+      }
+      break;
+    }
+
+    case "verify": {
+      console.log(bold("Verifying evidence store integrity..."));
+      const result = store.verify();
+      if (result.verified) {
+        console.log(green(`  OK — ${result.totalRecords} records verified, no errors.`));
+      } else {
+        console.log(red(`  FAIL — ${result.errors.length} error(s), ${result.duplicates.length} duplicate(s).`));
+        for (const err of result.errors.slice(0, 10)) {
+          console.log(red(`    ${err.file}:${err.line}  ${err.error}`));
+        }
+        if (result.duplicates.length > 0) {
+          console.log(red(`  Duplicates:`));
+          for (const dup of result.duplicates.slice(0, 10)) {
+            console.log(red(`    ${dup.id}  at ${dup.file}:${dup.line}`));
+          }
+        }
+        process.exit(1);
+      }
+      break;
+    }
+
+    case "export": {
+      const since = opt("--since");
+      const until = opt("--until");
+      const outFile = opt("--json-out");
+
+      const filters = {};
+      if (since) filters.since = since;
+      if (until) filters.until = until;
+
+      const records = store.export(filters);
+      const json = JSON.stringify({
+        exportedAt: new Date().toISOString(),
+        recordCount: records.length,
+        records,
+      }, null, 2);
+
+      if (outFile) {
+        writeFileSync(outFile, json);
+        console.log(green(`Exported ${records.length} records to ${outFile}`));
+      } else {
+        console.log(json);
+      }
+      break;
+    }
+
+    case "contradictions": {
+      const subject = opt("--subject");
+      if (!subject) {
+        console.error("--subject is required for contradictions");
+        process.exit(2);
+      }
+
+      const contradictions = store.contradictions(subject);
+      const preds = Object.keys(contradictions);
+
+      if (preds.length === 0) {
+        console.log(green(`No contradictions found for "${subject}".`));
+        return;
+      }
+
+      console.log(yellow(`Contradictions for "${subject}":`));
+      for (const [pred, recs] of Object.entries(contradictions)) {
+        console.log(yellow(`\n  ${pred}:`));
+        for (const r of recs) {
+          const val = r.claim.value === null ? dim("null") : JSON.stringify(r.claim.value);
+          console.log(`    ${r.timestamp}  value=${val}  conf=${r.claim.confidence}  method=${r.observer.method}`);
+        }
+      }
+      break;
+    }
+
+    default:
+      console.error(`Unknown evidence subcommand: "${sub}"`);
+      console.log("Usage: mcp-trustcard evidence <query|history|stats|verify|export|contradictions>");
+      process.exit(2);
+  }
+}
+
 async function main() {
   const cmd = argv[0];
   if (!cmd || cmd === "-h" || cmd === "--help" || cmd === "help") return usage();
@@ -731,6 +943,7 @@ async function main() {
     case "pins": return cmdPins();
     case "auth-issue": return cmdAuthIssue();
     case "auth-verify": return cmdAuthVerify();
+    case "evidence": return cmdEvidence();
     default:
       if (!cmd.startsWith("-")) return cmdScan();
       usage();
