@@ -18,10 +18,12 @@ insufficient and what the protocol replaces it with.
 
 ## Commands
 
-- Test: `npm test`  → `node --test "test/*.test.js"` (283 tests, all should pass)
-  - IMPORTANT: the glob `"test/*.test.js"` is required. Bare `node --test`
+- Test: `npm test`  → `node --test test/*.test.js` (326 tests, all should pass)
+  - IMPORTANT: the `test/*.test.js` glob is required. Bare `node --test`
     also matches `test/helpers.js` and the fixture servers, which hang the
     runner (child processes keep stdio open). Don't "simplify" the glob away.
+  - The glob must be unquoted in the `package.json` script so the shell expands
+    it before Node receives the paths; a quoted glob becomes a literal path.
 - CLI: `node bin/mcp-trustcard.js <subcommand>` (keygen/manifest/sign/verify/
   diff/pin/pins/fingerprint/scan/gen-manifest/inspect)
 - No runtime deps. Pure Node stdlib. Don't add dependencies.
