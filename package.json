@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "scan:all": "node bin/mcp-trustcard.js scan --batch servers/official.json --json-out results.json",
-    "test": "node --test \"test/*.test.js\"",
+    "test": "node --test test/*.test.js",
     "test:fast": "node --test test/checks.test.js test/danger-detector.test.js"
   },
   "keywords": [
