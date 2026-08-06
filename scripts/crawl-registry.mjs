@@ -94,6 +94,50 @@ function extractServer(entry) {
     repoSource = s.repository.source || null;
   }
 
+  // Extract declaration fields
+  let declaredEnvVars = [];
+  let declaredPackageArgs = [];
+  let declaredRuntimeArgs = [];
+  let declaredHeaders = [];
+
+  if (s.packages) {
+    for (const pkg of s.packages) {
+      if (pkg.environmentVariables) {
+        declaredEnvVars.push(...pkg.environmentVariables.map(v => ({
+          name: v.name,
+          description: v.description || null,
+          isRequired: v.isRequired ?? false,
+        })));
+      }
+      if (pkg.packageArguments) {
+        declaredPackageArgs.push(...pkg.packageArguments.map(a => ({
+          name: a.name,
+          description: a.description || null,
+          isRequired: a.isRequired ?? false,
+        })));
+      }
+      if (pkg.runtimeArguments) {
+        declaredRuntimeArgs.push(...pkg.runtimeArguments.map(a => ({
+          name: a.name,
+          description: a.description || null,
+          isRequired: a.isRequired ?? false,
+        })));
+      }
+    }
+  }
+
+  if (s.remotes) {
+    for (const r of s.remotes) {
+      if (r.headers) {
+        declaredHeaders.push(...r.headers.map(h => ({
+          name: h.name,
+          description: h.description || null,
+          isRequired: h.isRequired ?? false,
+        })));
+      }
+    }
+  }
+
   return {
     name: s.name || null,
     version: s.version || null,
@@ -110,6 +154,10 @@ function extractServer(entry) {
     status: official.status || null,
     publishedAt: official.publishedAt || null,
     updatedAt: official.updatedAt || null,
+    declaredEnvVars,
+    declaredPackageArgs,
+    declaredRuntimeArgs,
+    declaredHeaders,
   };
 }
 

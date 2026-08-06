@@ -342,10 +342,17 @@ async function cmdGenManifest() {
 
   const local = parseLocalCommand(argv.slice(1));
   let cmd, args, specStr, scwd;
-  if (local) {
+
+  // Check for HTTP URL spec (remote server).
+  const posSpec = positional(1)[0];
+  const isRemote = posSpec && /^https?:\/\//i.test(posSpec);
+
+  if (isRemote) {
+    specStr = posSpec;
+  } else if (local) {
     cmd = local.cmd; args = local.args; specStr = `${cmd} ${args.join(" ")}`; scwd = cwd;
   } else {
-    const spec = positional(1)[0];
+    const spec = posSpec;
     if (!spec) { console.error("gen-manifest: missing <spec> or -- <cmd> [args...]"); process.exit(2); }
     const npmCandidates = ["npm", "/opt/homebrew/bin/npm", "/usr/local/bin/npm"];
     let npmBin = "npm";
@@ -357,7 +364,14 @@ async function cmdGenManifest() {
     cmd = "npx"; args = ["-y", spec]; specStr = spec;
   }
 
-  const client = new McpStdioClient({ cmd, args, env: injectedEnv, spawnTimeout: 45_000, cwd: scwd });
+  // For remote HTTP servers, use McpHttpClient; otherwise stdio.
+  let client;
+  if (isRemote) {
+    const { McpHttpClient } = await import("../lib/client-http.js");
+    client = new McpHttpClient({ url: posSpec, transport: "streamable-http", timeout: 30_000 });
+  } else {
+    client = new McpStdioClient({ cmd, args, env: injectedEnv, spawnTimeout: 45_000, cwd: scwd });
+  }
   try {
     await client.start();
     // Try all protocol versions — servers may not support the newest.

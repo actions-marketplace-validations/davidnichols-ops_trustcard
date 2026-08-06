@@ -11,7 +11,6 @@
 ### The Registry
 
 | Metric | Value | Source |
-|---|---|---|
 | Total version records | 59,923 | Direct crawl (this session) |
 | Distinct server names | 18,754 | Direct crawl (this session) |
 | Servers with GitHub repos | 15,184 | Circadian dataset |

@@ -105,6 +105,21 @@ insufficient and what the protocol replaces it with.
   (interface/permission/implementation/provenance). Represents the case v1
   can't: `I_id` same + `M_id` changed → `implementation:"REPLACED"`.
   `isVectorCompatible()` keeps the simple auto-accept boolean.
+- `mcp-server.js` — **v3.1.** Minimal framework for building well-behaved MCP
+  servers. Encapsulates JSON-RPC 2.0 protocol, tool registration, structured
+  error codes, trustcard-aware handshake (toolsetDigest binding), and
+  observability. Used by `examples/bruce-lee/server.js`. Enforces
+  `destructiveHint` annotation on every tool.
+
+## Reference MCP server
+
+`examples/bruce-lee/` — the first reference well-behaved MCP server in this
+repo. Provides a deterministic, hash-chained agent decision audit log with 3
+tools (`record_decision`, `query_decisions`, `server_identity`). Scores 87/100
+on `mcp-trustcard scan`. Demonstrates: trustcard-aware handshake, honest
+annotations, safe param names, structured JSON-RPC error codes, fail-closed
+log integrity, and zero runtime deps. Includes a standalone chain verifier
+(`verify-chain.js`). Tests in `test/bruce-lee.test.js` (42 tests).
 
 ## Invariants / gotchas (don't break these)
 

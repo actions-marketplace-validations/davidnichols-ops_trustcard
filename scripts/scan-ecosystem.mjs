@@ -68,6 +68,9 @@ async function scanRuntime(server, timeoutMs = 20000) {
       handshake: result.checks?.handshake?.status || 'UNKNOWN',
       protocolVersion: result.protocolVersion,
       serverInfo: result.serverInfo,
+      capabilities: result.capabilities,
+      failureMode: result.failureMode || null,
+      stderr: result.stderr || null,
       checks: Object.fromEntries(
         Object.entries(result.checks || {}).map(([k, v]) => [k, v.status])
       ),
