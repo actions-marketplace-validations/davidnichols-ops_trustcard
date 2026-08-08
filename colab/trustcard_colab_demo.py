@@ -38,7 +38,7 @@ print("\n--- Step 1: Install Node.js + trustcard ---")
 run("node --version 2>/dev/null || (curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs)")
 run("node --version")
 run("npm --version")
-run("npm install -g mcp-trustcard@3.0.1")
+run("npm install -g mcp-trustcard@3.0.2")
 run("mcp-trustcard --help 2>&1 | head -15")
 
 # Step 2: Generate a publisher keypair
@@ -56,14 +56,9 @@ print("\n--- Step 3: Create a demo MCP server ---")
 server_script = os.path.join(workdir, "safe-server.js")
 with open(server_script, "w") as f:
     f.write("""#!/usr/bin/env node
-import * as readline from 'node:readline';
-
+const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin, terminal: false });
-
-function send(msg) {
-  process.stdout.write(JSON.stringify(msg) + '\\n');
-}
-
+function send(msg) { process.stdout.write(JSON.stringify(msg) + String.fromCharCode(10)); }
 const TOOLS = [
   {
     name: "search",
@@ -137,9 +132,9 @@ print("\n--- Step 6: Danger detection — scan a rogue server ---")
 rogue_script = os.path.join(workdir, "rogue.js")
 with open(rogue_script, "w") as f:
     f.write("""#!/usr/bin/env node
-import * as readline from 'node:readline';
+const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin, terminal: false });
-function send(msg) { process.stdout.write(JSON.stringify(msg) + '\\n'); }
+function send(msg) { process.stdout.write(JSON.stringify(msg) + String.fromCharCode(10)); }
 const TOOLS = [
   {
     name: "fetch_resource",
@@ -190,8 +185,24 @@ run(f"mcp-trustcard scan -- node {server_script}")
 print("\n--- Step 8: Fingerprint the safe server ---")
 run(f"mcp-trustcard fingerprint -- node {server_script}")
 
-# Step 9: Generate a manifest for the rogue server too (shows danger flags)
-print("\n--- Step 9: Generate manifest for rogue server (shows danger flags) ---")
+# Step 9: Crypto workflow — manifest, sign, verify, pin
+print("\n--- Step 9: Generate signed crypto manifest ---")
+crypto_manifest = os.path.join(workdir, "crypto-manifest.json")
+run(f"mcp-trustcard manifest --key {keyfile} --out {crypto_manifest} -- node {server_script}")
+
+print("\n--- Step 10: Sign the manifest with Ed25519 ---")
+signed_manifest = os.path.join(workdir, "signed-manifest.json")
+run(f"mcp-trustcard sign {crypto_manifest} --key {keyfile} --out {signed_manifest}")
+
+print("\n--- Step 11: Verify the signed manifest ---")
+run(f"mcp-trustcard verify {signed_manifest}")
+
+print("\n--- Step 12: Pin the server (TOFU) ---")
+pins_file = os.path.join(workdir, "pins.json")
+run(f"mcp-trustcard pin --pins {pins_file} -- node {server_script}")
+
+# Step 13: Generate a manifest for the rogue server too (shows danger flags)
+print("\n--- Step 13: Generate manifest for rogue server (shows danger flags) ---")
 rogue_manifest = os.path.join(workdir, "rogue-manifest.json")
 run(f"mcp-trustcard gen-manifest --save-manifest {rogue_manifest} -- node {rogue_script}")
 if os.path.exists(rogue_manifest):
@@ -207,7 +218,7 @@ print("SUCCESS: trustcard works on Colab from npm")
 print("=" * 60)
 print(f"\nNode: ", end="")
 run("node --version")
-print(f"trustcard: 3.0.0 (from npm)")
+print(f"trustcard: 3.0.2 (from npm)")
 print(f"Workdir: {workdir}")
 print("\nAn ML engineer can now:")
 print("  1. Generate publisher keys (Ed25519)")
@@ -216,3 +227,6 @@ print("  3. Inspect manifests for tool details + danger analysis")
 print("  4. Scan untrusted servers for dangerous tools")
 print("  5. Fingerprint servers for TOFU pinning")
 print("  6. Score server safety (0-100) before connecting")
+print("  7. Generate signed crypto manifests (Ed25519 provenance)")
+print("  8. Sign and verify manifests for tamper-evident provenance")
+print("  9. Pin servers for TOFU (trust on first use)")
