@@ -38,7 +38,7 @@ print("\n--- Step 1: Install Node.js + trustcard ---")
 run("node --version 2>/dev/null || (curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs)")
 run("node --version")
 run("npm --version")
-run("npm install -g mcp-trustcard@3.0.0")
+run("npm install -g mcp-trustcard@3.0.1")
 run("mcp-trustcard --help 2>&1 | head -15")
 
 # Step 2: Generate a publisher keypair
@@ -186,8 +186,12 @@ run(f"mcp-trustcard scan -- node {rogue_script}")
 print("\n--- Step 7: Scan the safe server (should score high) ---")
 run(f"mcp-trustcard scan -- node {server_script}")
 
-# Step 8: Generate a manifest for the rogue server too (shows danger flags)
-print("\n--- Step 8: Generate manifest for rogue server (shows danger flags) ---")
+# Step 8: Fingerprint the safe server (now supports local commands)
+print("\n--- Step 8: Fingerprint the safe server ---")
+run(f"mcp-trustcard fingerprint -- node {server_script}")
+
+# Step 9: Generate a manifest for the rogue server too (shows danger flags)
+print("\n--- Step 9: Generate manifest for rogue server (shows danger flags) ---")
 rogue_manifest = os.path.join(workdir, "rogue-manifest.json")
 run(f"mcp-trustcard gen-manifest --save-manifest {rogue_manifest} -- node {rogue_script}")
 if os.path.exists(rogue_manifest):

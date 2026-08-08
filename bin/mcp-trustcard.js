@@ -428,10 +428,26 @@ async function cmdGenManifest() {
 }
 
 async function cmdFingerprint() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
   const pins = new PinStore(opt("--pins"));
-  const card = await fingerprint(spec, { manifestPath: opt("--manifest"), pinStore: pins });
+
+  let card;
+  if (local) {
+    // Local command via `-- <cmd> [args...]`
+    const specStr = `${local.cmd} ${local.args.join(" ")}`;
+    card = await fingerprint(specStr, {
+      manifestPath: opt("--manifest"),
+      pinStore: pins,
+      localCmd: { cmd: local.cmd, args: local.args, cwd: cwd || undefined, env: injectedEnv },
+    });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    card = await fingerprint(spec, { manifestPath: opt("--manifest"), pinStore: pins });
+  }
+
   if (flag("--json")) console.log(JSON.stringify(card, null, 2));
   else printFingerprint(card, c);
   const failed = card.observation?.error || (card.provenance && !card.provenance.ok) || (card.binding && !card.binding.consistent) || card.drift?.status === "drifted";
