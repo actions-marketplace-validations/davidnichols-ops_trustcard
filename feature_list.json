@@ -75,5 +75,19 @@
     "description": "Unified pipeline on Colab T4: keygen → gen-manifest → scan → fingerprint → manifest --key → sign → verify (VERIFIED) → pin → list pins",
     "steps": ["colab run --gpu T4 colab/unified_pipeline_demo.py"],
     "passes": true
+  },
+  {
+    "id": 12,
+    "name": "observe-cwd-pass-through",
+    "description": "observeServer passes --cwd to McpStdioClient, enabling fingerprint/manifest/pin on servers in other directories",
+    "steps": ["mcp-trustcard fingerprint --cwd ~/Projects/repo-archaeologist -- python -m repo_archaeologist.mcp_server"],
+    "passes": true
+  },
+  {
+    "id": 13,
+    "name": "real-mcp-server-crypto-workflow",
+    "description": "Full trustcard crypto workflow on repo-archaeologist MCP server (4 tools): scan 78/100, fingerprint, manifest, sign, verify VERIFIED, pin",
+    "steps": ["mcp-trustcard scan --cwd ~/Projects/repo-archaeologist -- python -m repo_archaeologist.mcp_server"],
+    "passes": true
   }
 ]
