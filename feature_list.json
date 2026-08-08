@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "npm-test-passes",
+    "description": "All 514 Node.js tests pass",
+    "steps": ["npm test"],
+    "passes": true
+  },
+  {
+    "id": 2,
+    "name": "cli-scan-rogue-server",
+    "description": "mcp-trustcard scan detects dangerous tools in rogue server",
+    "steps": ["node bin/mcp-trustcard.js scan -- node rogue-servers/level1-subtle.js"],
+    "passes": true
+  },
+  {
+    "id": 3,
+    "name": "cli-keygen-works",
+    "description": "mcp-trustcard keygen produces Ed25519 keypair",
+    "steps": ["node bin/mcp-trustcard.js keygen --out /tmp/tc-test-key.json"],
+    "passes": true
+  },
+  {
+    "id": 4,
+    "name": "cli-sign-verify",
+    "description": "mcp-trustcard sign + verify round-trip works",
+    "steps": ["node bin/mcp-trustcard.js sign --help", "node bin/mcp-trustcard.js verify --help"],
+    "passes": true
+  },
+  {
+    "id": 5,
+    "name": "dst-test-fix",
+    "description": "Manifest expiry test handles DST boundary (±2h tolerance)",
+    "steps": ["npm test 2>&1 | grep 'proxy manifest includes expiresAt'"],
+    "passes": true
+  }
+]

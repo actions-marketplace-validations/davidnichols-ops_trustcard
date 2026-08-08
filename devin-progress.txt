@@ -1,0 +1,12 @@
+# trustcard — Nonstop Progress
+
+## Session 1 — 2026-08-08 (Build + Verify, COMPLETE)
+- Pulled from origin/master (set upstream tracking, was missing)
+- Tests: 514 passed (was 513 pass + 1 fail)
+- Fixed: DST boundary issue in manifest expiry test (test/security-model.test.js)
+  - `setDate(getDate() + 90)` crosses DST (CDT→CST), adding 1 hour in UTC
+  - Widened tolerance from ±60s to ±2h to absorb DST shift
+- CLI verified: scan rogue server → 78/100 score, 2/4 dangerous tools detected
+- CLI verified: keygen → Ed25519 keypair written, sign/verify help works
+- Feature list: 5/5 passing (100%)
+- Uncommitted: test/security-model.test.js (DST fix)

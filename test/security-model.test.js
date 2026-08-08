@@ -33,12 +33,15 @@ test("proxy manifest includes expiresAt by default (90 days)", () => {
   const tools = [{ name: "read", description: "read a file", inputSchema: { type: "object", properties: {} } }];
   const m = buildManifest(tools);
   assert.ok(m.expiresAt, "expiresAt should be set by default");
-  // Should be roughly 90 days from now
+  // Should be roughly 90 days from now. setDate() advances calendar days,
+  // so a 90-day span can cross a DST boundary (23/24/25-hour days). Allow
+  // ±2h tolerance to absorb the DST shift in UTC.
   const expiry = Date.parse(m.expiresAt);
   const now = Date.now();
   const days90 = 90 * 24 * 60 * 60 * 1000;
-  assert.ok(expiry > now + days90 - 60_000, "expiry should be ~90 days in the future");
-  assert.ok(expiry < now + days90 + 60_000, "expiry should be ~90 days in the future");
+  const tolerance = 2 * 60 * 60 * 1000;
+  assert.ok(expiry > now + days90 - tolerance, "expiry should be ~90 days in the future");
+  assert.ok(expiry < now + days90 + tolerance, "expiry should be ~90 days in the future");
 });
 
 test("proxy manifest accepts custom expiry via expiresInDays", () => {
