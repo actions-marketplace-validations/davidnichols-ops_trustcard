@@ -20,3 +20,26 @@
 - Rogue manifest: dangerous tools marked allowed=false (proxy blocks them)
 - Feature list: 8/8 passing (100%)
 - Committed with guards evidence
+
+## Session 3 — 2026-08-08 (MISSION 4: Complete Crypto Workflow)
+- Fixed `manifest` command: now supports -- <cmd> [args...] local command syntax
+- Fixed `pin` command: now supports -- <cmd> [args...] local command syntax
+- Published mcp-trustcard@3.0.2 to npm
+- Unified pipeline demo on Colab T4: all 11 steps pass
+  (keygen → gen-manifest → inspect → scan 80/100 → fingerprint →
+   manifest --key → sign → verify VERIFIED → pin → list pins)
+- Feature list: 11/11 passing (100%)
+- Guards: PR_READY (evidence captured)
+
+## Session 4 — 2026-08-08 (MISSION 5: Real MCP Server Crypto Workflow)
+- Fixed observeServer: now passes --cwd to McpStdioClient (was silently ignored)
+- This enables fingerprint/manifest/pin on servers in other directories
+- Verified full crypto workflow on repo-archaeologist MCP server (4 real tools):
+  - scan: 78/100, 4 tools (analyze_repo, get_structure, get_security, get_dead_code)
+  - fingerprint: protocol 2024-11-05, toolset+server digests
+  - manifest --key: crypto manifest with publisher key
+  - sign: Ed25519 signature
+  - verify: VERIFIED
+  - pin: pinned repo-archaeologist@0.2.0
+- v3.0.3 ready (not yet published — npm 2FA requires passkey via browser)
+- Feature list: 13/13 passing (100%)
