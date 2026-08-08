@@ -54,5 +54,26 @@
     "description": "External engineer can generate proxy manifests on Colab, dangerous tools marked allowed=false",
     "steps": ["mcp-trustcard gen-manifest --save-manifest manifest.json -- node server.js"],
     "passes": true
+  },
+  {
+    "id": 9,
+    "name": "manifest-local-command-support",
+    "description": "manifest command supports -- <cmd> [args...] local command syntax (not just npm specs)",
+    "steps": ["mcp-trustcard manifest --key pub.key.json --out m.json -- node server.js"],
+    "passes": true
+  },
+  {
+    "id": 10,
+    "name": "pin-local-command-support",
+    "description": "pin command supports -- <cmd> [args...] local command syntax for TOFU pinning",
+    "steps": ["mcp-trustcard pin --pins pins.json -- node server.js"],
+    "passes": true
+  },
+  {
+    "id": 11,
+    "name": "colab-full-crypto-workflow",
+    "description": "Unified pipeline on Colab T4: keygen → gen-manifest → scan → fingerprint → manifest --key → sign → verify (VERIFIED) → pin → list pins",
+    "steps": ["colab run --gpu T4 colab/unified_pipeline_demo.py"],
+    "passes": true
   }
 ]

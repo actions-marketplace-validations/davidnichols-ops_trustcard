@@ -455,9 +455,18 @@ async function cmdFingerprint() {
 }
 
 async function cmdManifest() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
-  const obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: {} });
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
+
+  let obs;
+  if (local) {
+    obs = await observeServer({ cmd: local.cmd, args: local.args, env: injectedEnv, cwd: cwd || undefined });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: injectedEnv });
+  }
   if (obs.error) { console.error(red(`probe failed: ${obs.error}`)); process.exit(1); }
   const keyPath = opt("--key");
   let publisher;
@@ -547,12 +556,21 @@ async function cmdDiff() {
 }
 
 async function cmdPin() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
   const pins = new PinStore(opt("--pins"));
-  const obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: {} });
+
+  let obs;
+  if (local) {
+    obs = await observeServer({ cmd: local.cmd, args: local.args, env: injectedEnv, cwd: cwd || undefined });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: injectedEnv });
+  }
   if (obs.error) { console.error(red(`probe failed: ${obs.error}`)); process.exit(1); }
-  const key = pins.serverKey(obs.serverInfo ?? spec);
+  const key = pins.serverKey(obs.serverInfo ?? (local ? `${local.cmd} ${local.args.join(" ")}` : posSpec));
   pins.pinServer(key, obs);
   console.log(`${green("✓")} pinned ${bold(key)}`);
   console.log(`  toolset: ${obs.toolsetDigest}`);
