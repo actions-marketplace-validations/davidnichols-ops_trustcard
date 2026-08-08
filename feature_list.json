@@ -33,5 +33,26 @@
     "description": "Manifest expiry test handles DST boundary (±2h tolerance)",
     "steps": ["npm test 2>&1 | grep 'proxy manifest includes expiresAt'"],
     "passes": true
+  },
+  {
+    "id": 6,
+    "name": "published-to-npm-v3",
+    "description": "mcp-trustcard v3.0.0 published to npm and installable by external users",
+    "steps": ["npm install -g mcp-trustcard@3.0.0"],
+    "passes": true
+  },
+  {
+    "id": 7,
+    "name": "colab-scan-rogue-works",
+    "description": "External engineer can install from npm on Colab, scan a rogue server → 78/100, scan safe server → 87/100",
+    "steps": ["colab run colab/trustcard_colab_demo.py"],
+    "passes": true
+  },
+  {
+    "id": 8,
+    "name": "colab-gen-manifest-works",
+    "description": "External engineer can generate proxy manifests on Colab, dangerous tools marked allowed=false",
+    "steps": ["mcp-trustcard gen-manifest --save-manifest manifest.json -- node server.js"],
+    "passes": true
   }
 ]

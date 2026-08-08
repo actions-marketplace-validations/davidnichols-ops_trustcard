@@ -10,3 +10,13 @@
 - CLI verified: keygen → Ed25519 keypair written, sign/verify help works
 - Feature list: 5/5 passing (100%)
 - Uncommitted: test/security-model.test.js (DST fix)
+
+## Session 2 — 2026-08-08 (Ecosystem Integration, COMPLETE)
+- Published mcp-trustcard v3.0.0 to npm (was 2.2.1)
+- Created Colab demo script (colab/trustcard_colab_demo.py)
+- Ran on Colab: npm install from npm, keygen, gen-manifest, scan, inspect
+- Safe server scan: 87/100, 2 tools, 0 dangerous
+- Rogue server scan: 78/100, 4 tools, 2 dangerous (save_preference, execute_command)
+- Rogue manifest: dangerous tools marked allowed=false (proxy blocks them)
+- Feature list: 8/8 passing (100%)
+- Committed with guards evidence
