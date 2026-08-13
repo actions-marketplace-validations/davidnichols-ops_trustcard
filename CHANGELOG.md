@@ -1,5 +1,57 @@
 # Changelog
 
+## [3.0.3] — 2026-08-11
+
+Bug fix: `observeServer` now accepts and passes `cwd` through to `McpStdioClient`.
+Previously, local commands invoked via `-- <cmd> [args...]` always spawned in the
+proxy's working directory, ignoring `--cwd`. This broke fingerprint/manifest/pin
+for any local server that needed to run from its project root.
+
+### Fixed
+
+- **`lib/observe.js`** — `observeServer({ cwd })` now forwards `cwd` to
+  `McpStdioClient`, which passes it to `child_process.spawn`. All CLI
+  subcommands that support local commands (`fingerprint`, `manifest`, `pin`)
+  already threaded `cwd` through `runtimeOpts()` — the gap was in the library
+  function itself.
+
+### Tests
+
+- 514 total (unchanged from 3.0.2 — the fix is a pass-through, covered by
+  existing local-command tests that set `cwd` at the CLI layer).
+
+## [3.0.2] — 2026-07-28
+
+`manifest` and `pin` subcommands now support local commands via `-- <cmd> [args...]`,
+matching `fingerprint` (added in 3.0.1). Full crypto workflow now works end-to-end
+for local servers without npx.
+
+### Added
+
+- **`bin/mcp-trustcard.js`** — `cmdManifest` and `cmdPin` now use
+  `parseLocalCommand()` + `runtimeOpts()` to accept `-- <cmd> [args...]` with
+  `--cwd` and `--env` support. `cmdPin` uses the local command string as the
+  pin key when no server info is available.
+- **Colab notebook** — updated to 3.0.2 with full crypto workflow demo
+  (keygen → manifest → sign → verify → pin → fingerprint).
+
+## [3.0.1] — 2026-07-28
+
+`fingerprint` subcommand now supports local commands via `-- <cmd> [args...]`.
+Previously, `fingerprint` only worked with npm package specs (via `npx -y <spec>`).
+Local servers (e.g. `mcp-trustcard fingerprint -- node my-server.js`) were not
+supported.
+
+### Added
+
+- **`lib/fingerprint.js`** — `fingerprint()` now accepts `localCmd: { cmd, args,
+  cwd, env }`. When provided, package identity is skipped (local commands have
+  no npm package) and the server is observed directly.
+- **`bin/mcp-trustcard.js`** — `cmdFingerprint` now uses `parseLocalCommand()`
+  to detect `-- <cmd> [args...]` and threads `cwd`/`env` through.
+- **Colab notebook** — added `trustcard_colab_demo.ipynb` for external usability
+  without cloning the repo.
+
 ## [3.0.0] — 2026-07-27
 
 Evidence substrate: the atomic primitive for MCP ecosystem observation. This
