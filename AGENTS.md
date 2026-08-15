@@ -71,11 +71,16 @@ insufficient and what the protocol replaces it with.
 - `middleware.js` — `wrapClient(rawClient, {guard, session})` for existing
   frameworks; also re-verifies toolset digest on every `tools/list`.
 - `policy.js` — **Gate 2 (v2).** Per-invocation authorization: composable rule
-  predicates (`denyTools`, `constrainArg`, `forbidArg`,
+  predicates (`allowTools`, `denyTools`, `constrainArg`, `forbidArg`,
   `restrictToolToEnvironments`, `requireApprovalForDestructive`,
   `requireScopes`) + `ScopedDecisions` (per-relying-party decision cache).
   NOT a policy language. `requireScopes` checks the invocation's `authToken`
-  against required scopes (wildcard `*` and `prefix:*` supported).
+  against required scopes (wildcard `*` and `prefix:*` supported). Rules are
+  evaluated for all matches and the most restrictive verdict wins
+  (deny > require-approval > allow), making the result order-independent; a
+  rule predicate that throws fails closed (deny). `defaultVerdict` is
+  configurable (`allow` by default for backward compatibility; set to `deny`
+  for default-deny posture).
 - `auth.js` — **(v2.3).** Per-agent auth scope enforcement. `DevIssuer`
   (HMAC-SHA256 JWT-like tokens for local dev), `IdpIntrospector` (RFC 7662
   OAuth 2.1 token introspection for external IdPs), `TokenValidator`
