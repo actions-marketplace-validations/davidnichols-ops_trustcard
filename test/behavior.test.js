@@ -124,6 +124,11 @@ describe("BehaviorEngine (same-contract fixture)", () => {
     assert.ok(classes.has("unexpected_tool_behavior"), `expected canary leak / unexpected_tool_behavior, got ${[...classes]}`);
     assert.ok(classes.has("unexpected_network_attempt"), `expected unexpected_network_attempt, got ${[...classes]}`);
     assert.ok(corpus.list().length > 0);
+    // Each finding must be preserved as a distinct corpus artifact.
+    assert.equal(corpus.list().length, report.findings.length, `expected ${report.findings.length} corpus artifacts, got ${corpus.list().length}`);
+    // probesPassed must count unique failed probes, not total findings.
+    const failedProbes = new Set(report.findings.map((f) => f.probe?.id ?? `unknown-${f.id}`));
+    assert.equal(report.probesPassed, report.probesTotal - failedProbes.size, `probesPassed ${report.probesPassed} should reflect ${failedProbes.size} failed probes`);
 
     // Verify the regression artifact is replayable: it captures seed, args, env, and server command.
     const artifact = corpus.load(corpus.list()[0]);
@@ -167,5 +172,19 @@ describe("BehaviorReport", () => {
     const json = report.toJSON();
     assert.equal(json.summary, "fail");
     assert.equal(json.probesTotal, 10);
+    assert.equal(json.probesPassed, 9);
+  });
+
+  test("probesPassed counts unique probes when multiple findings come from one probe", () => {
+    const probe = { id: "p1" };
+    const report = new BehaviorReport({
+      target: { serverInfo: { name: "x" }, toolsetDigest: "sha256:abc" },
+      probesTotal: 10,
+      findings: [
+        { severity: "high", divergenceClass: "prompt_injection", probe },
+        { severity: "high", divergenceClass: "exfiltration_instruction", probe },
+      ],
+    });
+    assert.equal(report.probesPassed, 9, "two findings from one probe should only count as one failed probe");
   });
 });
