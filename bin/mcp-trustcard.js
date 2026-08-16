@@ -27,6 +27,8 @@ import { PinStore } from "../lib/pin.js";
 import { printFingerprint, printDiff } from "../lib/report.js";
 import { EvidenceStore } from "../lib/evidence-store.js";
 import { EVIDENCE_LAYERS } from "../lib/evidence-predicates.js";
+import { BehaviorEngine, SandboxRuntime, InputGenerator, OutputComparator, RegressionCorpus, ReferenceObservation } from "../lib/behavior.js";
+import { resolve as resolvePath, dirname, isAbsolute } from "node:path";
 
 const exec = promisify(execCb);
 
@@ -46,7 +48,7 @@ function opt(name, fallback = undefined) {
   return i !== -1 ? argv[i + 1] : fallback;
 }
 function positional(skip = 1) {
-  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir"]);
+  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir", "--server", "--corpus", "--seed", "--probe"]);
   const out = [];
   for (let i = skip; i < argv.length; i++) {
     const a = argv[i];
@@ -67,6 +69,11 @@ Identity & provenance:
   mcp-trustcard sign <manifest.json> --key publisher.key.json [--out signed.json]
   mcp-trustcard verify <signed.json> [--spec <pkg>]
   mcp-trustcard diff <old.json> <new.json> [--verbose]
+
+Behavioral verification:
+  mcp-trustcard behavior <manifest.json> [--server <spec>] [--corpus <dir>] [--json]
+                        [--seed <n>] [--timeout <ms>] [--probe <id>] [--verbose]
+  mcp-trustcard behavior diff <reference.json> <target.json>
 
 Continuity (TOFU pinning):
   mcp-trustcard pin <spec>          # trust-on-first-use
@@ -972,6 +979,126 @@ async function cmdEvidence() {
   }
 }
 
+function behaviorFindingKey(f) {
+  return `${f.tool}:${f.probe?.id}:${f.divergenceClass}:${f.mechanism}:${JSON.stringify(f.evidence).slice(0, 120)}`;
+}
+
+async function cmdBehaviorDiff(refPath, targetPath) {
+  if (!existsSync(refPath)) { console.error(`behavior diff: reference not found: ${refPath}`); process.exit(2); }
+  if (!existsSync(targetPath)) { console.error(`behavior diff: target not found: ${targetPath}`); process.exit(2); }
+  const refReport = loadJson(refPath);
+  const targetReport = loadJson(targetPath);
+
+  const refById = new Map((refReport.findings ?? []).map((f) => [behaviorFindingKey(f), f]));
+  const targetById = new Map((targetReport.findings ?? []).map((f) => [behaviorFindingKey(f), f]));
+
+  const added = (targetReport.findings ?? []).filter((f) => !refById.has(behaviorFindingKey(f)));
+  const removed = (refReport.findings ?? []).filter((f) => !targetById.has(behaviorFindingKey(f)));
+
+  const sameToolset = refReport.target?.toolsetDigest === targetReport.target?.toolsetDigest;
+  const diff = {
+    referenceSummary: refReport.summary ?? "unknown",
+    targetSummary: targetReport.summary ?? "unknown",
+    toolsetDigestMatch: sameToolset,
+    referenceToolsetDigest: refReport.target?.toolsetDigest ?? null,
+    targetToolsetDigest: targetReport.target?.toolsetDigest ?? null,
+    added: added.map((f) => ({ severity: f.severity, divergenceClass: f.divergenceClass, mechanism: f.mechanism, tool: f.tool, probe: f.probe?.id, evidence: f.evidence })),
+    removed: removed.map((f) => ({ severity: f.severity, divergenceClass: f.divergenceClass, mechanism: f.mechanism, tool: f.tool, probe: f.probe?.id })),
+  };
+
+  if (flag("--json")) {
+    console.log(JSON.stringify(diff, null, 2));
+  } else {
+    console.log(`Behavior diff: ${refPath} -> ${targetPath}`);
+    console.log(`Reference summary: ${diff.referenceSummary}`);
+    console.log(`Target summary:      ${diff.targetSummary}`);
+    console.log(`Toolset digest match: ${sameToolset}`);
+    console.log(`---`);
+    console.log(`Added findings (${added.length}):`);
+    for (const f of added) console.log(`  [${f.severity}] ${f.divergenceClass} (${f.mechanism}) on ${f.tool}:${f.probe?.id}`);
+    console.log(`Removed findings (${removed.length}):`);
+    for (const f of removed) console.log(`  [${f.severity}] ${f.divergenceClass} (${f.mechanism}) on ${f.tool}:${f.probe?.id}`);
+  }
+  process.exit(diff.targetSummary === "pass" && sameToolset ? 0 : 1);
+}
+
+async function cmdBehavior() {
+  if (argv[1] === "diff") return cmdBehaviorDiff(argv[2], argv[3]);
+  const { cwd, injectedEnv } = runtimeOpts();
+  const json = flag("--json");
+  const manifestPath = positional(1)[0];
+  if (!manifestPath) { console.error("behavior: missing <manifest.json>"); usage(); process.exit(2); }
+  let manifest;
+  try { manifest = loadJson(manifestPath); } catch (e) { console.error(`behavior: cannot read ${manifestPath}: ${e.message}`); process.exit(2); }
+
+  // Resolve the target server spec. The manifest may contain it directly, or
+  // the caller may override with --server or the `-- <cmd> [args...]` form.
+  let server = manifest.server ?? (manifest.cmd ? manifest : null);
+  const serverSpec = opt("--server");
+  if (serverSpec) {
+    server = { cmd: "npx", args: ["-y", serverSpec] };
+  }
+  const local = parseLocalCommand(argv.slice(1));
+  if (local) {
+    server = { cmd: local.cmd, args: local.args };
+    if (cwd) server.cwd = cwd;
+  }
+  if (!server || !server.cmd) {
+    console.error("behavior: manifest must include a 'server' object with 'cmd', or use --server / -- <cmd>");
+    process.exit(2);
+  }
+
+  const spawnTimeout = parseInt(opt("--timeout") ?? "30000", 10);
+  const callTimeout = Math.min(spawnTimeout, 30000);
+  const seed = parseInt(opt("--seed") ?? "0", 10);
+  const probeId = opt("--probe");
+  const corpusDir = opt("--corpus");
+  const verbose = flag("--verbose");
+
+  const baseDir = cwd ? resolvePath(cwd) : process.cwd();
+  const resolvedArgs = (server.args ?? []).map((a) => (isAbsolute(a) ? a : resolvePath(baseDir, a)));
+  const runtime = new SandboxRuntime({
+    cmd: server.cmd,
+    args: resolvedArgs,
+    env: { ...injectedEnv, ...(server.env ?? {}) },
+    cwd: cwd ? resolvePath(cwd) : undefined,
+    spawnTimeout,
+    callTimeout,
+    detached: server.detached ?? false,
+  });
+
+  // Load a saved reference observation if the manifest points to one.
+  let reference = null;
+  if (manifest.reference) {
+    const refPath = typeof manifest.reference === "string" ? manifest.reference : manifest.reference.path;
+    if (!existsSync(refPath)) { console.error(`behavior: reference not found: ${refPath}`); process.exit(2); }
+    const refJson = loadJson(refPath);
+    reference = new ReferenceObservation(refJson);
+  }
+
+  const probeFilter = probeId ? (p) => p.id === probeId || p.type === probeId : null;
+  const inputGenerator = new InputGenerator({ seed, probesPerTool: 10 });
+  const outputComparator = new OutputComparator();
+  const corpus = corpusDir ? new RegressionCorpus({ dir: corpusDir }) : null;
+  const engine = new BehaviorEngine({ runtime, inputGenerator, outputComparator, reference, corpus, probeFilter });
+
+  const report = await engine.run();
+
+  if (verbose && !json) {
+    for (const obs of report.observations) {
+      console.error(`probe ${obs.probe?.id} elapsed=${obs.elapsedMs}ms ok=${obs.ok}`);
+    }
+  }
+
+  if (json) {
+    console.log(JSON.stringify(report.toJSON(), null, 2));
+  } else {
+    console.log(report.toHuman());
+    if (corpusDir) console.log(`Corpus written to: ${corpusDir}`);
+  }
+  process.exit(report.summary === "pass" ? 0 : 1);
+}
+
 async function main() {
   const cmd = argv[0];
   if (!cmd || cmd === "-h" || cmd === "--help" || cmd === "help") return usage();
@@ -992,6 +1119,7 @@ async function main() {
     case "auth-issue": return cmdAuthIssue();
     case "auth-verify": return cmdAuthVerify();
     case "evidence": return cmdEvidence();
+    case "behavior": return cmdBehavior();
     default:
       if (!cmd.startsWith("-")) return cmdScan();
       usage();
