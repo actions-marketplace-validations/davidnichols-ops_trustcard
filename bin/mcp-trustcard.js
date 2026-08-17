@@ -22,6 +22,8 @@ import { McpStdioClient, PROTOCOL_VERSIONS } from "../lib/client.js";
 import { fingerprint } from "../lib/fingerprint.js";
 import { observeServer } from "../lib/observe.js";
 import { buildManifest, signManifest, verifyManifest, generatePublisherKeypair, bindingConsistency } from "../lib/provenance.js";
+import { buildDescriptor, signDescriptor, verifyDescriptor } from "../lib/descriptor.js";
+import { changeVector } from "../lib/change.js";
 import { diffToolsets, CHANGE_LEVEL } from "../lib/diff.js";
 import { PinStore } from "../lib/pin.js";
 import { printFingerprint, printDiff } from "../lib/report.js";
@@ -48,7 +50,7 @@ function opt(name, fallback = undefined) {
   return i !== -1 ? argv[i + 1] : fallback;
 }
 function positional(skip = 1) {
-  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir", "--server", "--corpus", "--seed", "--probe"]);
+  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir", "--server", "--corpus", "--seed", "--probe", "--tool", "--implementation", "--namespace", "--expires-in", "--claims", "--publisher-name"]);
   const out = [];
   for (let i = skip; i < argv.length; i++) {
     const a = argv[i];
@@ -69,6 +71,13 @@ Identity & provenance:
   mcp-trustcard sign <manifest.json> --key publisher.key.json [--out signed.json]
   mcp-trustcard verify <signed.json> [--spec <pkg>]
   mcp-trustcard diff <old.json> <new.json> [--verbose]
+
+Capability descriptor (protocol-neutral):
+  mcp-trustcard descriptor build <tool-or-manifest.json> --key pub.key.json [--tool <name>] [--out desc.json]
+  mcp-trustcard descriptor sign <desc.json> --key publisher.key.json [--out signed.json]
+  mcp-trustcard descriptor verify <desc.json> [--json]
+  mcp-trustcard descriptor diff <old.json> <new.json> [--json]
+  mcp-trustcard descriptor pin <desc.json> [--pins path]
 
 Behavioral verification:
   mcp-trustcard behavior <manifest.json> [--server <spec>] [--corpus <dir>] [--json]
@@ -1099,6 +1108,179 @@ async function cmdBehavior() {
   process.exit(report.summary === "pass" ? 0 : 1);
 }
 
+async function cmdDescriptor() {
+  const sub = argv[1];
+  switch (sub) {
+    case "build": return cmdDescriptorBuild();
+    case "sign": return cmdDescriptorSign();
+    case "verify": return cmdDescriptorVerify();
+    case "diff": return cmdDescriptorDiff();
+    case "pin": return cmdDescriptorPin();
+    default:
+      console.error("Unknown descriptor subcommand");
+      usage();
+      process.exit(2);
+  }
+}
+
+function parseOptionalJsonArg(arg, label) {
+  if (!arg) return null;
+  let value;
+  if (existsSync(arg)) {
+    try { value = loadJson(arg); } catch (e) { console.error(`${label}: failed to read ${arg}: ${e.message}`); process.exit(2); }
+  } else {
+    try { value = JSON.parse(arg); } catch (e) { console.error(`${label}: expected JSON or existing file, got "${arg}"`); process.exit(2); }
+  }
+  return value;
+}
+
+async function cmdDescriptorBuild() {
+  const filePath = positional(2)[0];
+  if (!filePath) { console.error("descriptor build requires <tool-or-manifest.json>"); usage(); process.exit(2); }
+  const keyPath = opt("--key");
+  if (!keyPath) { console.error("descriptor build requires --key <publisher.key.json>"); process.exit(2); }
+
+  let key;
+  try { key = loadJson(keyPath); } catch (e) { console.error(`key: ${e.message}`); process.exit(2); }
+  if (!key?.keyId || !key?.publicKey) { console.error("key file must contain keyId and publicKey"); process.exit(2); }
+
+  let raw;
+  try { raw = loadJson(filePath); } catch (e) { console.error(`descriptor build: ${e.message}`); process.exit(2); }
+
+  let tool;
+  if (raw && Array.isArray(raw.tools) && raw.tools.length > 0) {
+    const toolName = opt("--tool");
+    if (!toolName) { console.error("manifest contains multiple tools; select one with --tool <name>"); process.exit(2); }
+    tool = raw.tools.find((t) => t?.name === toolName);
+    if (!tool) { console.error(`tool "${toolName}" not found in manifest`); process.exit(2); }
+  } else {
+    tool = raw;
+  }
+
+  if (!tool || typeof tool !== "object" || !tool.name) { console.error("descriptor build: input is not a valid tool definition"); process.exit(2); }
+
+  const namespace = opt("--namespace") ?? tool.name;
+  const implementation = parseOptionalJsonArg(opt("--implementation"), "--implementation");
+  const claims = parseOptionalJsonArg(opt("--claims"), "--claims");
+
+  let expiresAt = null;
+  const expiresIn = opt("--expires-in");
+  if (expiresIn) {
+    const days = Number(expiresIn);
+    if (!Number.isFinite(days) || days <= 0) { console.error("--expires-in must be a positive number of days"); process.exit(2); }
+    expiresAt = new Date(Date.now() + days * 86400000).toISOString();
+  }
+
+  const publisher = {
+    keyId: key.keyId,
+    publicKey: key.publicKey,
+    publisher: opt("--publisher-name") ?? key.keyId,
+  };
+
+  const descriptor = buildDescriptor({ tool, namespace, implementation, publisher, expiresAt, claims });
+
+  const out = opt("--out");
+  if (out) writeFileSync(out, JSON.stringify(descriptor, null, 2) + "\n");
+
+  if (flag("--json")) {
+    if (!out) console.log(JSON.stringify(descriptor, null, 2));
+  } else {
+    console.log(`${green("✓")} descriptor built for ${bold(tool.name)}`);
+    console.log(`  descriptorDigest: ${dim(descriptor.descriptorDigest)}`);
+    console.log(`  interfaceDigest:  ${dim(descriptor.capability.interfaceDigest)}`);
+    console.log(`  implementation:   ${dim(descriptor.implementation.kind)}`);
+    console.log(`  namespace:        ${dim(namespace)}`);
+    console.log(`  issuedAt:         ${dim(descriptor.issuedAt)}${expiresAt ? `  expiresAt: ${dim(expiresAt)}` : ""}`);
+    if (out) console.log(`  written to:       ${dim(out)}`);
+  }
+}
+
+async function cmdDescriptorSign() {
+  const descPath = positional(2)[0];
+  const keyPath = opt("--key");
+  if (!descPath || !keyPath) { console.error("descriptor sign requires <desc.json> --key <publisher.key.json>"); process.exit(2); }
+  let descriptor, key;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor sign: ${e.message}`); process.exit(2); }
+  try { key = loadJson(keyPath); } catch (e) { console.error(`key: ${e.message}`); process.exit(2); }
+  if (!key?.privateKey) { console.error("key file must contain privateKey"); process.exit(2); }
+  const signed = signDescriptor(descriptor, key.privateKey);
+  const out = opt("--out");
+  if (out) writeFileSync(out, JSON.stringify(signed, null, 2) + "\n");
+  if (flag("--json")) {
+    if (!out) console.log(JSON.stringify(signed, null, 2));
+  } else {
+    console.log(`${green("✓")} signed descriptor with ${signed.signature.keyId}`);
+    if (out) console.log(`  written to: ${dim(out)}`);
+  }
+}
+
+async function cmdDescriptorVerify() {
+  const descPath = positional(2)[0];
+  if (!descPath) { console.error("descriptor verify requires <desc.json>"); process.exit(2); }
+  let descriptor;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor verify: ${e.message}`); process.exit(2); }
+  const result = verifyDescriptor(descriptor);
+  if (flag("--json")) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    console.log("");
+    console.log(`${bold("Descriptor verification")}: ${descPath}`);
+    console.log(dim("─".repeat(72)));
+    console.log(`${"Schema + signature".padEnd(26)} ${result.ok ? green("VERIFIED") : red("INVALID")}`);
+    for (const e of result.errors) console.log(`${"".padEnd(26)} ${red("✗")} ${dim(e)}`);
+    console.log("");
+  }
+  process.exit(result.ok ? 0 : 1);
+}
+
+function descriptorDiffInput(descriptor) {
+  if (!descriptor?.capability?.interface) { console.error("descriptor diff: input is not a valid descriptor"); process.exit(2); }
+  return {
+    tools: [descriptor.capability.interface],
+    implementation: descriptor.implementation ?? { kind: "unresolved" },
+    publisherKeyId: descriptor.provenance?.keyId ?? null,
+  };
+}
+
+async function cmdDescriptorDiff() {
+  const [oldPath, newPath] = positional(2);
+  if (!oldPath || !newPath) { console.error("descriptor diff requires <old.json> <new.json>"); process.exit(2); }
+  let oldDesc, newDesc;
+  try { oldDesc = loadJson(oldPath); } catch (e) { console.error(`descriptor diff: ${e.message}`); process.exit(2); }
+  try { newDesc = loadJson(newPath); } catch (e) { console.error(`descriptor diff: ${e.message}`); process.exit(2); }
+  const prior = descriptorDiffInput(oldDesc);
+  const current = descriptorDiffInput(newDesc);
+  const { vector, compatible, summary, interfaceDiff } = changeVector(prior, current);
+  if (flag("--json")) {
+    console.log(JSON.stringify({ vector, compatible, summary, interfaceDiff }, null, 2));
+  } else {
+    console.log(`${bold("Descriptor diff")}: ${oldPath} → ${newPath}`);
+    console.log(dim("─".repeat(72)));
+    console.log(`  interface:      ${vector.interface}`);
+    console.log(`  permission:     ${vector.permission}`);
+    console.log(`  implementation: ${vector.implementation}`);
+    console.log(`  provenance:     ${vector.provenance}`);
+    console.log(`  compatible:     ${compatible ? green("yes") : red("no")}`);
+    console.log(`  summary:        ${dim(summary)}`);
+    console.log("");
+  }
+  process.exit(compatible ? 0 : 1);
+}
+
+async function cmdDescriptorPin() {
+  const descPath = positional(2)[0];
+  if (!descPath) { console.error("descriptor pin requires <desc.json>"); process.exit(2); }
+  let descriptor;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor pin: ${e.message}`); process.exit(2); }
+  if (!descriptor?.descriptorDigest) { console.error("descriptor pin: input is missing descriptorDigest"); process.exit(2); }
+  const pins = new PinStore(opt("--pins"));
+  const pin = pins.pinDescriptor(descriptor);
+  console.log(`${green("✓")} pinned descriptor ${bold(descriptor.descriptorDigest)}`);
+  console.log(`  namespace: ${pin.namespace ?? "(none)"}`);
+  console.log(`  interface: ${pin.interfaceDigest ?? "(none)"}`);
+  console.log(`  store:     ${dim(pins.path)}`);
+}
+
 async function main() {
   const cmd = argv[0];
   if (!cmd || cmd === "-h" || cmd === "--help" || cmd === "help") return usage();
@@ -1120,6 +1302,7 @@ async function main() {
     case "auth-verify": return cmdAuthVerify();
     case "evidence": return cmdEvidence();
     case "behavior": return cmdBehavior();
+    case "descriptor": return cmdDescriptor();
     default:
       if (!cmd.startsWith("-")) return cmdScan();
       usage();
