@@ -308,6 +308,42 @@ email link, not a CAPTCHA.
 - **Color palette:** neutral grays for the shell, a single brand accent color
   for primary actions, and amber for the informational notice.
 
+## Dead CAPTCHA Rationale
+
+Visual and cognitive CAPTCHAs are explicitly deprecated in this protocol. They
+are no longer a meaningful barrier to automated or adversarial clients and are
+harmful to legitimate users.
+
+### Why CAPTCHAs are not acceptable here
+
+1. **LLM Computer Use can solve them.** Modern agents can already interact with
+   GUIs, read distorted text, click puzzle tiles, and solve "I am not a robot"
+   challenges through the same input modalities as a human. A CAPTCHA that is
+   solvable by a person is increasingly solvable by a model.
+2. **Computer vision and image models bypass image challenges.** Grids of
+   traffic lights, crosswalks, and buses can be parsed reliably by off-the-shelf
+   vision models. There is no confidence that an image challenge distinguishes a
+   human from an AI.
+3. **Audio and text CAPTCHAs are similarly weak.** Speech-to-text and reading
+   comprehension models defeat audio and logic-puzzle variants.
+4. **Accessibility is poor.** CAPTCHAs create friction for screen-reader users,
+   motor-impaired users, and users on low-bandwidth or constrained devices.
+5. **They add latency without adding security.** A CAPTCHA round-trip slows down
+   an install and gives publishers a false sense of protection.
+
+### What replaces CAPTCHA
+
+This protocol relies on **what an automated agent physically cannot access**:
+the developer's local hardware and biometric secure enclave. WebAuthn / FIDO2
+with user presence, platform authenticators (Touch ID, Windows Hello), and
+hardware security keys require physical interaction with a device. A remote LLM
+running in a cloud sandbox cannot touch a fingerprint sensor, a TPM, or a YubiKey.
+
+Because of these facts, the browser attestation page and CLI flow **must not**
+offer a CAPTCHA option. The only permitted fallbacks are hardware-bound
+attestation, a one-time email link to a verified address, or OAuth
+re-authorization for a logged-in, reputable account.
+
 ## Rationale and Alternatives
 
 1. **Do nothing / rely on global rate limits.** Global limits do not give
