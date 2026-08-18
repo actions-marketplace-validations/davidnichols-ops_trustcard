@@ -18,13 +18,16 @@ publishers distinguish human-driven installs from automated installs at
 download time. The registry's tarball endpoint acts as a per-package policy
 proxy:
 
-- **CI, agents, scrapers, and bots** get a **zero-config heuristic automation
+- **CI and legitimate automation** get a **zero-config heuristic automation
   pass**. The registry uses passive signals — IP/ASN, User-Agent/TLS
   fingerprint, and a honeypot header — to recognize automation and serve the
   tarball immediately. No tokens, no browser, no CAPTCHA, no manual setup.
 - **Human-driven installs** are directed through a **hardware-bound
   proof-of-humanity** step using WebAuthn / platform biometric secure enclaves
   (Touch ID, Windows Hello, hardware security keys), not a visual CAPTCHA.
+- **Known scrapers, abuse, and obvious non-human traffic** are classified as
+  `spam_user` and **hard-blocked** with a 403/429 response. They are not offered
+  a human challenge, an email fallback, or a CAPTCHA.
 - **Visual/cognitive CAPTCHAs are explicitly deprecated** in this protocol
   because LLM computer-use agents can solve them.
 
@@ -101,7 +104,11 @@ Signals in the `CI signal catalog`:
   the nonce (or a derived value) in the subsequent tarball request. Naive
   scrapers that skip the metadata fetch or do not mirror headers correctly are
   not recognized as legitimate automation and fall through to the human or
-  low-trust path.
+  blocked path.
+- **Abuse signals.** Known bulk-scraper networks, TOR exit nodes, open proxies,
+  exploit-tooling User-Agent strings, failed challenge patterns, and clients
+  that exceed rate limits accumulate a negative `spam_score`. These requests do
+  not get a challenge; they are denied immediately.
 
 Classification flow:
 
@@ -111,7 +118,12 @@ Client GET /:pkg/-/:pkg-:version.tgz
 
 Registry:
   score = heuristic_automation_score(ip, asn, ua, tls_fp, challenge)
-  if score >= AUTOMATION_THRESHOLD:
+  spam_score = abuse_score(ip, asn, ua, tls_fp, rate_limit_violations, challenge)
+
+  if spam_score >= SPAM_THRESHOLD:
+       emit install-trust-check event with tokenKind "blocked"
+       return 403 TRUST_CHECK_BLOCKED
+  else if score >= AUTOMATION_THRESHOLD:
        emit install-trust-check event with tokenKind "heuristic-automation"
        return tarball + short-lived unattended trust check token
   else if score >= AMBIGUOUS_THRESHOLD:
@@ -212,7 +224,10 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
   possession of an authenticator or passed reputation checks.
 - `automation` and `service` tokens receive publisher- or registrar-controlled
   rate limits.
-- Each tarball fetch emits a standardized `install-trust-check` event:
+- `blocked` requests emit an `install-trust-check` event but no tarball is
+  served. The response is 403 `TRUST_CHECK_BLOCKED`.
+- Each tarball fetch or blocked attempt emits a standardized
+  `install-trust-check` event:
 
 ```json
 {
@@ -226,6 +241,10 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
   "ipHash": "sha256:..."
 }
 ```
+
+Blocked requests include a `tokenKind` of `blocked` and the set of abuse
+signals that triggered the deny decision, without exposing the underlying raw
+data.
 
 No raw IP or token value is retained. Signal names are logged as categories,
 not raw fingerprints.
@@ -250,14 +269,19 @@ not raw fingerprints.
   `"require-human"` still requires maturity.
 - The `heuristic-automation` catalog is versioned and auditable. False
   positives can be reported and corrected.
+- `spam_user` classification is deliberately punitive: blocked clients are not
+  offered a human challenge, email fallback, or CAPTCHA. They must stop the
+  abusive behavior or use an approved `automation`/`service` token after
+  publisher/admin review.
 
 ### 9. Publisher-facing controls
 
 Publishers can see, in their dashboard and via `npm view`:
 
-- The share of `heuristic-automation`, `unattended`, and `human` installs.
+- The share of `heuristic-automation`, `unattended`, `human`, and `blocked`
+  requests.
 - Top signal categories for `heuristic-automation` traffic.
-- Rate-limit hits and blocked requests.
+- Rate-limit hits and `blocked` request volume.
 
 This gives publishers the signal they currently lack without forcing every user
 through a manual workflow.
@@ -369,11 +393,12 @@ re-authorization for a logged-in, reputable account.
    catastrophically disruptive and harm npm adoption. The feature must be
    publisher-opt-in.
 
-The chosen design is a registry-side, per-package gate with two lanes:
-heuristic automation classification for zero-config CI, and hardware-bound
-biometric trust check for humans. It gives publishers the signal they need
-while preserving the friction-free CI experience and removing CAPTCHA as a
-viable bypass.
+The chosen design is a registry-side, per-package gate with three lanes:
+heuristic automation classification for zero-config CI, hardware-bound
+biometric trust check for humans, and a hard `blocked` category for known
+scrapers and abuse. It gives publishers the signal they need, preserves the
+friction-free CI experience, removes CAPTCHA as a viable bypass, and stops
+plain scrapers from consuming a human challenge.
 
 ## Implementation
 
@@ -381,11 +406,14 @@ viable bypass.
 
 - Build and maintain the `CI signal catalog` (ASN, IP ranges, UA patterns,
   TLS fingerprints).
+- Build and maintain an `abuse signal catalog` (known scraper ASNs, TOR exit
+  nodes, open proxies, exploit tooling signatures, rate-limit violators).
 - Add `X-NPM-Trust-Check-Challenge` to metadata responses and validate the
   echoed value on tarball requests.
 - Add `trustCheck` to the package document schema.
 - Update the tarball endpoint to classify requests and emit
   `install-trust-check` events.
+- Implement `403 TRUST_CHECK_BLOCKED` for `spam_user` classification.
 - Implement `428 Precondition Required` for human trust check and the anonymous
   `heuristic-automation` / `unattended` token issuance flow.
 - Integrate WebAuthn verification into the trust check service.
