@@ -1,8 +1,10 @@
-# Trustcard Protocol Specification v1
+# Trustcard Protocol Specification v3
 
-Status: draft. This document is the normative reference for the trustcard
-manifest format, identity digests, change classification, trust-state machine,
-and the client/server behaviors that close the discovery↔execution gap.
+Status: stable for v1 features; v3 extensions (behavioral verification and
+evidence records) are additive and described in the appendix. This document
+remains the normative reference for the trustcard manifest format, identity
+digests, change classification, trust-state machine, and the client/server
+behaviors that close the discovery↔execution gap.
 
 The key words **MUST**, **SHOULD**, and **MAY** are to be interpreted as in
 RFC 2119.
@@ -499,3 +501,92 @@ key other than the old one) fails verification.
 own revocation remains verifiable (you can confirm the key revoked itself).
 `verifyRevocationCertificate` checks the keyId↔publicKey binding, digest, and
 self-signature. A certificate claiming to revoke a key it does not hold fails.
+
+---
+
+## 14. Behavioral verification and evidence (v3 extensions)
+
+The v3 extensions are **additive**. They do not change `toolDigest`,
+`toolsetDigest`, `serverDigest`, manifest signing, or the trust-state machine.
+
+### 14.1 Behavioral verification
+
+`lib/behavior.js` executes a server in a sandboxed stdio harness, fires
+deterministic seeded probes, and compares observations to a
+`ReferenceObservation` or baseline expectations.
+
+- `SandboxRuntime` is a **process harness**, not an OS sandbox. It sets a fresh
+  `cwd`, limits environment variables, captures stdout/stderr, enforces timeouts,
+  and kills the process tree.
+- `InputGenerator` produces probes per tool from a seed; `probesPerTool` controls
+  coverage. Probe categories: `valid`, `boundary`, `malformed_missing_required`,
+  `malformed_wrong_type`, `long_string`, `unicode`, `path_like`, `url_like`,
+  `prompt_injection`, `secret_canary`.
+- `OutputComparator` splits findings into **fact** (schema violation, canary
+  leakage, stderr network/fs/process events, timeout, crash) and **heuristic**
+  (prompt-injection marker drift, new URLs, output text drift).
+- `BehaviorReport` rolls findings into a summary: any `critical`/`high` finding
+  makes the report `fail`; `medium` makes it `warn`; otherwise `pass`.
+- `RegressionCorpus` writes one artifact per `(probe, finding)`, capturing probe,
+  server identity, reference observation, and target observation for replay.
+
+A report includes `targetObservation` metadata: `network`, `filesystem`, and
+`subprocesses` capability labels. The default labels are truthful:
+`network: "not-observed"`, `filesystem: "cwd-isolated"`,
+`subprocesses: "stderr-only"`.
+
+### 14.2 Evidence records
+
+`lib/evidence.js` defines an immutable, content-addressed observation:
+
+```jsonc
+{
+  "$schema": "trustcard.dev/evidence@1",
+  "subject": { "kind": "server", "identifiers": ["sha256:..."] },
+  "claim": { "predicate": "behavior.prompt-injection-detected",
+              "value": true,
+              "confidence": 1.0,
+              "payload": { ... } },
+  "observer": { "method": "mcp-trustcard-behavior", "version": "3.0.3" },
+  "timestamp": "...",
+  "reproducibility": { ... },
+  "digest": "sha256:...",
+  "signature": { ... }
+}
+```
+
+Evidence records:
+
+- are canonicalized with JCS and hashed with SHA-256;
+- contain no score, no trust state, and no recommendation;
+- are immutable; corrections link via `supersedes`;
+- are protocol-neutral.
+
+`lib/evidence-store.js` persists records in a local directory and supports
+query by subject, predicate, layer, and time range, plus integrity verification
+and export.
+
+### 14.3 CLI surface
+
+```text
+mcp-trustcard behavior <manifest-or-reference.json> [--json]
+                        [--server <spec>] [--corpus <dir>] [--seed <n>]
+                        [--timeout <ms>] [--probe <id>] [--verbose]
+                        [-- <cmd> [args...]]
+
+mcp-trustcard behavior diff <reference.json> <target.json>
+
+mcp-trustcard evidence query --subject <name> [--predicate <p>] [--layer <n>] [--json]
+mcp-trustcard evidence history --subject <name> [--since <date>]
+mcp-trustcard evidence stats [--json]
+mcp-trustcard evidence verify
+mcp-trustcard evidence export [--since <date>] [--json-out <file>]
+mcp-trustcard evidence contradictions --subject <name>
+```
+
+### 14.4 Extension philosophy
+
+Behavioral findings and evidence records are not part of the signed manifest
+schema. They ride alongside the trust substrate. A client may enforce a policy
+that requires a recent, passing behavior report before calling a tool, but the
+report itself is an observation, not a provenance statement.

@@ -1,5 +1,11 @@
 # The Capability Descriptor
 
+> **Current as of trustcard v3.0.3.** The v2 identity + provenance core remains
+> unchanged. v3 adds behavioral verification and evidence as separate, additive
+> layers; they do not alter `interfaceDigest`, `descriptorDigest`, or the
+> descriptor format. See [`BEHAVIOR.md`](BEHAVIOR.md) and
+> [`ROADMAP-2Y.md`](ROADMAP-2Y.md) for the runtime verification layer.
+
 The v2 identity + provenance core. This document describes what a descriptor
 is, what it proves, and — just as important — what it does not prove.
 

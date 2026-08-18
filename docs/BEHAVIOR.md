@@ -1,8 +1,11 @@
 # Behavioral verification for MCP servers
 
+> **Current as of trustcard v3.0.3.** For the long-term vision, see
+> [`ROADMAP-2Y.md`](ROADMAP-2Y.md).
+
 `mcp-trustcard behavior` executes a server in a sandboxed stdio harness, fires
 deterministic seeded probes, and compares what it actually does against a
-tr reference observation or its own runtime expectations.
+reference observation or its own runtime expectations.
 
 It answers a question the static trust substrate cannot: **does the running
 code honor the contract it signed?** Two servers can have byte-identical
@@ -214,3 +217,19 @@ Exit codes: `0` for `pass`, `1` for `warn`/`fail` or missing arguments.
 - Canary leakage detection is scoped to secret-like parameters. A non-secret
   string field that echoes an injected canary is reported at `low` severity to
   avoid false positives; a secret-like field that leaks is `high`.
+
+## Relationship to evidence and roadmap
+
+Behavior reports are the raw material for the evidence substrate
+(`lib/evidence.js`, `lib/evidence-store.js`). Each finding is a candidate
+observation that can be stored as a content-addressed, signed evidence record.
+
+The first roadmap gate after v3.0.3 is **behavior → evidence bridge**
+(`ROADMAP-2Y.md` Gate Y1-H1): running `mcp-trustcard behavior` with an optional
+`--evidence-dir` should append evidence records per finding and make them
+queryable with `mcp-trustcard evidence query --subject <server>`.
+
+Other near-term work includes HTTP/SSE transport parity for the behavioral
+sandbox, a real-world reference corpus, and an observatory scheduler. Deep
+containment (OS-level namespaces, TEE attestation, syscall tracing) is an
+explicit Y2 goal and must remain optional and truthfully labeled.
