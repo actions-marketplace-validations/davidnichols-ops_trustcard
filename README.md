@@ -222,14 +222,18 @@ mcp-trustcard sign \
 ### Verify behavior against a reference
 
 ```bash
-# capture a reference observation
-mcp-trustcard behavior --server @modelcontextprotocol/server-memory \
+# Build a manifest from a live probe
+mcp-trustcard manifest @modelcontextprotocol/server-memory --out manifest.json
+
+# Capture a reference behavior report
+mcp-trustcard behavior manifest.json --server @modelcontextprotocol/server-memory \
   --json --out reference.json
 
-# later, verify the same or a different build/region
-mcp-trustcard behavior reference.json --json
+# Later, verify the same or a different build/region
+mcp-trustcard behavior manifest.json --server @modelcontextprotocol/server-memory \
+  --json --out target.json
 
-# or compare two reports directly
+# Compare two reports directly
 mcp-trustcard behavior diff reference.json target.json
 ```
 
@@ -248,9 +252,15 @@ mcp-trustcard behavior diff reference.json target.json
 | `gen-manifest <spec> --save-manifest <file>` | Build a proxy-enforcement manifest |
 | `inspect <file>` | Inspect a manifest or pin store |
 | `auth-issue` / `auth-verify` | Issue or verify dev-mode scoped tokens |
-| `behavior <manifest-or-reference.json>` | Run behavioral probes and emit a report |
+| `descriptor build <tool-or-manifest.json>` | Build a protocol-neutral capability descriptor |
+| `descriptor sign <desc.json>` | Sign a descriptor |
+| `descriptor verify <desc.json>` | Verify a signed descriptor |
+| `descriptor diff <old.json> <new.json>` | Compare two descriptors |
+| `descriptor pin <desc.json>` | Pin a descriptor to the local store |
+| `behavior <manifest.json> [--server <spec>]` | Run behavioral probes and emit a report |
+| `behavior <manifest.json> -- <cmd> [args...]` | Run behavioral probes against a local server |
 | `behavior diff <ref.json> <target.json>` | Compare two behavior reports |
-| `evidence query` / `stats` / `verify` | Query the local evidence store |
+| `evidence query` / `stats` / `verify` / `export` / `contradictions` | Query and audit the local evidence store |
 
 Use `--help` on any subcommand for options.
 
@@ -455,8 +465,8 @@ Static trust tells you the contract has not changed. It does not tell you the ru
 `mcp-trustcard behavior` runs the server in a sandboxed stdio harness, fires deterministic probes, and compares the results against a captured reference or baseline expectations.
 
 ```bash
-mcp-trustcard behavior <manifest.json> [--json]
-mcp-trustcard behavior --server @modelcontextprotocol/server-memory [--json]
+mcp-trustcard behavior <manifest.json> [--server <spec>] [--json]
+mcp-trustcard behavior <manifest.json> -- <cmd> [args...] [--json]
 mcp-trustcard behavior diff reference.json target.json
 ```
 
@@ -483,10 +493,13 @@ trustcard can bind a call to the capability that authorized it:
 
 ```json
 {
-  "capability": "sha256:...",
-  "tool": "sha256:...",
-  "arguments": "sha256:...",
-  "result": "sha256:..."
+  "schema": "trustcard.dev/receipt@1",
+  "at": "2026-08-15T19:28:00.000Z",
+  "server": { "name": "server-memory", "version": "1.0.0" },
+  "tool": "read_file",
+  "toolsetDigest": "sha256:...",
+  "argumentsDigest": "sha256:...",
+  "resultDigest": "sha256:..."
 }
 ```
 
@@ -512,6 +525,14 @@ Agents ────────▶│             │
               Policy
               Receipts
               Evidence
+```
+
+For example, build and sign a descriptor for one tool:
+
+```bash
+mcp-trustcard descriptor build manifest.json --key publisher.key.json --tool read_file --out desc.json
+mcp-trustcard descriptor sign desc.json --key publisher.key.json --out signed-desc.json
+mcp-trustcard descriptor verify signed-desc.json
 ```
 
 The goal is simple:
