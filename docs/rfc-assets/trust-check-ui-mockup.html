@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Install attestation — mcp-trustcard</title>
+  <title>Install trust check — mcp-trustcard</title>
   <style>
     :root {
       --bg: #f6f8fa;
@@ -190,7 +190,7 @@
 
       <div class="notice">
         <strong>Why am I seeing this?</strong><br />
-        This publisher has enabled install attestation. CI, agents, and known automation skip this step automatically through the zero-config heuristic pass (IP/ASN, User-Agent, and the echoed <code>X-NPM-Attestation-Challenge</code> header).
+        This publisher has enabled install trust check. CI, agents, and known automation skip this step automatically through the zero-config heuristic pass (IP/ASN, User-Agent, and the echoed <code>X-NPM-Trust-Check-Challenge</code> header).
       </div>
 
       <div class="human-check">
@@ -198,10 +198,11 @@
         <button class="btn btn-primary" type="button">Verify with passkey / Touch ID / Windows Hello</button>
         <br />
         <button class="btn btn-ghost" type="button">Email a one-time link</button>
+        <p class="fallback-note" style="margin:10px 0 0; font-size:12px; color:var(--muted);">Two clicks: request the email, then click the single “Verify this install” button inside it.</p>
       </div>
 
       <p class="footer">
-        The registry will issue a short-lived attestation token once verified. No new personal data is collected beyond your existing npm session.
+        The registry will issue a short-lived trust check token once verified. No new personal data is collected beyond your existing npm session.
       </p>
     </div>
   </div>

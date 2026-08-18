@@ -1,5 +1,5 @@
 ---
-title: Package-level install attestation for automated and human consumers
+title: Package-level install trust check for automated and human consumers
 number: null
 status: proposed
 created: null
@@ -9,7 +9,7 @@ withdrawn_at: null
 implementation: null
 ---
 
-# Package-level install attestation for automated and human consumers
+# Package-level install trust check for automated and human consumers
 
 ## Summary
 
@@ -64,7 +64,7 @@ registry package document and be set from `package.json` at publish time:
 ```jsonc
 {
   "publishConfig": {
-    "attestation": "require"   // or "audit" or "none" (default)
+    "trustCheck": "require"   // or "audit" or "none" (default)
   }
 }
 ```
@@ -72,12 +72,12 @@ registry package document and be set from `package.json` at publish time:
 Allowed values:
 
 - `"none"` (default): the existing install flow is unchanged.
-- `"audit"`: the registry records an `install-attestation` event for every
+- `"audit"`: the registry records an `install-trust-check` event for every
   tarball fetch but does not block the install.
-- `"require"`: the registry requires a valid attestation token before serving
+- `"require"`: the registry requires a valid trust check token before serving
   the tarball. Both heuristic automation and hardware-bound human tokens are
   accepted, so CI and headless automation continue to work out of the box.
-- `"require-human"`: the registry only accepts `human` attestation tokens.
+- `"require-human"`: the registry only accepts `human` trust check tokens.
   This blocks pure unattended automation and is intended for extreme-risk
   packages. CI must then use an approved `automation` token or OIDC trusted
   publishing.
@@ -97,7 +97,7 @@ Signals in the `CI signal catalog`:
   headless TLS fingerprints are recognized. A desktop browser fingerprint from
   a cloud IP is treated as ambiguous, not automatic.
 - **Honeypot header.** The registry's metadata response includes a hidden
-  `X-NPM-Attestation-Challenge` header with a nonce. The official npm CLI echoes
+  `X-NPM-Trust-Check-Challenge` header with a nonce. The official npm CLI echoes
   the nonce (or a derived value) in the subsequent tarball request. Naive
   scrapers that skip the metadata fetch or do not mirror headers correctly are
   not recognized as legitimate automation and fall through to the human or
@@ -107,35 +107,35 @@ Classification flow:
 
 ```text
 Client GET /:pkg/-/:pkg-:version.tgz
-       (includes npm-attestation header, UA, echoed challenge)
+       (includes npm-trust-check header, UA, echoed challenge)
 
 Registry:
   score = heuristic_automation_score(ip, asn, ua, tls_fp, challenge)
   if score >= AUTOMATION_THRESHOLD:
-       emit install-attestation event with tokenKind "heuristic-automation"
-       return tarball + short-lived unattended attestation token
+       emit install-trust-check event with tokenKind "heuristic-automation"
+       return tarball + short-lived unattended trust check token
   else if score >= AMBIGUOUS_THRESHOLD:
        return tarball + short-lived "unattended" token with lower rate limit
   else:
-       return 428 HUMAN_ATTESTATION_REQUIRED
+       return 428 HUMAN_TRUST_CHECK_REQUIRED
 ```
 
 The `heuristic-automation` and `unattended` tokens are anonymous, short-lived,
-and cached by the CLI in `~/.npm/_attestations`. They require no account, no
+and cached by the CLI in `~/.npm/_trust-checks`. They require no account, no
 browser, and no manual token.
 
 A developer on a cloud VM who is falsely classified as automation can force the
 human flow with:
 
 ```bash
-NPM_ATTESTATION=human npm install <pkg>
+NPM_TRUST_CHECK=human npm install <pkg>
 ```
 
-### 3. Hardware-bound human attestation
+### 3. Hardware-bound human trust check
 
 When the registry sees a residential IP, an unknown scraper, a suspicious
 headless browser, or any request that does not pass the automation heuristic, it
-returns a `428 Precondition Required` with an `attestation_url`.
+returns a `428 Precondition Required` with a `trust_check_url`.
 
 The npm CLI intercepts the response and triggers a **native OS-level biometric
 prompt** using WebAuthn / FIDO2 with `userVerification` required:
@@ -143,10 +143,10 @@ prompt** using WebAuthn / FIDO2 with `userVerification` required:
 ```text
 Registry:
   return 428 Precondition Required
-         + { error: "HUMAN_ATTESTATION_REQUIRED",
-             attestation_url: "https://www.npmjs.com/attest/install?nonce=..." }
+         + { error: "HUMAN_TRUST_CHECK_REQUIRED",
+             trust_check_url: "https://www.npmjs.com/trust-check/install?nonce=..." }
 
-CLI (npm >= version that advertises attestation support):
+CLI (npm >= version that advertises trust-check support):
   open OS native prompt:
        "Touch ID to install mcp-trustcard" (macOS)
        "Windows Hello to install mcp-trustcard" (Windows)
@@ -158,11 +158,11 @@ CLI (npm >= version that advertises attestation support):
   Authenticator signs the registry nonce with a hardware- or platform-backed
   private key scoped to npmjs.com and the package name.
 
-  Registry verifies the signature, issues a short-lived human attestation
+  Registry verifies the signature, issues a short-lived human trust check
   token, and returns it to the CLI.
 
   CLI retries tarball request with:
-       Authorization: Attestation <token>
+       Authorization: Trust-Check <token>
   Registry validates token and returns tarball.
 ```
 
@@ -179,7 +179,7 @@ Why this beats LLM Computer Use:
 ### 4. Reputation fast pass
 
 A logged-in npm CLI user with a high-reputation account can skip the biometric
-prompt for `attestation: "require"` packages:
+prompt for `trustCheck: "require"` packages:
 
 Qualifying signals (configurable by registry policy):
 
@@ -187,9 +187,9 @@ Qualifying signals (configurable by registry policy):
 - 2FA enabled.
 - Linked, aged GitHub account.
 - No recent abuse reports or rate-limit violations.
-- Prior successful hardware attestation on the same device.
+- Prior successful hardware trust check on the same device.
 
-When the account qualifies, the registry issues a `human` attestation token
+When the account qualifies, the registry issues a `human` trust check token
 without requiring a new biometric ceremony. This keeps daily development smooth
 while ensuring fresh burner accounts and LLM agents cannot bypass the gate.
 
@@ -212,7 +212,7 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
   possession of an authenticator or passed reputation checks.
 - `automation` and `service` tokens receive publisher- or registrar-controlled
   rate limits.
-- Each tarball fetch emits a standardized `install-attestation` event:
+- Each tarball fetch emits a standardized `install-trust-check` event:
 
 ```json
 {
@@ -220,7 +220,7 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
   "version": "3.0.3",
   "timestamp": "2026-08-18T00:00:00Z",
   "tokenKind": "heuristic-automation",
-  "attestationIdHash": "sha256:...",
+  "trustCheckIdHash": "sha256:...",
   "automationSignals": ["asn:github-actions", "ua:ci", "challenge:echoed"],
   "userAgent": "npm/12.0.0",
   "ipHash": "sha256:..."
@@ -238,7 +238,7 @@ not raw fingerprints.
 - `human` tokens are tied to an npm account session or a device-bound public
   key, not to a raw fingerprint.
 - WebAuthn / passkey is the default proof-of-humanity mechanism.
-- The `X-NPM-Attestation-Challenge` header is a nonce, not a cookie or tracker.
+- The `X-NPM-Trust-Check-Challenge` header is a nonce, not a cookie or tracker.
 
 ### 8. Abuse prevention
 
@@ -262,30 +262,33 @@ Publishers can see, in their dashboard and via `npm view`:
 This gives publishers the signal they currently lack without forcing every user
 through a manual workflow.
 
-## Browser attestation page
+## Browser trust check page
 
-When the CLI opens `attestation_url` in a context where a native OS prompt is
+When the CLI opens `trust_check_url` in a context where a native OS prompt is
 not available (e.g. an older OS or a browser-based install flow), the user sees
 a lightweight, branded page rather than a generic error. The page should:
 
 - Display the package identity (name, version, publisher, provenance status).
 - Show the publisher's or ecosystem trust mark prominently. For example, the
-  `mcp-trustcard` attestation page uses the trustcard shield logo:
+  `mcp-trustcard` trust check page uses the trustcard shield logo:
 
   ![trustcard logo](rfc-assets/trustcard-logo.png)
 
-- Explain why the attestation is required and how automation is handled
+- Explain why the trust check is required and how automation is handled
   (zero-config heuristic pass; no tokens needed).
 - Offer a **WebAuthn / passkey** verification button as the primary action.
 - **Not** offer a visual or cognitive CAPTCHA. The only allowed fallbacks are
-  hardware-bound attestation, a one-time email link to a verified address, or an
+  hardware-bound trust check, a one-time email link to a verified address, or an
   OAuth re-authorization for logged-in users.
-- Issue a short-lived, opaque attestation token to the CLI on success.
+- If an email link fallback is used, keep it to **two clicks**: one click to
+  request the link, and one click on the "Verify this install" button in the
+  email. No copying codes, no switching apps to paste, no additional forms.
+- Issue a short-lived, opaque trust check token to the CLI on success.
 
 A reference HTML/CSS mockup is included alongside this RFC:
 
-- [`rfc-assets/attestation-ui-mockup.html`](rfc-assets/attestation-ui-mockup.html)
-- [`rfc-assets/attestation-ui-mockup.png`](rfc-assets/attestation-ui-mockup.png)
+- [`rfc-assets/trust-check-ui-mockup.html`](rfc-assets/trust-check-ui-mockup.html)
+- [`rfc-assets/trust-check-ui-mockup.png`](rfc-assets/trust-check-ui-mockup.png)
 - [`rfc-assets/trustcard-logo.png`](rfc-assets/trustcard-logo.png)
 
 The mockup demonstrates a centered card layout with the trustcard logo as the
@@ -293,7 +296,7 @@ hero mark, a package metadata panel, a "Provenance verified" badge, and a
 primary "Verify with passkey" button. The secondary fallback is a one-time
 email link, not a CAPTCHA.
 
-![attestation page mockup](rfc-assets/attestation-ui-mockup.png)
+![trust check page mockup](rfc-assets/trust-check-ui-mockup.png)
 
 ### Icons and imagery guidelines
 
@@ -339,9 +342,9 @@ with user presence, platform authenticators (Touch ID, Windows Hello), and
 hardware security keys require physical interaction with a device. A remote LLM
 running in a cloud sandbox cannot touch a fingerprint sensor, a TPM, or a YubiKey.
 
-Because of these facts, the browser attestation page and CLI flow **must not**
+Because of these facts, the browser trust check page and CLI flow **must not**
 offer a CAPTCHA option. The only permitted fallbacks are hardware-bound
-attestation, a one-time email link to a verified address, or OAuth
+trust check, a one-time email link to a verified address, or OAuth
 re-authorization for a logged-in, reputable account.
 
 ## Rationale and Alternatives
@@ -362,13 +365,13 @@ re-authorization for a logged-in, reputable account.
    downloaded.
 5. **Client-side wrapper (`npx <pkg>-install`).** Rejected: trivially bypassed
    and does not protect the registry or the publisher's metrics.
-6. **Mandatory attestation for all public packages.** Rejected: would be
+6. **Mandatory trust check for all public packages.** Rejected: would be
    catastrophically disruptive and harm npm adoption. The feature must be
    publisher-opt-in.
 
 The chosen design is a registry-side, per-package gate with two lanes:
 heuristic automation classification for zero-config CI, and hardware-bound
-biometric attestation for humans. It gives publishers the signal they need
+biometric trust check for humans. It gives publishers the signal they need
 while preserving the friction-free CI experience and removing CAPTCHA as a
 viable bypass.
 
@@ -378,34 +381,36 @@ viable bypass.
 
 - Build and maintain the `CI signal catalog` (ASN, IP ranges, UA patterns,
   TLS fingerprints).
-- Add `X-NPM-Attestation-Challenge` to metadata responses and validate the
+- Add `X-NPM-Trust-Check-Challenge` to metadata responses and validate the
   echoed value on tarball requests.
-- Add `attestation` to the package document schema.
+- Add `trustCheck` to the package document schema.
 - Update the tarball endpoint to classify requests and emit
-  `install-attestation` events.
-- Implement `428 Precondition Required` for human attestation and the anonymous
+  `install-trust-check` events.
+- Implement `428 Precondition Required` for human trust check and the anonymous
   `heuristic-automation` / `unattended` token issuance flow.
-- Integrate WebAuthn verification into the attestation service.
+- Integrate WebAuthn verification into the trust check service.
 - Add reputation fast-pass checks to account/session endpoints.
 
 ### CLI
 
-- Add `npm-attestation` header support and challenge-echo logic to `npm install`.
+- Add `npm-trust-check` header support and challenge-echo logic to `npm install`.
 - Detect interactive vs non-interactive environments.
 - In non-interactive or high-confidence CI environments, rely on the
   registry's heuristic response.
-- In interactive environments or after `HUMAN_ATTESTATION_REQUIRED`, trigger the
+- In interactive environments or after `HUMAN_TRUST_CHECK_REQUIRED`, trigger the
   native OS WebAuthn / biometric prompt.
 - Cache `heuristic-automation`, `unattended`, and `human` tokens locally.
-- Add `NPM_ATTESTATION=human|unattended` override for false positives.
+- Add `NPM_TRUST_CHECK=human|unattended` override for false positives.
 - Keep `npm token create --kind=automation|--kind=service` for publishers who
   need higher-trust explicit tokens.
 
 ### Web
 
-- Build the `/attest/install` endpoint.
+- Build the `/trust-check/install` endpoint.
 - Integrate WebAuthn / passkey ceremony with existing npm account/auth.
 - Provide **only** hardware-bound or account-reputation fallback paths.
+- If offering an email link fallback, send a one-button deep link so the total
+  user interaction is two clicks (request + confirm).
 - Explicitly do not implement image-based CAPTCHA.
 
 ### Documentation
@@ -421,7 +426,7 @@ viable bypass.
 - **GitHub Packages** scoped tokens and OIDC trusted publishing.
 - **npm provenance / Sigstore** (publish-time attestation): this RFC is
   complementary — provenance says *where* a package was built; install
-  attestation says *who* requested the install.
+  trust check says *who* requested the install.
 - **Cloudflare Turnstile** and **hCaptcha** invisible challenges: distinguish
   humans from bots without interactive puzzles. This RFC goes further by
   removing visual challenges entirely.
@@ -434,11 +439,11 @@ viable bypass.
 
 1. How often should the `CI signal catalog` be updated, and who maintains the
    canonical list of cloud provider IP ranges?
-2. Should `heuristic-automation` classification require the `X-NPM-Attestation-Challenge`
+2. Should `heuristic-automation` classification require the `X-NPM-Trust-Check-Challenge`
    echo, or should ASN/UA alone be enough for a fast pass?
 3. What is the exact reputation score formula for the fast pass? Account age,
-   2FA, GitHub linkage, prior attestation history, package ownership?
-4. How should false positives be handled? A `NPM_ATTESTATION=human` environment
+   2FA, GitHub linkage, prior trust check history, package ownership?
+4. How should false positives be handled? A `NPM_TRUST_CHECK=human` environment
    override is proposed; should there also be a registry appeal process?
 5. Should `unattended` and `heuristic-automation` tokens be bound to a package
    scope, or should one token cover all installs in a session? Scope binding is
