@@ -1,7 +1,8 @@
 # trustcard
 
 > **Cryptographic trust infrastructure for executable capabilities.**
->
+><img width="1254" height="1254" alt="trust_card" src="https://github.com/user-attachments/assets/40336664-70f6-4df2-9572-5817833a89cb" />
+
 > Content-addressed capability identity, signed provenance, trust continuity, call-time enforcement, behavioral verification, and tamper-evident evidence — for MCP servers and, eventually, any executable capability.
 
 [![tests](https://img.shields.io/badge/tests-passing-brightgreen)](#development)
