@@ -18,14 +18,15 @@ publishers distinguish human-driven installs from automated installs at
 download time. The registry's tarball endpoint acts as a per-package policy
 proxy:
 
-- **Automation, CI, agents, scrapers, and bots** receive an `unattended`
-  attestation token **out of the box**, with no manual token setup, no browser,
-  and no CAPTCHA. The request is logged and rate-limited, then the tarball is
-  served immediately.
-- **Human-driven installs** are directed through a one-time, strong
-  proof-of-humanity step using WebAuthn / passkey, not a "brainless" CAPTCHA.
-  The registry issues a `human` attestation token that is harder for headless
-  automation to forge.
+- **CI, agents, scrapers, and bots** get a **zero-config heuristic automation
+  pass**. The registry uses passive signals — IP/ASN, User-Agent/TLS
+  fingerprint, and a honeypot header — to recognize automation and serve the
+  tarball immediately. No tokens, no browser, no CAPTCHA, no manual setup.
+- **Human-driven installs** are directed through a **hardware-bound
+  proof-of-humanity** step using WebAuthn / platform biometric secure enclaves
+  (Touch ID, Windows Hello, hardware security keys), not a visual CAPTCHA.
+- **Visual/cognitive CAPTCHAs are explicitly deprecated** in this protocol
+  because LLM computer-use agents can solve them.
 
 The design preserves the existing non-interactive install experience, does not
 run any code on the consumer's machine, and only affects packages that
@@ -37,21 +38,21 @@ explicitly opt in.
    scrapers, malware sandboxes, and misconfigured CI loops. Publishers cannot
    tell whether a spike represents real users, automated abuse, or
    infrastructure traffic.
-2. **Manual scoped tokens are a burden.** Requiring every CI pipeline to create
-   and rotate a per-package granular access token is operationally expensive and
-   does not scale to one-off installs or public forks.
-3. **CAPTCHAs are the wrong answer for software supply chains.** Image-based
-   CAPTCHAs can be solved by computer-vision systems, create poor accessibility,
-   and add friction without meaningful security. A real proof-of-humanity should
-   rely on a hardware- or platform-backed credential.
+2. **Manual scoped tokens do not scale.** Requiring every CI pipeline to create
+   and rotate a per-package token is operationally expensive, excludes public
+   forks, and breaks one-off installs.
+3. **CAPTCHAs are dead for supply-chain security.** Image-based and
+   puzzle-based CAPTCHAs can be solved by modern computer-vision systems and
+   LLM "Computer Use" agents. They are also inaccessible and create hostile UX.
+   A real proof-of-humanity must rely on something an AI cannot access: the
+   user's physical hardware and biometric secure enclave.
 4. **Trust-sensitive packages need a human loop.** Packages such as security
-   tooling, MCP servers, or certificate/identity libraries may want to know that
-   a human approved the first install, while still allowing every CI pipeline to
-   pull exact versions non-interactively.
+   tooling, MCP servers, or identity libraries may want to know that a human
+   approved the first install, while still allowing every CI pipeline to pull
+   exact versions non-interactively.
 5. **A registry-side gate is the right place.** The registry already serves the
    tarball. Adding an optional, policy-driven check there is enforceable,
-   transparent, and does not require changes to package contents or unrelated
-   packages.
+   transparent, and does not require changes to package contents.
 
 ## Detailed Explanation
 
@@ -74,112 +75,141 @@ Allowed values:
 - `"audit"`: the registry records an `install-attestation` event for every
   tarball fetch but does not block the install.
 - `"require"`: the registry requires a valid attestation token before serving
-  the tarball. Both `unattended` and `human` tokens are accepted, so CI and
-  headless automation continue to work out of the box.
+  the tarball. Both heuristic automation and hardware-bound human tokens are
+  accepted, so CI and headless automation continue to work out of the box.
 - `"require-human"`: the registry only accepts `human` attestation tokens.
   This blocks pure unattended automation and is intended for extreme-risk
-  packages. CI must then use a publisher-approved `automation` token or OIDC
-  trusted publishing.
+  packages. CI must then use an approved `automation` token or OIDC trusted
+  publishing.
 
-### 2. Attestation token kinds
+### 2. Heuristic automation pass (zero-config)
 
-The registry issues two primary token kinds from the install path:
+When `npm install` runs in a CI or headless environment, the registry classifies
+the request using passive telemetry. No client configuration is required.
 
-- **`unattended`** — anonymous, short-lived, no account, no browser. Obtained
-  automatically by the npm CLI when it detects a non-interactive environment.
-  This is the "out of the box" path for CI, agents, scrapers, and bots.
-- **`human`** — obtained after a WebAuthn / passkey ceremony with user presence.
-  Bound to an npm account session (or, for unauthenticated users, to a
-  device-bound public key). This is the path for interactive installs.
+Signals in the `CI signal catalog`:
 
-Optional higher-trust kinds for publishers who need them:
+- **IP/ASN reputation.** The registry maintains a list of autonomous systems
+  known to host CI runners: GitHub Actions, AWS CodeBuild, GitLab CI, Azure
+  Pipelines, Google Cloud Build, Vercel, Netlify, etc. Public IP range feeds
+  keep the catalog current.
+- **User-Agent and TLS fingerprinting.** Standard CI `User-Agent` strings and
+  headless TLS fingerprints are recognized. A desktop browser fingerprint from
+  a cloud IP is treated as ambiguous, not automatic.
+- **Honeypot header.** The registry's metadata response includes a hidden
+  `X-NPM-Attestation-Challenge` header with a nonce. The official npm CLI echoes
+  the nonce (or a derived value) in the subsequent tarball request. Naive
+  scrapers that skip the metadata fetch or do not mirror headers correctly are
+  not recognized as legitimate automation and fall through to the human or
+  low-trust path.
 
-- **`automation`** — a long-lived granular access token explicitly created for
-  CI. Allows higher rate limits and is useful for `"require-human"` packages
-  that still run in CI.
-- **`service`** — a registry-registered token for mirrors and public indexers.
-  Rate-limited separately and may be required to identify themselves.
-
-### 3. Unattended attestation flow (out of the box)
-
-When `npm install` runs in a non-interactive environment, the CLI automatically
-requests an `unattended` token before fetching the tarball:
+Classification flow:
 
 ```text
 Client GET /:pkg/-/:pkg-:version.tgz
-       npm-attestation: unattended   (client advertises support)
+       (includes npm-attestation header, UA, echoed challenge)
 
 Registry:
-  if package.attestation in ("audit", "require"):
-       issue short-lived unattended token
-       emit install-attestation event with tokenKind "unattended"
-       return tarball
+  score = heuristic_automation_score(ip, asn, ua, tls_fp, challenge)
+  if score >= AUTOMATION_THRESHOLD:
+       emit install-attestation event with tokenKind "heuristic-automation"
+       return tarball + short-lived unattended attestation token
+  else if score >= AMBIGUOUS_THRESHOLD:
+       return tarball + short-lived "unattended" token with lower rate limit
+  else:
+       return 428 HUMAN_ATTESTATION_REQUIRED
 ```
 
-No manual token, no browser, no CAPTCHA. The registry may apply a lightweight
-rate limit and proof-of-work nonce to the token endpoint, but nothing that
-blocks normal CI or one-off scripts.
+The `heuristic-automation` and `unattended` tokens are anonymous, short-lived,
+and cached by the CLI in `~/.npm/_attestations`. They require no account, no
+browser, and no manual token.
 
-The `unattended` token is cached locally by the CLI (for example in
-`~/.npm/_attestations`) with a TTL and is reused for the same package scope
-within the session.
+A developer on a cloud VM who is falsely classified as automation can force the
+human flow with:
 
-### 4. Human attestation flow (interactive installs)
+```bash
+NPM_ATTESTATION=human npm install <pkg>
+```
 
-When `npm install` runs in an interactive terminal, the CLI requests a `human`
-token:
+### 3. Hardware-bound human attestation
+
+When the registry sees a residential IP, an unknown scraper, a suspicious
+headless browser, or any request that does not pass the automation heuristic, it
+returns a `428 Precondition Required` with an `attestation_url`.
+
+The npm CLI intercepts the response and triggers a **native OS-level biometric
+prompt** using WebAuthn / FIDO2 with `userVerification` required:
 
 ```text
-Client GET /:pkg/-/:pkg-:version.tgz
-       npm-attestation: human
-
 Registry:
-  if package.attestation == "require" or "require-human":
-       return 428 Precondition Required
-              + { error: "HUMAN_ATTESTATION_REQUIRED",
-                  attestation_url: "https://www.npmjs.com/attest/install?..." }
+  return 428 Precondition Required
+         + { error: "HUMAN_ATTESTATION_REQUIRED",
+             attestation_url: "https://www.npmjs.com/attest/install?nonce=..." }
 
 CLI (npm >= version that advertises attestation support):
-  if terminal has a browser or a supported passkey bridge:
-       open attestation_url
-  else:
-       print URL and wait for user
+  open OS native prompt:
+       "Touch ID to install mcp-trustcard" (macOS)
+       "Windows Hello to install mcp-trustcard" (Windows)
+       "Use your security key to install mcp-trustcard" (cross-platform)
 
-  User performs a WebAuthn / passkey ceremony with user presence
-  (biometric, PIN, or hardware security key tap).
+  User performs WebAuthn / passkey ceremony with user presence
+  (fingerprint, face, PIN, or hardware security key tap).
 
-  Registry verifies the assertion, issues a short-lived human attestation
-  token bound to the package scope, and returns it to the CLI.
+  Authenticator signs the registry nonce with a hardware- or platform-backed
+  private key scoped to npmjs.com and the package name.
+
+  Registry verifies the signature, issues a short-lived human attestation
+  token, and returns it to the CLI.
 
   CLI retries tarball request with:
        Authorization: Attestation <token>
   Registry validates token and returns tarball.
 ```
 
-WebAuthn / passkey is chosen because:
+Why this beats LLM Computer Use:
 
-- It requires user presence, not just pattern recognition.
-- It is backed by hardware or platform authenticators.
-- It is phishing-resistant when tied to `npmjs.com` origin.
-- It does not expose new PII beyond an existing npm account session.
+- The private key lives in a secure enclave (TPM, Secure Enclave, YubiKey).
+- User presence is required: a physical biometric or PIN entry.
+- A remote LLM agent running in a cloud sandbox or via desktop automation does
+  not have access to the developer's fingerprint sensor, Face ID, or hardware
+  security key.
+- The signature is cryptographically bound to the `npmjs.com` origin, so replay
+  from a fake page is not possible.
 
-For users without a passkey, the registry may fall back to a one-time link sent
-to a verified email or an OAuth re-authorization, but never to an image-based
-CAPTCHA as the primary mechanism.
+### 4. Reputation fast pass
 
-### 5. Compatibility with old clients
+A logged-in npm CLI user with a high-reputation account can skip the biometric
+prompt for `attestation: "require"` packages:
 
-The registry gates installs **only** when the client advertises support via an
-`npm-attestation` request header or a new CLI user-agent version. Clients that
-do not advertise support continue to receive the tarball unchanged. This keeps
-the feature opt-in and prevents breaking existing tooling.
+Qualifying signals (configurable by registry policy):
+
+- Account age greater than a threshold (e.g. 6 months).
+- 2FA enabled.
+- Linked, aged GitHub account.
+- No recent abuse reports or rate-limit violations.
+- Prior successful hardware attestation on the same device.
+
+When the account qualifies, the registry issues a `human` attestation token
+without requiring a new biometric ceremony. This keeps daily development smooth
+while ensuring fresh burner accounts and LLM agents cannot bypass the gate.
+
+### 5. Optional higher-trust tokens
+
+For CI environments that the heuristic catalog misses, or for publishers using
+`"require-human"`, the CLI still supports explicit tokens:
+
+- **`automation`** — long-lived granular access token for a specific CI
+  pipeline.
+- **`service`** — registry-registered token for mirrors and public indexers.
+
+These are opt-in. The default path for CI is the zero-config heuristic pass.
 
 ### 6. Rate limits and logging
 
-- `unattended` tokens receive a baseline rate limit, suitable for CI but
-  throttled enough to curb abuse.
+- `heuristic-automation` tokens receive a baseline CI rate limit.
+- `unattended` (ambiguous) tokens receive a lower rate limit.
 - `human` tokens receive a higher rate limit because the user has proven
-  possession of an authenticator.
+  possession of an authenticator or passed reputation checks.
 - `automation` and `service` tokens receive publisher- or registrar-controlled
   rate limits.
 - Each tarball fetch emits a standardized `install-attestation` event:
@@ -189,29 +219,28 @@ the feature opt-in and prevents breaking existing tooling.
   "package": "mcp-trustcard",
   "version": "3.0.3",
   "timestamp": "2026-08-18T00:00:00Z",
-  "tokenKind": "unattended",
+  "tokenKind": "heuristic-automation",
   "attestationIdHash": "sha256:...",
+  "automationSignals": ["asn:github-actions", "ua:ci", "challenge:echoed"],
   "userAgent": "npm/12.0.0",
   "ipHash": "sha256:..."
 }
 ```
 
-No raw IP or token value is retained.
+No raw IP or token value is retained. Signal names are logged as categories,
+not raw fingerprints.
 
 ### 7. Privacy and security
 
-- `unattended` tokens are anonymous and short-lived.
-- `human` tokens are tied to an npm account session or a device-bound public key,
-  not to a raw fingerprint.
-- The attestation page reuses the existing npm account session where possible.
-- The feature must not collect new PII beyond what npm already holds for
-  accounts.
+- The `heuristic-automation` pass uses only network and client metadata the
+  registry already sees; no new tracking pixels or browser scripts are added.
+- `unattended` and `heuristic-automation` tokens are anonymous and short-lived.
+- `human` tokens are tied to an npm account session or a device-bound public
+  key, not to a raw fingerprint.
 - WebAuthn / passkey is the default proof-of-humanity mechanism.
+- The `X-NPM-Attestation-Challenge` header is a nonce, not a cookie or tracker.
 
 ### 8. Abuse prevention
-
-To prevent typosquatters or malicious packages from using `"require-human"` to
-force ads or harvest behavior:
 
 - `"require-human"` may only be enabled for packages with provenance or that
   have existed for a minimum period (e.g. 30 days).
@@ -219,13 +248,15 @@ force ads or harvest behavior:
   without a version bump and a deprecation notice.
 - Scoped packages and organizations may enable `"require"` immediately;
   `"require-human"` still requires maturity.
+- The `heuristic-automation` catalog is versioned and auditable. False
+  positives can be reported and corrected.
 
 ### 9. Publisher-facing controls
 
 Publishers can see, in their dashboard and via `npm view`:
 
-- The share of `unattended` vs `human` installs.
-- Top `userAgent` / IP-hash clusters for `unattended` traffic.
+- The share of `heuristic-automation`, `unattended`, and `human` installs.
+- Top signal categories for `heuristic-automation` traffic.
 - Rate-limit hits and blocked requests.
 
 This gives publishers the signal they currently lack without forcing every user
@@ -233,8 +264,9 @@ through a manual workflow.
 
 ## Browser attestation page
 
-When the CLI opens `attestation_url`, the user sees a lightweight, branded page
-rather than a generic error. The page should:
+When the CLI opens `attestation_url` in a context where a native OS prompt is
+not available (e.g. an older OS or a browser-based install flow), the user sees
+a lightweight, branded page rather than a generic error. The page should:
 
 - Display the package identity (name, version, publisher, provenance status).
 - Show the publisher's or ecosystem trust mark prominently. For example, the
@@ -242,9 +274,12 @@ rather than a generic error. The page should:
 
   ![trustcard logo](rfc-assets/trustcard-logo.png)
 
-- Explain why the attestation is required and how automation can avoid it
-  (`unattended` flow, optional `automation` tokens).
-- Offer a WebAuthn / passkey verification button as the primary action.
+- Explain why the attestation is required and how automation is handled
+  (zero-config heuristic pass; no tokens needed).
+- Offer a **WebAuthn / passkey** verification button as the primary action.
+- **Not** offer a visual or cognitive CAPTCHA. The only allowed fallbacks are
+  hardware-bound attestation, a one-time email link to a verified address, or an
+  OAuth re-authorization for logged-in users.
 - Issue a short-lived, opaque attestation token to the CLI on success.
 
 A reference HTML/CSS mockup is included alongside this RFC:
@@ -255,7 +290,8 @@ A reference HTML/CSS mockup is included alongside this RFC:
 
 The mockup demonstrates a centered card layout with the trustcard logo as the
 hero mark, a package metadata panel, a "Provenance verified" badge, and a
-primary "Verify with passkey" button.
+primary "Verify with passkey" button. The secondary fallback is a one-time
+email link, not a CAPTCHA.
 
 ![attestation page mockup](rfc-assets/attestation-ui-mockup.png)
 
@@ -263,11 +299,12 @@ primary "Verify with passkey" button.
 
 - **Hero mark:** publisher or ecosystem trust logo (shield, lock, or verified
   badge). Avoid animated or ad-like imagery.
-- **Status icons:** a small lock for provenance, a robot outline for unattended
+- **Status icons:** a small lock for provenance, a robot outline for heuristic
   automation, and a user silhouette for human sessions.
-- **Action icons:** fingerprint / security-key icon for WebAuthn, OAuth provider
-  icons when available, and a generic puzzle-piece icon only for a
-  CAPTCHA-based fallback.
+- **Action icons:** fingerprint / security-key icon for WebAuthn, email icon
+  for the one-time link fallback, OAuth provider icons when available.
+- **Forbidden:** image-based CAPTCHA widgets, puzzle grids, "click all
+  traffic lights" interfaces, or any visual challenge an LLM can solve.
 - **Color palette:** neutral grays for the shell, a single brand accent color
   for primary actions, and amber for the informational notice.
 
@@ -279,9 +316,10 @@ primary "Verify with passkey" button.
 2. **Manual scoped tokens for every CI job.** Rejected: operationally expensive,
    excludes public forks, one-off scripts, and scrapers that are not malicious.
    It also does not help publishers understand real human usage.
-3. **Image-based CAPTCHA at install time.** Rejected: poor accessibility, can
-   be solved by computer-vision systems, and adds friction without meaningful
-   security.
+3. **Image-based or cognitive CAPTCHA at install time.** Rejected: poor
+   accessibility, easily solved by LLM computer-use and computer-vision
+   systems, and adds friction without meaningful security. This RFC explicitly
+   deprecates CAPTCHA as a primary or fallback mechanism.
 4. **Package `postinstall` challenge.** Rejected: lifecycle scripts can be
    disabled with `--ignore-scripts`, cannot reliably detect a terminal, and are
    a poor security boundary. They also cannot stop the tarball from being
@@ -292,44 +330,53 @@ primary "Verify with passkey" button.
    catastrophically disruptive and harm npm adoption. The feature must be
    publisher-opt-in.
 
-The chosen design is a registry-side, per-package gate with two speed lanes:
-`unattended` for automation out of the box, and `human` via WebAuthn / passkey
-for interactive installs. It gives publishers the signal they need while
-preserving the friction-free CI experience.
+The chosen design is a registry-side, per-package gate with two lanes:
+heuristic automation classification for zero-config CI, and hardware-bound
+biometric attestation for humans. It gives publishers the signal they need
+while preserving the friction-free CI experience and removing CAPTCHA as a
+viable bypass.
 
 ## Implementation
 
 ### Registry
 
+- Build and maintain the `CI signal catalog` (ASN, IP ranges, UA patterns,
+  TLS fingerprints).
+- Add `X-NPM-Attestation-Challenge` to metadata responses and validate the
+  echoed value on tarball requests.
 - Add `attestation` to the package document schema.
 - Update the tarball endpoint to classify requests and emit
   `install-attestation` events.
-- Implement `428 Precondition Required` for human attestation and an anonymous
-  `unattended` token issuance endpoint.
-- Add token-kind enforcement to granular access tokens.
+- Implement `428 Precondition Required` for human attestation and the anonymous
+  `heuristic-automation` / `unattended` token issuance flow.
+- Integrate WebAuthn verification into the attestation service.
+- Add reputation fast-pass checks to account/session endpoints.
 
 ### CLI
 
-- Add `npm-attestation` header support to `npm install`.
+- Add `npm-attestation` header support and challenge-echo logic to `npm install`.
 - Detect interactive vs non-interactive environments.
-- In non-interactive mode, automatically obtain an `unattended` token.
-- In interactive mode, open the human attestation URL and handle the
-  WebAuthn / passkey flow.
-- Cache both token kinds locally.
-- Add `npm token create --kind=automation|--kind=service` for publishers who
-  need higher-trust tokens.
+- In non-interactive or high-confidence CI environments, rely on the
+  registry's heuristic response.
+- In interactive environments or after `HUMAN_ATTESTATION_REQUIRED`, trigger the
+  native OS WebAuthn / biometric prompt.
+- Cache `heuristic-automation`, `unattended`, and `human` tokens locally.
+- Add `NPM_ATTESTATION=human|unattended` override for false positives.
+- Keep `npm token create --kind=automation|--kind=service` for publishers who
+  need higher-trust explicit tokens.
 
 ### Web
 
 - Build the `/attest/install` endpoint.
 - Integrate WebAuthn / passkey ceremony with existing npm account/auth.
-- Provide fallback paths (email link, OAuth re-auth) only when passkey is
-  unavailable.
+- Provide **only** hardware-bound or account-reputation fallback paths.
+- Explicitly do not implement image-based CAPTCHA.
 
 ### Documentation
 
 - Update registry API documentation, access-token docs, and the acceptable-use
-  policy to describe the new behavior and rate-limit classes.
+  policy to describe the new behavior, signal catalog, and rate-limit classes.
+- Publish the "dead CAPTCHA" rationale for transparency.
 
 ## Prior Art
 
@@ -340,28 +387,32 @@ preserving the friction-free CI experience.
   complementary — provenance says *where* a package was built; install
   attestation says *who* requested the install.
 - **Cloudflare Turnstile** and **hCaptcha** invisible challenges: distinguish
-  humans from bots without interactive puzzles.
+  humans from bots without interactive puzzles. This RFC goes further by
+  removing visual challenges entirely.
 - **WebAuthn / FIDO2** user-presence ceremonies: a hardware-backed
   proof-of-humanity used by major identity providers.
+- **Device-bound credentials** in native apps (iOS Secure Enclave, Windows
+  Hello, Android Keystore) for local biometric authentication.
 
 ## Unresolved Questions and Bikeshedding
 
-1. Should `unattended` tokens require a small proof-of-work or proof-of-space
-   challenge to raise the cost of large-scale abuse without breaking CI?
-2. How should the CLI detect "interactive" accurately? `isatty(stdin)` is a
-   start, but containers and pseudoterminals complicate it. Should an
-   `NPM_ATTESTATION=human|unattended` environment variable override?
-3. What is the default TTL for `unattended` vs `human` tokens? One hour is
-   proposed for both, but human sessions may last a full workday.
-4. Should `unattended` tokens be bound to a package scope, or should one token
-   cover all installs in a session? Scope binding is safer; session binding is
-   more convenient for CI with many dependencies.
-5. Should old npm clients be served tarballs for `"require"` packages at all,
+1. How often should the `CI signal catalog` be updated, and who maintains the
+   canonical list of cloud provider IP ranges?
+2. Should `heuristic-automation` classification require the `X-NPM-Attestation-Challenge`
+   echo, or should ASN/UA alone be enough for a fast pass?
+3. What is the exact reputation score formula for the fast pass? Account age,
+   2FA, GitHub linkage, prior attestation history, package ownership?
+4. How should false positives be handled? A `NPM_ATTESTATION=human` environment
+   override is proposed; should there also be a registry appeal process?
+5. Should `unattended` and `heuristic-automation` tokens be bound to a package
+   scope, or should one token cover all installs in a session? Scope binding is
+   safer; session binding is more convenient for CI with many dependencies.
+6. Should old npm clients be served tarballs for `"require"` packages at all,
    or should they always get a `429` with a manual URL? Keeping them served
    avoids breaking legacy workflows but weakens the gate.
-6. Should the gate apply to package metadata (`GET /:pkg`) or only to tarball
+7. Should the gate apply to package metadata (`GET /:pkg`) or only to tarball
    fetches? Applying only to tarballs limits impact but may be bypassed by
    mirrors that already have the metadata.
-7. What is the path for CI providers that cannot use unattended tokens, such as
-   locked-down enterprise networks? A possible answer: allow `automation` tokens
-   as a higher-trust opt-in with higher rate limits.
+8. What is the path for CI providers on private networks or custom runners that
+   the heuristic catalog misses? Explicit `automation` tokens remain available
+   as an opt-in fallback.

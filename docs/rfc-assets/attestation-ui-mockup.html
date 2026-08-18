@@ -173,7 +173,7 @@
         <img src="trustcard-logo.png" alt="trustcard" />
       </div>
       <h1>Confirm this install</h1>
-      <p class="subtitle">mcp-trustcard requires a one-time human attestation before downloading this package.</p>
+      <p class="subtitle">mcp-trustcard requires a one-time, hardware-bound proof of humanity before this package can be downloaded.</p>
     </div>
 
     <div class="body">
@@ -190,14 +190,14 @@
 
       <div class="notice">
         <strong>Why am I seeing this?</strong><br />
-        This publisher has enabled install attestation. Automation and CI skip this step automatically with the out-of-box <code>unattended</code> flow.
+        This publisher has enabled install attestation. CI, agents, and known automation skip this step automatically through the zero-config heuristic pass (IP/ASN, User-Agent, and the echoed <code>X-NPM-Attestation-Challenge</code> header).
       </div>
 
       <div class="human-check">
-        <p>Prove you are human to continue the install.</p>
-        <button class="btn btn-primary" type="button">Verify with passkey</button>
+        <p>Prove you are human. This uses a WebAuthn / platform authenticator such as Touch ID, Windows Hello, or a security key. Visual CAPTCHA challenges are not available — LLM computer-use agents can solve them.</p>
+        <button class="btn btn-primary" type="button">Verify with passkey / Touch ID / Windows Hello</button>
         <br />
-        <button class="btn btn-ghost" type="button">Use CAPTCHA instead</button>
+        <button class="btn btn-ghost" type="button">Email a one-time link</button>
       </div>
 
       <p class="footer">
