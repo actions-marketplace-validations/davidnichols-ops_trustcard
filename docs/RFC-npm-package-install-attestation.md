@@ -181,6 +181,43 @@ ads or harvest behavior:
 - Scoped packages and organizations may enable it immediately; unscoped public
   packages must meet the maturity requirement.
 
+## Browser attestation page
+
+When the CLI opens `attestation_url`, the user sees a lightweight, branded page
+rather than a generic error. The page should:
+
+- Display the package identity (name, version, publisher, provenance status).
+- Show the publisher's or ecosystem trust mark prominently. For example, the
+  `mcp-trustcard` attestation page uses the trustcard shield logo:
+
+  ![trustcard logo](rfc-assets/trustcard-logo.png)
+
+- Explain why the attestation is required and how automation can avoid it
+  (`automation` tokens, `npm token create --kind=automation`).
+- Offer a privacy-preserving proof-of-humanity widget (passkey/WebAuthn first,
+  OAuth re-auth second, CAPTCHA as accessible fallback).
+- Issue a short-lived, opaque attestation token to the CLI on success.
+
+A reference HTML/CSS mockup is included alongside this RFC:
+
+- [`rfc-assets/attestation-ui-mockup.html`](rfc-assets/attestation-ui-mockup.html)
+- [`rfc-assets/trustcard-logo.png`](rfc-assets/trustcard-logo.png)
+
+The mockup demonstrates a centered card layout with the trustcard logo as the
+hero mark, a package metadata panel, a "Provenance verified" badge, and primary
+and secondary human-verification buttons.
+
+### Icons and imagery guidelines
+
+- **Hero mark:** publisher or ecosystem trust logo (shield, lock, or verified
+  badge). Avoid animated or ad-like imagery.
+- **Status icons:** a small lock for provenance, a robot outline for automation
+  tokens, and a user silhouette for personal sessions.
+- **Action icons:** passkey/fingerprint icon for WebAuthn, OAuth provider icons
+  when available, and a generic puzzle-piece icon for CAPTCHA fallback.
+- **Color palette:** neutral grays for the shell, a single brand accent color
+  for primary actions, and amber for the informational notice.
+
 ## Rationale and Alternatives
 
 1. **Do nothing / rely on global rate limits.** Global limits do not give
