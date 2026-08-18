@@ -1,5 +1,12 @@
 # Trustcard v2 — analysis & verdict
 
+> **Historical design context, v3.0.3.** This document records the reasoning
+> behind the v2 protocol redesign. The conclusions are implemented in current
+> code (`lib/identity.js`, `lib/descriptor.js`, `lib/policy.js`, `lib/change.js`,
+> `lib/guard.js`). For the current state and roadmap, see
+> [`docs/INDEX.md`](INDEX.md), [`docs/SECURITY-MODEL.md`](SECURITY-MODEL.md),
+> and [`docs/ROADMAP-2Y.md`](ROADMAP-2Y.md).
+
 This document answers the question the v2 work started with: **is the existing
 Trustcard abstraction fundamentally sufficient?** It isn't — and the reason is
 instructive, because it's the same reason most MCP security tooling today is

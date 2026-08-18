@@ -1,5 +1,13 @@
 # Trustcard as a General Trust Substrate
 
+> **Historical design context, v3.0.3.** This is a first-principles
+> investigation into a protocol-neutral trust substrate. Several early proposals
+> (e.g., folding namespace into identity) were deliberately not implemented;
+> see [`DESCRIPTOR.md`](DESCRIPTOR.md) for the corrections that landed. The
+> current implementation, behavior model, and roadmap are documented in
+> [`INDEX.md`](INDEX.md), [`SECURITY-MODEL.md`](SECURITY-MODEL.md),
+> [`BEHAVIOR.md`](BEHAVIOR.md), and [`ROADMAP-2Y.md`](ROADMAP-2Y.md).
+
 A first-principles investigation into what the smallest universal trust object
 for an executable capability should be, whether Trustcard v1's abstraction
 survives generalization beyond MCP, and what the system should become.

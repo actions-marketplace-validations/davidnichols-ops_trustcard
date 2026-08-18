@@ -81,6 +81,21 @@ server never sees the raw token.
 | 24 | **Auth metadata leakage** (token exposed to the server via `_meta`) | `stripAuth` removes `_meta.auth` from the request before forwarding. The server receives the call as if no auth was present. | If the server requires the token for its own authorization (e.g. GitHub API calls), the operator must configure server-side auth separately. trustcard's job is to enforce *proxy-level* scope, not to manage server-side credentials. |
 | 25 | **Scope confusion** (agent presents a scope that looks like a prefix but isn't) | `scopeSatisfies` uses exact string matching for non-wildcard scopes. `files:write` does NOT satisfy `files:w`. Only `*` and `prefix:*` (trailing colon-star) are wildcards. | None — the matching is deterministic and tested. Operator confusion from poorly named scopes is a policy-design problem. |
 
+## v3 attack scenarios — behavioral verification & evidence
+
+v3 adds `lib/behavior.js` (deterministic probes against a reference) and
+`lib/evidence.js` / `lib/evidence-store.js` (content-addressed observations).
+These do not change the trust-state machine or identity bytes.
+
+| # | Attack | Control | Residual risk |
+|---|---|---|---|
+| 26 | **Same-contract runtime divergence** (server keeps the same `toolsetDigest` but behaves maliciously when called) | `BehaviorEngine` runs probes and compares outputs/events to a `ReferenceObservation`. Findings are emitted with `divergenceClass` and `confidence`. | A server can pass every probe and still misbehave on an unprobed input. Probes are bounded; the default sandbox is a harness, not an OS jail. |
+| 27 | **Prompt injection via tool output** (tool output contains `<IMPORTANT>` or system-override instructions to the calling model) | Output comparator flags new injection markers not present in input. | Markers not in the known list or that bypass the heuristic will pass. The detector is pattern-based, not semantic. |
+| 28 | **Secret exfiltration** (tool echoes a secret-like value back, or writes it to stderr/network) | `secret_canary` probes insert `TC-CANARY-...` values into secret-like schema properties and check output/stderr for them. | Only secret-like properties are canaried; a server can leak non-canaried data or exfiltrate without writing to captured streams. |
+| 29 | **Unexpected side channels** (server makes network/fs/subprocess calls that are not declared) | `SandboxRuntime` captures stderr and flags known network/filesystem/spawn event strings. | Events that leave no trace in stdout/stderr/exit are not observed. OS-level syscall tracing is a roadmap item (Y2-H3). |
+| 30 | **Behavioral evidence tampering** (attacker forges or rewrites a behavior report) | The behavior-to-evidence bridge (roadmap Y1-H1) will store findings as signed, content-addressed evidence records (`lib/evidence.js`). | Until implemented, behavior JSON reports are local artifacts and should be treated as evidence, not proof. |
+| 31 | **Reference observation poisoning** (the reference itself is malicious or stale) | The reference is a captured observation, not a contract. Operators must generate references from a trusted source and version them with `toolsetDigest`. | A malicious reference makes differential verification meaningless. |
+
 ## Trust boundary
 
 ```
@@ -117,9 +132,10 @@ execution.** trustcard sits between them.
 
 ## Explicit non-goals
 
-- **Runtime behavior of a tool.** trustcard pins the *contract* (definition),
-  not what the code does when called. A signed read-only tool can still behave
-  badly; that's a sandboxing/least-privilege problem, not an identity problem.
+- **Universal runtime behavior proof.** trustcard can detect observable
+  divergence for a bounded probe set, but it cannot prove a tool is safe on
+  every input. Deep containment (OS namespaces, TEE attestation, syscall
+  tracing) is a roadmap goal, not a current guarantee.
 - **Publisher honesty.** Signatures establish provenance, not intent.
 - **A universal PKI.** TOFU + break-glass rotation is a deliberate choice for
   a young, decentralized ecosystem. If the MCP registry later operates a key
@@ -128,6 +144,7 @@ execution.** trustcard sits between them.
 ## The one-sentence version
 
 trustcard guarantees that **the tool an agent calls is bit-for-bit the tool a
-known publisher signed and the client pinned, and that the agent is authorized
-to call it** — or it stops the call and says exactly what changed or what scope
-was missing. It does not guarantee the tool is *good*.
+known publisher signed and the client pinned, that the operator's chosen
+behavioral probes passed, and that the whole chain is recorded as evidence** —
+or it stops the call and says exactly what changed, what behavior diverged, or
+what scope was missing. It does not guarantee the tool is *good*.
