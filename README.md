@@ -1,12 +1,17 @@
 # trustcard
 
 > **Cryptographic trust infrastructure for executable capabilities.**
-><img width="350" height="425" alt="trust_card" src="https://github.com/user-attachments/assets/40336664-70f6-4df2-9572-5817833a89cb" />
+>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/40336664-70f6-4df2-9572-5817833a89cb" alt="trust_card" width="140" style="margin-bottom:8px;" />
+</p>
 
-> Content-addressed capability identity, signed provenance, trust continuity, call-time enforcement, behavioral verification, and tamper-evident evidence — for MCP servers and, eventually, any executable capability.
+<p align="center">
+  <a href="#development"><img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="tests"></a>
+  <a href="docs/SPEC.md"><img src="https://img.shields.io/badge/manifest-trustcard.dev%2Fmanifest%401-blue" alt="manifest"></a>
+</p>
 
-[![tests](https://img.shields.io/badge/tests-passing-brightgreen)](#development)
-[![manifest](https://img.shields.io/badge/manifest-trustcard.dev%2Fmanifest%401-blue)](docs/SPEC.md)
+> Content-addressed capability identity, signed provenance, trust continuity, call-time enforcement, behavioral verification, and tamper-evident evidence — for MCP servers, and eventually any executable capability consumers.
 
 Agents increasingly call capabilities they did not build, inspect, or previously encounter:
 
@@ -19,7 +24,7 @@ Agents increasingly call capabilities they did not build, inspect, or previously
 
 The fundamental problem is simple:
 
-> **Before an agent calls a capability, how does it know what it is, who authorized it, whether it has changed, whether the running code honors the contract, and whether this specific call is allowed?**
+> **Before an agent calls a capability, how does it know what it is, who authorized it, whether it has changed, whether the running code honors the contract, and whether this specific call is allowed?[...]
 
 The usual model is:
 
@@ -152,7 +157,7 @@ A trusted server is not automatically authorized to perform every call. Trust is
 
 ### 6. Behavioral verification
 
-Static identity can pass while runtime behavior diverges. `mcp-trustcard behavior` executes a server in a sandboxed harness, fires deterministic seeded probes, and compares observations against a reference or baseline expectations.
+Static identity can pass while runtime behavior diverges. `mcp-trustcard behavior` executes a server in a sandboxed harness, fires deterministic seeded probes, and compares observations against a refe[...] 
 
 It catches:
 
@@ -337,7 +342,7 @@ mcp-trustcard scan --threshold 70 <server>
 | Protocol version | 10 | Does it negotiate a supported protocol? |
 | Latency / failure rate | 5 | Does it respond reliably? |
 
-A score is useful for CI, discovery, regression detection, and ecosystem visibility. **A score is not a trust decision.** A server scoring `95` can still be the wrong capability for a particular agent; a server scoring `60` can still be acceptable under a constrained policy.
+A score is useful for CI, discovery, regression detection, and ecosystem visibility. **A score is not a trust decision.** A server scoring `95` can still be the wrong capability for a particular agent[...] 
 
 ### Danger detection — three engines
 
@@ -345,7 +350,7 @@ The destructive-capabilities check uses a **three-engine fusion**:
 
 1. **Heuristic engine** — word-boundary regex for destructive verbs and dangerous parameters, with context-aware scoring (`clear` is only destructive when paired with destructive nouns).
 2. **Semantic engine** — TF-IDF vectors over tool names and descriptions compared against a curated dangerous-action corpus.
-3. **Injection engine** — scans descriptions for prompt-injection markers (`<IMPORTANT>`, `[SYSTEM OVERRIDE]`, "ignore previous instructions", sensitive paths, secrecy instructions, base64 blobs, exfiltration language).
+3. **Injection engine** — scans descriptions for prompt-injection markers (`<IMPORTANT>`, `[SYSTEM OVERRIDE]`, "ignore previous instructions", sensitive paths, secrecy instructions, base64 blobs, ex[...] 
 
 Safe tool patterns (`create_directory`, `mkdir`, `sequentialthinking`) are whitelisted unless the injection detector flags the description.
 
@@ -397,7 +402,7 @@ according to policy.
 
 ### Manifest expiration
 
-Manifests carry an `expiresAt` timestamp (default: 90 days). An expired manifest blocks all calls until regenerated, ensuring the danger analysis stays fresh. Override with `--expires-in <days>` or `--no-expiry`.
+Manifests carry an `expiresAt` timestamp (default: 90 days). An expired manifest blocks all calls until regenerated, ensuring the danger analysis stays fresh. Override with `--expires-in <days>` or `-[...]`
 
 ### Tool overrides
 
@@ -455,7 +460,7 @@ mcp-trustcard behavior --server @modelcontextprotocol/server-memory [--json]
 mcp-trustcard behavior diff reference.json target.json
 ```
 
-Probe categories include valid, boundary, malformed, long strings, unicode, path-like, URL-like, prompt-injection, and secret-canary inputs. Reports include `divergenceClass`, `severity`, `confidence`, and `evidence`.
+Probe categories include valid, boundary, malformed, long strings, unicode, path-like, URL-like, prompt-injection, and secret-canary inputs. Reports include `divergenceClass`, `severity`, `confidence`[...] 
 
 See [`docs/BEHAVIOR.md`](docs/BEHAVIOR.md) for the full model.
 
@@ -470,7 +475,7 @@ mcp-trustcard evidence verify
 mcp-trustcard evidence export --json-out evidence.json
 ```
 
-Evidence records are content-addressed, immutable, and forward-compatible. They are the source of truth from which scores and trust decisions are derived. The long-term vision is a peer-to-peer observatory that continuously records, verifies, and exchanges evidence about executable capabilities. See [`docs/ROADMAP-2Y.md`](docs/ROADMAP-2Y.md).
+Evidence records are content-addressed, immutable, and forward-compatible. They are the source of truth from which scores and trust decisions are derived. The long-term vision is a peer-to-peer observ[...] 
 
 ## Signed, chained receipts
 
@@ -517,7 +522,7 @@ The goal is simple:
 
 For the full guarantees table, see [`docs/SECURITY-MODEL.md`](docs/SECURITY-MODEL.md).
 
-trustcard is not a sandbox. A signed capability can still be malicious. A publisher can sign bad software. A trusted server can have a vulnerability. A receipt can prove what was authorized and observed, not that the server's internal execution was honest.
+trustcard is not a sandbox. A signed capability can still be malicious. A publisher can sign bad software. A trusted server can have a vulnerability. A receipt can prove what was authorized and observ[...] 
 
 trustcard addresses:
 
