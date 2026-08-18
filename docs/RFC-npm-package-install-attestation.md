@@ -201,11 +201,14 @@ rather than a generic error. The page should:
 A reference HTML/CSS mockup is included alongside this RFC:
 
 - [`rfc-assets/attestation-ui-mockup.html`](rfc-assets/attestation-ui-mockup.html)
+- [`rfc-assets/attestation-ui-mockup.png`](rfc-assets/attestation-ui-mockup.png)
 - [`rfc-assets/trustcard-logo.png`](rfc-assets/trustcard-logo.png)
 
 The mockup demonstrates a centered card layout with the trustcard logo as the
 hero mark, a package metadata panel, a "Provenance verified" badge, and primary
 and secondary human-verification buttons.
+
+![attestation page mockup](rfc-assets/attestation-ui-mockup.png)
 
 ### Icons and imagery guidelines
 
