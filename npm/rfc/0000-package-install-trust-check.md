@@ -17,8 +17,9 @@ a per-package policy proxy with three lanes:
    Windows Hello, hardware security keys). No visual or cognitive CAPTCHA is
    offered.
 3. **Known scrapers, abuse networks, and obvious non-human traffic** are
-   classified as `blocked` and receive a 403 `TRUST_CHECK_BLOCKED` response. They
-   are not offered a challenge, fallback, or CAPTCHA.
+   classified as `spam_user` (returned externally as `blocked`) and receive a
+   403 `TRUST_CHECK_BLOCKED` response. They are not offered a challenge, fallback,
+   or CAPTCHA.
 
 The design only affects packages that explicitly opt in through
 `publishConfig.trustCheck`.
@@ -108,7 +109,7 @@ Registry:
   spam_score = abuse_score(ip, asn, ua, tls_fp, rate_limit_violations, challenge)
 
   if spam_score >= SPAM_THRESHOLD:
-       emit install-trust-check event with tokenKind "blocked"
+       emit install-trust-check event with tokenKind "spam_user"
        return 403 TRUST_CHECK_BLOCKED
   else if score >= AUTOMATION_THRESHOLD:
        emit install-trust-check event with tokenKind "heuristic-automation"
@@ -211,8 +212,8 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
   possession of an authenticator or passed reputation checks.
 - `automation` and `service` tokens receive publisher- or registrar-controlled
   rate limits.
-- `blocked` requests emit an `install-trust-check` event but no tarball is
-  served. The response is 403 `TRUST_CHECK_BLOCKED`.
+- `spam_user` (externally `blocked`) requests emit an `install-trust-check`
+  event but no tarball is served. The response is 403 `TRUST_CHECK_BLOCKED`.
 - Each tarball fetch or blocked attempt emits a standardized
   `install-trust-check` event:
 
@@ -229,9 +230,9 @@ These are opt-in. The default path for CI is the zero-config heuristic pass.
 }
 ```
 
-Blocked requests include a `tokenKind` of `blocked` and the set of abuse
-signals that triggered the deny decision, without exposing the underlying raw
-data.
+Blocked (`spam_user`) requests include a `tokenKind` of `spam_user` and the
+set of abuse signals that triggered the deny decision, without exposing the
+underlying raw data.
 
 No raw IP or token value is retained. Signal names are logged as categories,
 not raw fingerprints.
@@ -256,10 +257,10 @@ not raw fingerprints.
   `"require-human"` still requires maturity.
 - The CI signal catalog is versioned and auditable. False positives can be
   reported and corrected.
-- `blocked` classification is deliberately punitive: blocked clients are not
-  offered a human challenge, email fallback, or CAPTCHA. They must stop the
-  abusive behavior or use an approved `automation`/`service` token after
-  publisher/admin review.
+- `spam_user` (externally `blocked`) classification is deliberately punitive:
+  `spam_user` clients are not offered a human challenge, email fallback, or
+  CAPTCHA. They must stop the abusive behavior or use an approved
+  `automation`/`service` token after publisher/admin review.
 
 ### Browser trust check page
 
@@ -311,7 +312,7 @@ email link, not a CAPTCHA.
 - **Color palette:** neutral grays for the shell, a single brand accent color
   for primary actions, and amber for informational notices.
 
-### Why visual and cognitive CAPTCHA is not acceptable here
+## Dead CAPTCHA Rationale
 
 Visual and cognitive CAPTCHAs are explicitly deprecated in this protocol. They
 are no longer a meaningful barrier to automated or adversarial clients and are
@@ -364,9 +365,9 @@ for a logged-in, reputable account.
 
 The chosen design is a registry-side, per-package gate with three lanes:
 heuristic automation classification for zero-config CI, hardware-bound
-biometric trust check for humans, and a hard `blocked` category for known
-scrapers and abuse. It gives publishers the signal they need, preserves the
-friction-free CI experience, removes CAPTCHA as a viable bypass, and stops
+biometric trust check for humans, and a hard `spam_user` (`blocked`) category
+for known scrapers and abuse. It gives publishers the signal they need, preserves
+the friction-free CI experience, removes CAPTCHA as a viable bypass, and stops
 plain scrapers from consuming a human challenge.
 
 ## Implementation
@@ -382,7 +383,7 @@ plain scrapers from consuming a human challenge.
 - Add `trustCheck` to the package document schema.
 - Update the tarball endpoint to classify requests and emit
   `install-trust-check` events.
-- Implement 403 `TRUST_CHECK_BLOCKED` for `blocked` classification.
+- Implement 403 `TRUST_CHECK_BLOCKED` for `spam_user` classification.
 - Implement 428 `Precondition Required` for human trust check and the anonymous
   `heuristic-automation` / `unattended` token issuance flow.
 - Integrate WebAuthn verification into the trust check service.
