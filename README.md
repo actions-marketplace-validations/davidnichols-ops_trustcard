@@ -2,26 +2,31 @@
 
 > **Cryptographic trust infrastructure for executable capabilities.**
 >
-> Content-addressed capability identity, signed provenance, trust continuity, and call-time enforcement — with an empirical health scanner for MCP servers.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/40336664-70f6-4df2-9572-5817833a89cb" alt="trust_card" width="140" style="margin-bottom:8px;" />
+</p>
 
-[![tests](https://img.shields.io/badge/tests-passing-brightgreen)](#development)
-[![manifest](https://img.shields.io/badge/manifest-trustcard.dev%2Fmanifest%401-blue)](docs/SPEC.md)
+<p align="center">
+  <a href="#development"><img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="tests"></a>
+  <a href="docs/SPEC.md"><img src="https://img.shields.io/badge/manifest-trustcard.dev%2Fmanifest%401-blue" alt="manifest"></a>
+</p>
 
-Agents increasingly execute capabilities they did not build, inspect, or previously encounter:
+> Content-addressed capability identity, signed provenance, trust continuity, call-time enforcement, behavioral verification, and tamper-evident evidence — for MCP servers, and eventually any executable capability consumers.
+
+Agents increasingly call capabilities they did not build, inspect, or previously encounter:
 
 - MCP tools
-- APIs
+- remote APIs
 - plugins
 - packages
 - workflows
-- remote services
 - other agents
 
 The fundamental problem is simple:
 
-> **Before an agent calls a capability, how does it know what it is, who authorized it, whether it has changed, and whether this specific call is allowed?**
+> **Before an agent calls a capability, how does it know what it is, who authorized it, whether it has changed, whether the running code honors the contract, and whether this specific call is allowed?[...]
 
-Today, the usual model is:
+The usual model is:
 
 ```text
 discover → connect → call
@@ -40,12 +45,14 @@ compare against trusted state
     ↓
 evaluate policy
     ↓
-allow / warn / block
+verify behavior
     ↓
 record evidence
+    ↓
+allow / warn / block
 ```
 
-## The core primitive
+## The core primitives
 
 trustcard turns an executable capability into a **content-addressed, verifiable object**.
 
@@ -53,40 +60,39 @@ trustcard turns an executable capability into a **content-addressed, verifiable 
 ┌──────────────────────────────────────────────────────────────┐
 │                     EXECUTABLE CAPABILITY                   │
 │                                                              │
-│   What does it expose?       →  Capability identity          │
+│   What does it expose?        →  Capability identity          │
 │   Who authorized it?          →  Signed provenance            │
 │   Has it changed?             →  Change classification         │
-│   Is this the thing I trust? →  Trust continuity              │
+│   Is this the thing I trust?  →  Trust continuity              │
 │   May this call happen?       →  Policy enforcement            │
-│   What happened?              →  Tamper-evident receipt        │
+│   Does the code honor it?     →  Behavioral verification      │
+│   What happened?              →  Tamper-evident evidence       │
 └──────────────────────────────────────────────────────────────┘
 ```
 
 For MCP, a tool's identity is derived from a canonical semantic projection:
 
 ```text
-toolDigest   = SHA-256(JCS(semantic tool projection))
-toolsetDigest = SHA-256(JCS(sorted tool digests))
-serverDigest  = SHA-256(JCS(server identity + protocol + toolset))
+toolDigest      = SHA-256(JCS(semantic tool projection))
+toolsetDigest   = SHA-256(JCS(sorted tool digests))
+serverDigest    = SHA-256(JCS(server identity + protocol + toolset))
 ```
 
-The result is a stable identity for **what the capability actually is**.
-
-Not:
-
-```text
-"the server responded successfully once"
-```
-
-But:
+The result is a stable identity for **what the capability actually is**:
 
 ```text
 "this exact capability contract is the one I approved"
 ```
 
+not merely:
+
+```text
+"the server responded successfully once"
+```
+
 ## The trust model
 
-trustcard combines five layers:
+trustcard combines six layers:
 
 ### 1. Capability identity
 
@@ -98,136 +104,71 @@ The identity is based on the fields that affect what an agent can do or believe.
 
 Publishers can sign complete capability manifests with Ed25519.
 
-A server can claim:
-
 ```text
-"I serve this toolset."
-```
-
-A publisher can attest:
-
-```text
-"I authorized this exact toolset."
-```
-
-A client can verify:
-
-```text
-"The capability I received is the capability that was signed."
+server:    "I serve this toolset."
+publisher: "I authorized this exact toolset."
+client:    "The capability I received is the capability that was signed."
 ```
 
 ### 3. Trust continuity
 
-Clients can pin observed or signed state:
+Clients pin observed or signed state. A later connection is not just "reachable" — it is "still the capability I previously trusted."
 
 ```text
-UNKNOWN
-   ↓
-OBSERVED
-   ↓
-PINNED
-   ↓
-      ┌───────────────┐
-      │               │
-      ▼               │
-  MISMATCH        SUSPECT
-      │               │
-      └───────┬───────┘
-              ▼
-           REVOKED
+UNKNOWN → OBSERVED → PINNED → MISMATCH/SUSPECT → REVOKED
 ```
 
-For human-facing UIs and high-level APIs, these six internal states project
-onto four trust levels:
+`REVOKED` is terminal and sticky; only explicit re-approval exits it.
+
+For human-facing UIs, the internal states project onto four trust levels:
 
 ```text
-Internal state    Trust level    Meaning
-──────────────    ───────────    ──────────────────
-PINNED            TRUSTED        Green — verified, calls allowed
-OBSERVED          OBSERVED       Yellow — seen but not pinned
-SUSPECT           OBSERVED       Yellow — something looks off
-UNKNOWN           OBSERVED       Yellow — never seen
-MISMATCH          UNTRUSTED      Red — contract changed
-REVOKED           REVOKED        Red — terminal, human re-pin required
-```
-
-A later connection is not merely:
-
-```text
-"the server is reachable"
-```
-
-It becomes:
-
-```text
-"the server is still the capability I previously trusted"
+PINNED     → TRUSTED
+OBSERVED   → OBSERVED
+SUSPECT    → OBSERVED
+UNKNOWN    → OBSERVED
+MISMATCH   → UNTRUSTED
+REVOKED    → REVOKED
 ```
 
 ### 4. Change classification
 
-A digest mismatch is not enough.
-
-trustcard classifies the semantic meaning of change:
+A digest mismatch is not enough. trustcard classifies the semantic meaning of change:
 
 ```text
-NONE
-  ↓
-SYNTACTIC
-  ↓
-NON_BREAKING
-  ↓
-ANNOTATION_DOWNGRADE
-  ↓
-PERMISSION_CHANGE
-  ↓
-BREAKING
+NONE < SYNTACTIC < NON_BREAKING < ANNOTATION_DOWNGRADE < PERMISSION_CHANGE < BREAKING
 ```
 
-This lets policy distinguish between:
-
-```text
-description changed
-```
-
-and:
-
-```text
-a new destructive capability appeared
-```
-
-and:
-
-```text
-a previously safe parameter became unrestricted
-```
-
-The client learns not merely that something changed, but **what the change means**.
+This lets policy distinguish a renamed title, a widened optional argument, a rewritten description, a permission downgrade, and a removed required parameter.
 
 ### 5. Call-time enforcement
 
-Trustcard applies a two-gate model to invocation:
+trustcard applies a two-gate model:
 
 ```text
-GATE 1
-Is this the capability we approved?
-        │
-        ▼
-Capability identity + trust state
-        │
-        ▼
-GATE 2
-May this agent make this call?
-        │
-        ▼
-Policy + pinned schema + arguments
-        │
-        ▼
-      ALLOW
+GATE 1: Is this still the capability we approved?
+        → capability identity + trust state
+
+GATE 2: May this agent make this call?
+        → policy + pinned schema + arguments + environment
 ```
 
-A trusted server is not automatically authorized to perform every call.
+A trusted server is not automatically authorized to perform every call. Trust is not permission.
 
-Trust is not permission.
+### 6. Behavioral verification
+
+Static identity can pass while runtime behavior diverges. `mcp-trustcard behavior` executes a server in a sandboxed harness, fires deterministic seeded probes, and compares observations against a refe[...] 
+
+It catches:
+
+- prompt-injection markers minted in tool output
+- secret canary leakage
+- exfiltration URLs in output or stderr
+- unexpected network/filesystem/process events
+- schema violations and output-shape drift
+- nondeterministic behavior
+
+The acceptance test is intentionally strong: **static verification can accept a server while behavioral verification fails it, for the same unchanged contract.**
 
 ## Quickstart
 
@@ -247,19 +188,6 @@ npx mcp-trustcard <command>
 mcp-trustcard fingerprint @modelcontextprotocol/server-memory
 ```
 
-```text
-Trustcard: memory-server
-────────────────────────────────────────────────────────
-Server       memory-server@0.6.3
-Protocol     2025-06-18
-Tools        9
-Toolset      sha256:077EddEANnTm…
-Server       sha256:FiELfkb8KDtT…
-Manifest     VERIFIED
-Pin          MATCH
-────────────────────────────────────────────────────────
-```
-
 ### Pin trust on first use
 
 ```bash
@@ -267,7 +195,7 @@ mcp-trustcard pin @modelcontextprotocol/server-memory
 mcp-trustcard pins
 ```
 
-Later connections can detect and classify drift.
+Later connections detect and classify drift.
 
 ### Compare two capability states
 
@@ -291,9 +219,54 @@ mcp-trustcard sign \
   --out signed.json
 ```
 
+### Verify behavior against a reference
+
+```bash
+# Build a manifest from a live probe
+mcp-trustcard manifest @modelcontextprotocol/server-memory --out manifest.json
+
+# Capture a reference behavior report
+mcp-trustcard behavior manifest.json --server @modelcontextprotocol/server-memory \
+  --json --out reference.json
+
+# Later, verify the same or a different build/region
+mcp-trustcard behavior manifest.json --server @modelcontextprotocol/server-memory \
+  --json --out target.json
+
+# Compare two reports directly
+mcp-trustcard behavior diff reference.json target.json
+```
+
+## CLI commands
+
+| Command | Purpose |
+|---|---|
+| `fingerprint <spec>` | Full identity card: digests, provenance, pin continuity |
+| `scan <spec>` | Empirical health scorecard |
+| `manifest <spec>` | Build an unsigned crypto manifest from a live probe |
+| `keygen` | Generate a publisher Ed25519 keypair |
+| `sign <manifest.json>` | Sign a manifest |
+| `verify <signed.json>` | Verify signature, digests, and optional live binding |
+| `diff <old.json> <new.json>` | Classify changes (BREAKING/PERMISSION/ANNOTATION_DOWNGRADE/NON_BREAKING/SYNTACTIC) |
+| `pin <spec>` / `unpin <key>` / `pins` | TOFU pin-store management |
+| `gen-manifest <spec> --save-manifest <file>` | Build a proxy-enforcement manifest |
+| `inspect <file>` | Inspect a manifest or pin store |
+| `auth-issue` / `auth-verify` | Issue or verify dev-mode scoped tokens |
+| `descriptor build <tool-or-manifest.json>` | Build a protocol-neutral capability descriptor |
+| `descriptor sign <desc.json>` | Sign a descriptor |
+| `descriptor verify <desc.json>` | Verify a signed descriptor |
+| `descriptor diff <old.json> <new.json>` | Compare two descriptors |
+| `descriptor pin <desc.json>` | Pin a descriptor to the local store |
+| `behavior <manifest.json> [--server <spec>]` | Run behavioral probes and emit a report |
+| `behavior <manifest.json> -- <cmd> [args...]` | Run behavioral probes against a local server |
+| `behavior diff <ref.json> <target.json>` | Compare two behavior reports |
+| `evidence query` / `stats` / `verify` / `export` / `contradictions` | Query and audit the local evidence store |
+
+Use `--help` on any subcommand for options.
+
 ## Use it as middleware
 
-Trustcard can sit between an MCP client and server.
+trustcard can sit between an MCP client and server.
 
 ```js
 import { TrustSession } from "mcp-trustcard/lib/session.js";
@@ -301,10 +274,7 @@ import { TrustStore } from "mcp-trustcard/lib/trust.js";
 import { Guard } from "mcp-trustcard/lib/guard.js";
 import { wrapClient } from "mcp-trustcard/lib/middleware.js";
 
-const trust = new TrustStore({
-  policy: { requireSignature: true }
-});
-
+const trust = new TrustStore({ policy: { requireSignature: true } });
 const guard = new Guard({
   mode: "enforce",
   policy: { allowDestructive: false }
@@ -338,7 +308,7 @@ await secure.request("tools/call", {
 });
 ```
 
-The call can be denied when:
+A call can be denied when:
 
 - the server is revoked
 - the server no longer matches its trusted identity
@@ -346,20 +316,13 @@ The call can be denied when:
 - the tool is not in the approved manifest
 - the tool is destructive under policy
 - the arguments violate the approved schema
+- the caller lacks required OAuth 2.1 scopes
 
 ## The MCP scanner
 
-Trustcard also includes the original reason the project exists:
+`mcp-trustcard scan` is the empirical layer. It answers:
 
-```bash
-mcp-trustcard scan <server>
-```
-
-The scanner is the **empirical layer**.
-
-It answers:
-
-> **What does this server actually do when a client connects to it?**
+> **What does this server actually do when a client connects?**
 
 The protocol answers:
 
@@ -371,17 +334,8 @@ Both questions matter.
 
 ```bash
 mcp-trustcard scan @modelcontextprotocol/server-github
-```
-
-```bash
 mcp-trustcard scan @modelcontextprotocol/server-github --json
-```
-
-```bash
 mcp-trustcard scan --strict <server>
-```
-
-```bash
 mcp-trustcard scan --threshold 70 <server>
 ```
 
@@ -398,65 +352,29 @@ mcp-trustcard scan --threshold 70 <server>
 | Protocol version | 10 | Does it negotiate a supported protocol? |
 | Latency / failure rate | 5 | Does it respond reliably? |
 
-The score is useful for:
-
-- CI
-- discovery
-- regression detection
-- ecosystem visibility
-
-But a score is not a trust decision.
-
-A server scoring `95` can still be the wrong capability for a particular agent.
-
-A server scoring `60` can still be acceptable under a constrained policy.
-
-**Trustcard separates empirical health from cryptographic identity.**
+A score is useful for CI, discovery, regression detection, and ecosystem visibility. **A score is not a trust decision.** A server scoring `95` can still be the wrong capability for a particular agent[...] 
 
 ### Danger detection — three engines
 
 The destructive-capabilities check uses a **three-engine fusion**:
 
-1. **Heuristic engine** — word-boundary regex for destructive verbs (`delete`,
-   `destroy`, `drop`, `kill`, …) and write/exec verbs, plus `inputSchema`
-   parameter analysis for dangerous inputs (`command`, `sql`, `path`, `url`,
-   `webhook`, `script`). Context-aware scoring: verbs like `clear` and `reset`
-   are only destructive when paired with destructive nouns (files, data, cache,
-   database) — not when used in cognitive tools ("clear thoughts").
-2. **Semantic engine** — TF-IDF vectors over tool names + descriptions, compared
-   against a curated corpus of dangerous-action patterns using cosine similarity.
-   Catches novel attacks that avoid known verbs (e.g. "invalidate stored data").
-3. **Injection engine (v2.2)** — scans tool descriptions for prompt-injection
-   markers: `<IMPORTANT>` tags, `[SYSTEM OVERRIDE]` brackets, "ignore previous
-   instructions", "do not tell the user", sensitive file paths (`~/.ssh/id_rsa`),
-   secrecy instructions, base64 blobs, and exfiltration language. This is a
-   separate threat class from destructive actions — a tool can have a benign
-   schema ("add two numbers") with a weaponized description.
+1. **Heuristic engine** — word-boundary regex for destructive verbs and dangerous parameters, with context-aware scoring (`clear` is only destructive when paired with destructive nouns).
+2. **Semantic engine** — TF-IDF vectors over tool names and descriptions compared against a curated dangerous-action corpus.
+3. **Injection engine** — scans descriptions for prompt-injection markers (`<IMPORTANT>`, `[SYSTEM OVERRIDE]`, "ignore previous instructions", sensitive paths, secrecy instructions, base64 blobs, ex[...] 
 
-**Fusion logic:** when multiple engines flag a tool, confidence is `high`. When
-only one flags it, `medium`/`low`. A tool is marked dangerous when the fused
-score exceeds 0.3.
-
-**Safe tool patterns:** idempotent non-destructive operations (`create_directory`,
-`mkdir`, `sequentialthinking`) are whitelisted — the override applies unless the
-injection detector flags the description (a poisoned `create_directory` is still
-dangerous).
+Safe tool patterns (`create_directory`, `mkdir`, `sequentialthinking`) are whitelisted unless the injection detector flags the description.
 
 ## Call-time protection
 
-A scan is a snapshot.
-
-Capabilities can change after the scan.
-
-The proxy enforces an approved manifest at runtime:
+A scan is a snapshot. Capabilities can change after the scan. The proxy enforces an approved manifest at runtime:
 
 ```bash
-# Generate a manifest (includes danger analysis + 90-day expiry by default)
+# Build a manifest (includes danger analysis + 90-day expiry by default)
 mcp-trustcard gen-manifest \
   @modelcontextprotocol/server-memory \
   --save-manifest memory.json
 
-# For local commands (e.g. a Python server):
+# For local commands (e.g. a Python server)
 mcp-trustcard gen-manifest \
   --save-manifest my-server.json \
   --allow-tool dangerous_but_reviewed_tool \
@@ -482,16 +400,7 @@ mcp-http-proxy \
   --strict
 ```
 
-The proxy can detect:
-
-- new tools
-- removed tools
-- changed schemas
-- unapproved calls
-- manifest drift
-- manifest expiration
-
-It can then:
+The proxy can detect new tools, removed tools, changed schemas, unapproved calls, manifest drift, and manifest expiration. It responds:
 
 ```text
 ALLOW
@@ -503,25 +412,18 @@ according to policy.
 
 ### Manifest expiration
 
-Manifests carry an `expiresAt` timestamp (default: 90 days). An expired
-manifest blocks all calls until regenerated, ensuring the danger analysis
-stays fresh. Override with `--expires-in <days>` or `--no-expiry`.
+Manifests carry an `expiresAt` timestamp (default: 90 days). An expired manifest blocks all calls until regenerated, ensuring the danger analysis stays fresh. Override with `--expires-in <days>` or `-[...]`
 
 ### Tool overrides
 
-Tools flagged as dangerous by the danger detector can be explicitly allowed
-with `--allow-tool <name>` (repeatable). The override is recorded in the
-manifest as `manualOverride: true` so it's visible in audit. Use this only
-for tools you've reviewed and that have their own safety constraints.
+Tools flagged as dangerous can be explicitly allowed with `--allow-tool <name>` (repeatable). The override is recorded in the manifest as `manualOverride: true` so it's visible in audit.
 
 ### Per-agent auth scopes
 
-The proxy can enforce per-agent authorization using OAuth 2.1 token scopes.
-Tools declare `requiredScopes` in the manifest; the proxy validates a bearer
-token against those scopes before forwarding the call.
+The proxy can enforce per-agent authorization using OAuth 2.1 token scopes:
 
 ```bash
-# 1. Generate a manifest with scope requirements
+# 1. Build a manifest with scope requirements
 mcp-trustcard gen-manifest \
   --save-manifest my-server.json \
   --require-scopes delete_file=write:files \
@@ -554,60 +456,66 @@ mcp-proxy \
   -- npx -y @modelcontextprotocol/server-github
 ```
 
-Scope matching supports wildcards: `*` matches everything, `read:*` matches
-`read:files`, `read:db`, etc. A call is allowed only if every required scope
-is satisfied by the token's granted scopes.
+Scope matching supports wildcards: `*` matches everything, `read:*` matches `read:files`, `read:db`, etc. A call is allowed only if every required scope is satisfied by the token's granted scopes.
 
-### Why blocked?
+## Behavioral verification
 
-Every denial includes a structured explanation — not just "DENIED" but
-the tool name, the reason code (`MANIFEST_EXPIRED`, `TOOL_NOT_APPROVED`,
-`DANGEROUS_TOOL`, `INSUFFICIENT_SCOPES`), the danger score, and the action to take.
+Static trust tells you the contract has not changed. It does not tell you the running code honors the contract.
+
+`mcp-trustcard behavior` runs the server in a sandboxed stdio harness, fires deterministic probes, and compares the results against a captured reference or baseline expectations.
+
+```bash
+mcp-trustcard behavior <manifest.json> [--server <spec>] [--json]
+mcp-trustcard behavior <manifest.json> -- <cmd> [args...] [--json]
+mcp-trustcard behavior diff reference.json target.json
+```
+
+Probe categories include valid, boundary, malformed, long strings, unicode, path-like, URL-like, prompt-injection, and secret-canary inputs. Reports include `divergenceClass`, `severity`, `confidence`[...] 
+
+See [`docs/BEHAVIOR.md`](docs/BEHAVIOR.md) for the full model.
+
+## Evidence and the observatory
+
+trustcard records verifiable observations in a local evidence store:
+
+```bash
+mcp-trustcard evidence query --subject <name>
+mcp-trustcard evidence history --subject <name>
+mcp-trustcard evidence verify
+mcp-trustcard evidence export --json-out evidence.json
+```
+
+Evidence records are content-addressed, immutable, and forward-compatible. They are the source of truth from which scores and trust decisions are derived. The long-term vision is a peer-to-peer observ[...] 
 
 ## Signed, chained receipts
 
-Trustcard can bind a call to the capability that authorized it:
+trustcard can bind a call to the capability that authorized it:
 
-```text
+```json
 {
-  capability: toolsetDigest,
-  tool: toolDigest,
-  arguments: argsDigest,
-  result: resultDigest
+  "schema": "trustcard.dev/receipt@1",
+  "at": "2026-08-15T19:28:00.000Z",
+  "server": { "name": "server-memory", "version": "1.0.0" },
+  "tool": "read_file",
+  "toolsetDigest": "sha256:...",
+  "argumentsDigest": "sha256:...",
+  "resultDigest": "sha256:..."
 }
 ```
 
-Receipts are signed and hash-chained:
-
-```text
-receipt[n]
-    ↓
-hash
-    ↓
-receipt[n+1]
-```
-
-This makes the history tamper-evident.
-
-A receipt is evidence of a decision and an observed interaction.
-
-It is **not** proof that a server behaved honestly internally.
+Receipts are signed and hash-chained, making the history tamper-evident. A receipt is evidence of a decision and an observed interaction; it is **not** proof that a server behaved honestly internally.
 
 ## Capability descriptors
 
-The trust model is not fundamentally MCP-specific.
-
-MCP is the first supported protocol.
-
-The deeper abstraction is:
+trustcard is not fundamentally MCP-specific. The deeper abstraction is a protocol-neutral capability descriptor that projects different execution surfaces into one canonical trust model:
 
 ```text
                 ┌─────────────┐
 MCP ───────────▶│             │
 OpenAPI ───────▶│ Capability  │
-Function calls ─▶│ Descriptor │
-Plugins ────────▶│             │
-Agents ─────────▶│             │
+Function calls ─▶│ Descriptor  │
+Plugins ───────▶│             │
+Agents ────────▶│             │
                 └──────┬──────┘
                        │
                        ▼
@@ -616,9 +524,16 @@ Agents ─────────▶│             │
               Change
               Policy
               Receipts
+              Evidence
 ```
 
-A capability descriptor projects different execution surfaces into one canonical trust model.
+For example, build and sign a descriptor for one tool:
+
+```bash
+mcp-trustcard descriptor build manifest.json --key publisher.key.json --tool read_file --out desc.json
+mcp-trustcard descriptor sign desc.json --key publisher.key.json --out signed-desc.json
+mcp-trustcard descriptor verify signed-desc.json
+```
 
 The goal is simple:
 
@@ -628,17 +543,9 @@ The goal is simple:
 
 For the full guarantees table, see [`docs/SECURITY-MODEL.md`](docs/SECURITY-MODEL.md).
 
-Trustcard is not a sandbox.
+trustcard is not a sandbox. A signed capability can still be malicious. A publisher can sign bad software. A trusted server can have a vulnerability. A receipt can prove what was authorized and observ[...] 
 
-A signed capability can still be malicious.
-
-A publisher can sign bad software.
-
-A trusted server can have a vulnerability.
-
-A receipt can prove what was authorized and observed, not that the server's internal execution was honest.
-
-Trustcard addresses:
+trustcard addresses:
 
 ```text
 identity
@@ -646,6 +553,7 @@ provenance
 continuity
 change
 authorization
+behavioral verification
 evidence
 ```
 
@@ -663,17 +571,16 @@ Those are complementary controls.
 
 ## Documentation
 
-- [`docs/SECURITY-MODEL.md`](docs/SECURITY-MODEL.md) — **what trustcard guarantees and what it doesn't** (read this first)
+See [`docs/INDEX.md`](docs/INDEX.md) for a map of the documentation.
+
+Key documents:
+
+- [`docs/SECURITY-MODEL.md`](docs/SECURITY-MODEL.md) — what trustcard guarantees and what it doesn't
 - [`docs/SPEC.md`](docs/SPEC.md) — normative protocol specification
-- [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md) — threats and non-goals
-- [`docs/DESCRIPTOR.md`](docs/DESCRIPTOR.md) — protocol-neutral capability descriptors
-- [`docs/ANALYSIS.md`](docs/ANALYSIS.md) — why health probing alone was insufficient
-- [`docs/TRUST-SUBSTRATE.md`](docs/TRUST-SUBSTRATE.md) — generalization beyond MCP
-- [`docs/AUDIT-REPORT-v2.md`](docs/AUDIT-REPORT-v2.md) — adversarial architecture audit
-- [`docs/REGISTRY-INTEGRATION.md`](docs/REGISTRY-INTEGRATION.md) — registry integration
-- [`docs/MIGRATION.md`](docs/MIGRATION.md) — v0.x → v1
-- [`examples/production-agent/`](examples/production-agent/) — reference deployment architecture
-- [`CHANGELOG.md`](CHANGELOG.md) — release history
+- [`docs/BEHAVIOR.md`](docs/BEHAVIOR.md) — behavioral verification model
+- [`docs/ROADMAP-2Y.md`](docs/ROADMAP-2Y.md) — two-year dependency-gate plan
+- [`docs/MIGRATION.md`](docs/MIGRATION.md) — version migration notes
+- [`docs/KNOWN-LIMITATIONS.md`](docs/KNOWN-LIMITATIONS.md) — documented gaps
 
 ## Development
 
@@ -682,27 +589,18 @@ npm test
 npm run test:fast
 ```
 
-Trustcard is implemented with Node.js standard-library primitives, including:
-
-```text
-node:crypto
-node:child_process
-```
+trustcard is implemented with Node.js standard-library primitives, including `node:crypto`, `node:child_process`, and `node:fs`. There are no runtime dependencies.
 
 ## The short version
 
 ```text
 A scanner tells you what a server looked like.
-
 A signature tells you who authorized a capability.
-
 A digest tells you what the capability is.
-
 A pin tells you whether it changed.
-
 A policy tells you whether the call is allowed.
-
-A receipt tells you what was authorized and observed.
+Behavioral verification tells you whether the code honored the contract.
+Evidence tells you what was observed and when.
 
 trustcard combines all of them.
 ```

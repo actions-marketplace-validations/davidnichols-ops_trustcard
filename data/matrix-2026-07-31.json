@@ -1,0 +1,3508 @@
+{
+  "name": "Declaration-vs-Observation Matrix",
+  "description": "Classification of MCP registry declarations against observed runtime behavior.",
+  "builtAt": "2026-07-31T20:46:53.713Z",
+  "registrySource": "data/mcp-registry-2026-07-31-sample.json",
+  "scanSource": "data/mcp-ecosystem-2026-07-31-sample.json",
+  "summary": {
+    "scanServers": 101,
+    "registryServers": 111,
+    "matched": 101,
+    "unmatched": 0,
+    "classificationCounts": {
+      "transport": {
+        "MATCH": 69,
+        "UNKNOWN": 32
+      },
+      "envVars": {
+        "OBSERVED_UNDECLARED": 17,
+        "UNKNOWN": 44,
+        "MATCH": 2,
+        "N/A": 34,
+        "DECLARED_UNOBSERVED": 4
+      },
+      "packageArgs": {
+        "N/A": 98,
+        "UNKNOWN": 3
+      },
+      "runtimeArgs": {
+        "OBSERVED_UNDECLARED": 19,
+        "UNKNOWN": 44,
+        "N/A": 38
+      },
+      "headers": {
+        "N/A": 60,
+        "UNKNOWN": 37,
+        "DECLARED_UNOBSERVED": 4
+      },
+      "handshake": {
+        "FAIL": 31,
+        "MATCH": 38,
+        "UNKNOWN": 32
+      },
+      "capabilities": {
+        "UNKNOWN": 62,
+        "OBSERVED_UNDECLARED": 39
+      }
+    },
+    "denominators": {
+      "envVars": {
+        "withDeclarations": 10,
+        "withObservations": 98,
+        "total": 101
+      },
+      "packageArgs": {
+        "withDeclarations": 1,
+        "total": 101
+      },
+      "runtimeArgs": {
+        "withDeclarations": 0,
+        "total": 101
+      },
+      "headers": {
+        "withDeclarations": 13,
+        "total": 101
+      }
+    }
+  },
+  "servers": [
+    {
+      "serverName": "ai.agentutility/mcp-retail",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-retail@0.2.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-agentops",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-agentops@0.1.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-mediakit",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-mediakit@0.11.9",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-edge-market",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-edge-market@0.15.6",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.ankimcp/anki-mcp-server",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@ankimcp/anki-mcp-server@0.22.5",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-matchpoint",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-matchpoint@0.1.4",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-wordmint",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-wordmint@0.16.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-edge-finance",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-edge-finance@0.18.8",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-browser-workflow",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-browser-workflow@0.1.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bolthub/registry",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "MATCH",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@bolthub/mcp-registry@0.1.6",
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "LND_REST_HOST",
+            "description": "LND REST API URL (recommended wallet; pair with LND_MACAROON). One wallet config is required.",
+            "isRequired": false
+          },
+          {
+            "name": "LND_MACAROON",
+            "description": "Hex-encoded macaroon for LND (use a pay-scoped macaroon in production). Required with LND_REST_HOST.",
+            "isRequired": false
+          },
+          {
+            "name": "NWC_URI",
+            "description": "Nostr Wallet Connect string — easiest setup, works with CoinOS, Alby Hub, Zeus, and more. Alternative to LND.",
+            "isRequired": false
+          },
+          {
+            "name": "LNBITS_URL",
+            "description": "LNbits instance URL (pair with LNBITS_ADMIN_KEY). Alternative wallet.",
+            "isRequired": false
+          },
+          {
+            "name": "LNBITS_ADMIN_KEY",
+            "description": "Admin API key for LNbits. Required with LNBITS_URL.",
+            "isRequired": false
+          },
+          {
+            "name": "PHOENIXD_URL",
+            "description": "Phoenixd HTTP API URL (pair with PHOENIXD_PASSWORD). Alternative wallet.",
+            "isRequired": false
+          },
+          {
+            "name": "PHOENIXD_PASSWORD",
+            "description": "HTTP password for Phoenixd. Required with PHOENIXD_URL.",
+            "isRequired": false
+          },
+          {
+            "name": "BUDGET_SATS",
+            "description": "Maximum sats the server may spend per session (process lifetime). Unset = unlimited.",
+            "isRequired": false
+          },
+          {
+            "name": "BOLTHUB_AUTH_TOKEN",
+            "description": "Optional bolthub API token, used only by the deploy_node / node_status Node Launcher tools.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-rollforge",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-rollforge@0.1.5",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "agency.kesey/pretrip",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "pretrip-mcp@1.0.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 2,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-web-probe",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-web-probe@0.32.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.autoblocks/ctxl",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "ctxl@0.0.2",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-compose",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-compose@0.13.0",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenttrust/mcp-server",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "MATCH",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agenttrust/mcp-server@1.1.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "AGENTTRUST_API_KEY",
+            "description": "Your AgentTrust API key from https://agenttrust.ai",
+            "isRequired": true
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.autonomad/computeback",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "DECLARED_UNOBSERVED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@autonomad1/computeback-mcp@1.1.3",
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "COMPUTEBACK_API_URL",
+            "description": "Computeback API base URL. Defaults to production.",
+            "isRequired": false
+          },
+          {
+            "name": "BASE_RPC_URL",
+            "description": "Base L2 RPC endpoint for on-chain reads (balance, settlement tx). Defaults to public mainnet endpoint.",
+            "isRequired": false
+          },
+          {
+            "name": "AGENT_DID",
+            "description": "Optional. Decentralized identifier of the calling agent (e.g. did:nomd:agt_...). Required for CB Hire B2B tools (list_my_inbox, place_bid, dispatch_*, etc.). Get one from https://www.computeback.com/agents/start.",
+            "isRequired": false
+          },
+          {
+            "name": "AGENT_HMAC_SECRET",
+            "description": "Optional. HMAC secret returned at agent registration time. Required together with AGENT_DID for CB Hire B2B tools.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 28,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.adeu/adeu",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@adeu/mcp-server@1.7.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 9,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-model-router",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-model-router@0.1.1",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-locale",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-locale@0.8.7",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.apithreshold/apithreshold",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "UNKNOWN",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": null,
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "APITHRESHOLD_LLM_PROVIDER",
+            "description": "LLM provider to use: openai or anthropic.",
+            "isRequired": true
+          },
+          {
+            "name": "OPENAI_API_KEY",
+            "description": "Required when APITHRESHOLD_LLM_PROVIDER=openai.",
+            "isRequired": false
+          },
+          {
+            "name": "ANTHROPIC_API_KEY",
+            "description": "Required when APITHRESHOLD_LLM_PROVIDER=anthropic.",
+            "isRequired": false
+          },
+          {
+            "name": "APITHRESHOLD_LICENSE",
+            "description": "Optional license JWT. Omit for Free tier.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [
+          {
+            "description": null,
+            "isRequired": false
+          },
+          {
+            "description": null,
+            "isRequired": false
+          },
+          {
+            "description": null,
+            "isRequired": false
+          }
+        ],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": null,
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": "no runnable spec"
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-bestiary",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-bestiary@0.1.3",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aetherwealth/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "UNKNOWN",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@aetherwealth/mcp@0.2.11",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "resources": {
+            "listChanged": false,
+            "subscribe": false
+          },
+          "prompts": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 48,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bizmuse/bizmuse",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "bizmuse-mcp@0.1.6",
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "BIZMUSE_API_KEY",
+            "description": "API key created at https://bizmuse.ai/settings/apikeys",
+            "isRequired": true
+          },
+          {
+            "name": "BIZMUSE_API_URL",
+            "description": "BizMuse API base URL",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-synthforge",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-synthforge@0.8.2",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bolthub/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "DECLARED_UNOBSERVED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@bolthub/mcp@0.7.2",
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "LND_REST_HOST",
+            "description": "LND REST API URL (recommended wallet; pair with LND_MACAROON). A wallet is optional — without one, free tools and marketplace search still work; paid calls return their payment challenge.",
+            "isRequired": false
+          },
+          {
+            "name": "LND_MACAROON",
+            "description": "Hex-encoded macaroon for LND (use a pay-scoped macaroon in production). Required with LND_REST_HOST.",
+            "isRequired": false
+          },
+          {
+            "name": "NWC_URI",
+            "description": "Nostr Wallet Connect string — easiest setup, works with CoinOS, Alby Hub, Zeus, and more. Alternative to LND.",
+            "isRequired": false
+          },
+          {
+            "name": "LNBITS_URL",
+            "description": "LNbits instance URL (pair with LNBITS_ADMIN_KEY). Alternative wallet.",
+            "isRequired": false
+          },
+          {
+            "name": "LNBITS_ADMIN_KEY",
+            "description": "Admin API key for LNbits. Required with LNBITS_URL.",
+            "isRequired": false
+          },
+          {
+            "name": "PHOENIXD_URL",
+            "description": "Phoenixd HTTP API URL (pair with PHOENIXD_PASSWORD). Alternative wallet.",
+            "isRequired": false
+          },
+          {
+            "name": "PHOENIXD_PASSWORD",
+            "description": "HTTP password for Phoenixd. Required with PHOENIXD_URL.",
+            "isRequired": false
+          },
+          {
+            "name": "BUDGET_SATS",
+            "description": "Maximum sats the server may spend per session (process lifetime), across ALL sources. Unset = unlimited; 0 = free tools only. The config file's budget.sat takes precedence.",
+            "isRequired": false
+          },
+          {
+            "name": "BOLTHUB_ACCOUNT_TOKEN",
+            "description": "Account token for tools that act on YOUR bolthub account (workspace, listing, audit, earnings, and node tools). Optional even for those: the connect_account tool pairs via the browser instead. Never needed to discover, call, or pay for APIs — buying is account-less.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 22,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-prooflayer",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-prooflayer@0.2.4",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aliengiraffe/spotdb",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "UNKNOWN",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": null,
+        "remoteUrl": null,
+        "declaredEnvVars": [
+          {
+            "name": "X-API-Key",
+            "description": "Optional API key for request authentication",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": null,
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": "no runnable spec"
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-statline",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "OBSERVED_UNDECLARED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "OBSERVED_UNDECLARED",
+        "headers": "N/A",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "stdio",
+        "npmSpec": "@agentutility/mcp-statline@0.1.3",
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.biel/biel-ai",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.biel.ai/v2/{project_slug}/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 1,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ac.inference.sh/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.inference.sh/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bloopo/bloopo",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.bloopo.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.boolsai/scan",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://boolsai.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 2,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bezal/local-commerce",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://app.bezal.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 13,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentdm/agentdm",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.agentdm.ai/mcp/v1/grid",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Optional. Recommended: OAuth 2.0. Omit this header and your MCP client will discover /.well-known/oauth-protected-resource and run browser-based authorization (tokens auto-refresh for 30 days, no keys to copy). Alternative: API key. Send 'Bearer agentdm_<token>' from https://app.agentdm.ai for server-to-server use.",
+            "isRequired": false
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.atdev/supershopping",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://supershopping-mcp.atdev.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "logging": {},
+          "prompts": {
+            "listChanged": true
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": true
+          },
+          "tools": {
+            "listChanged": true
+          },
+          "extensions": {
+            "io.modelcontextprotocol/ui": {}
+          }
+        },
+        "toolCount": 8,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.adside/adside",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.adside.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer sk_live_... API key from your Adside account",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenticshelf/graffeo",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.agenticshelf.ai/m/graffeo/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.adweave/meta-ads-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.adweave.ai/meta-ads-mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token using your AdWeave API key (aw_ prefix)",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.ai-akari/agent-trust-receipt",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://ai-akari.ai/mcp-trust",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {},
+          "resources": {}
+        },
+        "toolCount": 1,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.adadvisor/mcp-server",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.adadvisor.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token (adv_sk_...). Get key: https://www.adadvisor.ai/docs/user-guide/getting-started-with-mcp?utm_source=mcp-registry",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentic-news/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.agentic-news.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.alphacreek/alphacreek-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "DECLARED_UNOBSERVED",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.alphacreek.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token: OAuth access token (Claude/ChatGPT) or AlphaCreek MCP API key from dashboard",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.beatbandit/beatbandit",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://beatbandit.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.analyticslegends/sap-analytics",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://analyticslegends.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {},
+          "resources": {},
+          "prompts": {},
+          "completions": {}
+        },
+        "toolCount": 15,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.afmr/discovery",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://afmr.ai/api/rpc",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "resources": {
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.benroberts/b4-index",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "DECLARED_UNOBSERVED",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://b4-index.vercel.app/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Optional. 'Bearer <b4_... key>' unlocks the Pro workflow tools (b4_audit, b4_compare, b4_recommend). The free tier (b4_browse, b4_score) needs no credentials.",
+            "isRequired": false
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 5,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.anzenna/anzenna",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.anzenna.ai/sse",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenticfabricationnetwork/ufp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://agenticfabricationnetwork.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "resources": {
+            "listChanged": true
+          },
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 9,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aient/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://aient.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.adramp/google-ads",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.adramp.ai",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.abmeter/abmeter",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.abmeter.ai",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          }
+        },
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bittlebits/bittlebits",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://bittlebits.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.ai-portal/ai-portal",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://www.ai-portal.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bassethound/bassethound",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.bassethound.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bowmark/bowmark",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.bowmark.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {},
+          "prompts": {}
+        },
+        "toolCount": 2,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aviado/health",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://aviado.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {},
+          "prompts": {}
+        },
+        "toolCount": 9,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.biddeed/biddeed-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.biddeed.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aisecuritygateway/mcp-gateway",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.aisecuritygateway.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer <project API key> (oah_...). Request beta access at enterprise@aisecuritygateway.ai",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.augworlds/travel-world",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://travel.augworlds.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.alpic.test/test-mcp-server",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://test.alpic.ai/",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.autorfp/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://{api_host}/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.assetlog/assetlog",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.assetlog.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.atlasverified/atlas-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.atlasverified.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenticshelf/puroair",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.agenticshelf.ai/m/puroair/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.auteng/docs",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://auteng.ai/mcp/docs",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.baselight/baselight",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.baselight.app/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "x-api-key",
+            "description": "Baselight API key. Generate one at https://baselight.app under account settings.",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.ambix/ambix",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.ambix.ai",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.betterpost/server",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://betterpost.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 23,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.airshelf/catalog",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.airshelf.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenticterminal/directory",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.agenticterminal.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 6,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.augmentev/paseo",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.augmentev.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token — your AugmentEV agent API key (format: 'Bearer <key>'). Sign up at https://augmentev.com to get one.",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.arclan/registry",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://arclan.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.authoryze/authoryze",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://authoryze.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token using your agent API key (format: Bearer <key>). Not needed when using OAuth — Claude Desktop, Claude.ai, and ChatGPT authenticate via OAuth automatically.",
+            "isRequired": false
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.arpi/arpi-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.arpi.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.axonagentic/neuroautomata",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.neuroautomata.axonagentic.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bodenrichtwert/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.bodenrichtwert.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.artidrop/artidrop",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://artidrop.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ac.tandem/docs-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://tandem.ac/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {},
+          "resources": {},
+          "prompts": {}
+        },
+        "toolCount": 13,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.auralogs/auralogs",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "DECLARED_UNOBSERVED",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.auralogs.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Bearer aura_read_YOUR_KEY. Create a read-only project key in the Auralogs dashboard under Settings, API & MCP keys.",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.boolsai/grep",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://grep.boolsai.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "logging": {}
+        },
+        "toolCount": 4,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.backengine/backengine-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://backengine-prod.backengine.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agentrapay/agentra",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.agentrapay.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "capabilities": {
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "listChanged": false,
+            "subscribe": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 6,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.auteng/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://auteng.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 7,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.auxen/auxen",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.auxen.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.appdeploy/deploy-app",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api-v2.appdeploy.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.aarna/atars-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.aarna.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 18,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.argushq/enforcement-database",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://argushq.ai/api/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "toolCount": 5,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.1325/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://agoclnqfyinwjxdmjnns.supabase.co/functions/v1/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.boolsai/signals",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://signals.boolsai.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 12,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.boolsai/directory",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://directory.boolsai.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 19,
+        "error": null
+      }
+    },
+    {
+      "serverName": "agency.lona/trading",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.lona.agency/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bluenexus/universal-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.bluenexus.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.basethread/basethread",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "FAIL",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.basethread.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bareun/bareun",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://api.bareun.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "Authorization",
+            "description": "Send 'Bearer <your Bareun API key>'. Alternatively send the key in an 'api-key' header. Get a key at https://bareun.ai.",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.bankee/inferventis-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "N/A",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "DECLARED_UNOBSERVED",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "remote",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp-server-295985738387.europe-west1.run.app/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": [
+          {
+            "name": "x-api-key",
+            "description": "Inferventis API key — obtain at inferventis.ai",
+            "isRequired": true
+          }
+        ]
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {}
+        },
+        "toolCount": 20,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.anomalyarmor/armor-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "both",
+        "npmSpec": null,
+        "remoteUrl": "https://mcp.anomalyarmor.ai/mcp",
+        "declaredEnvVars": [
+          {
+            "name": "ARMOR_API_KEY",
+            "description": "AnomalyArmor API key (aa_live_*). Generate at https://app.anomalyarmor.ai/settings/api-keys.",
+            "isRequired": true
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.borealhost/mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "DECLARED_UNOBSERVED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "both",
+        "npmSpec": null,
+        "remoteUrl": "https://borealhost.ai/mcp/",
+        "declaredEnvVars": [
+          {
+            "name": "BOREALHOST_API_KEY",
+            "description": "BorealHost API key (format: bh_<48 hex chars>). Optional — you can also call register() or set_api_key() at runtime.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "toolCount": 113,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.agenticaffiliate/affiliate-networks-mcp",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "N/A",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "UNKNOWN",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "both",
+        "npmSpec": "affiliate-networks-mcp@0.19.0",
+        "remoteUrl": "https://mcp.agenticaffiliate.ai/mcp",
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.autonomad/travel",
+      "unmatched": false,
+      "classifications": {
+        "transport": "MATCH",
+        "envVars": "DECLARED_UNOBSERVED",
+        "packageArgs": "N/A",
+        "runtimeArgs": "N/A",
+        "headers": "N/A",
+        "handshake": "MATCH",
+        "capabilities": "OBSERVED_UNDECLARED"
+      },
+      "declarations": {
+        "transport": "both",
+        "npmSpec": "autonomad-travel@1.4.0",
+        "remoteUrl": "https://mcp.autonomad.ai/mcp",
+        "declaredEnvVars": [
+          {
+            "name": "AUTONOMAD_API_URL",
+            "description": "Autonomad API base URL. Defaults to production.",
+            "isRequired": false
+          },
+          {
+            "name": "AUTONOMAD_AGENT_MODE",
+            "description": "Set to 'true' to expose autonomous-agent tools (register_agent, DID-based booking). Default human mode is for Claude/ChatGPT users.",
+            "isRequired": false
+          }
+        ],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {},
+          "resources": {}
+        },
+        "toolCount": 8,
+        "error": null
+      }
+    },
+    {
+      "serverName": "ai.ankimcp/anki-mcp-server-addon",
+      "unmatched": false,
+      "classifications": {
+        "transport": "UNKNOWN",
+        "envVars": "UNKNOWN",
+        "packageArgs": "UNKNOWN",
+        "runtimeArgs": "UNKNOWN",
+        "headers": "N/A",
+        "handshake": "UNKNOWN",
+        "capabilities": "UNKNOWN"
+      },
+      "declarations": {
+        "transport": "unknown",
+        "npmSpec": null,
+        "remoteUrl": null,
+        "declaredEnvVars": [],
+        "declaredPackageArgs": [],
+        "declaredRuntimeArgs": [],
+        "declaredHeaders": []
+      },
+      "observations": {
+        "handshake": null,
+        "protocolVersion": null,
+        "capabilities": null,
+        "toolCount": 0,
+        "error": "no runnable spec"
+      }
+    }
+  ]
+}

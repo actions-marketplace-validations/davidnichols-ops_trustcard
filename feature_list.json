@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "name": "npm-test-passes",
+    "description": "All 514 Node.js tests pass",
+    "steps": ["npm test"],
+    "passes": true
+  },
+  {
+    "id": 2,
+    "name": "cli-scan-rogue-server",
+    "description": "mcp-trustcard scan detects dangerous tools in rogue server",
+    "steps": ["node bin/mcp-trustcard.js scan -- node rogue-servers/level1-subtle.js"],
+    "passes": true
+  },
+  {
+    "id": 3,
+    "name": "cli-keygen-works",
+    "description": "mcp-trustcard keygen produces Ed25519 keypair",
+    "steps": ["node bin/mcp-trustcard.js keygen --out /tmp/tc-test-key.json"],
+    "passes": true
+  },
+  {
+    "id": 4,
+    "name": "cli-sign-verify",
+    "description": "mcp-trustcard sign + verify round-trip works",
+    "steps": ["node bin/mcp-trustcard.js sign --help", "node bin/mcp-trustcard.js verify --help"],
+    "passes": true
+  },
+  {
+    "id": 5,
+    "name": "dst-test-fix",
+    "description": "Manifest expiry test handles DST boundary (±2h tolerance)",
+    "steps": ["npm test 2>&1 | grep 'proxy manifest includes expiresAt'"],
+    "passes": true
+  },
+  {
+    "id": 6,
+    "name": "published-to-npm-v3",
+    "description": "mcp-trustcard v3.0.0 published to npm and installable by external users",
+    "steps": ["npm install -g mcp-trustcard@3.0.0"],
+    "passes": true
+  },
+  {
+    "id": 7,
+    "name": "colab-scan-rogue-works",
+    "description": "External engineer can install from npm on Colab, scan a rogue server → 78/100, scan safe server → 87/100",
+    "steps": ["colab run colab/trustcard_colab_demo.py"],
+    "passes": true
+  },
+  {
+    "id": 8,
+    "name": "colab-gen-manifest-works",
+    "description": "External engineer can generate proxy manifests on Colab, dangerous tools marked allowed=false",
+    "steps": ["mcp-trustcard gen-manifest --save-manifest manifest.json -- node server.js"],
+    "passes": true
+  },
+  {
+    "id": 9,
+    "name": "manifest-local-command-support",
+    "description": "manifest command supports -- <cmd> [args...] local command syntax (not just npm specs)",
+    "steps": ["mcp-trustcard manifest --key pub.key.json --out m.json -- node server.js"],
+    "passes": true
+  },
+  {
+    "id": 10,
+    "name": "pin-local-command-support",
+    "description": "pin command supports -- <cmd> [args...] local command syntax for TOFU pinning",
+    "steps": ["mcp-trustcard pin --pins pins.json -- node server.js"],
+    "passes": true
+  },
+  {
+    "id": 11,
+    "name": "colab-full-crypto-workflow",
+    "description": "Unified pipeline on Colab T4: keygen → gen-manifest → scan → fingerprint → manifest --key → sign → verify (VERIFIED) → pin → list pins",
+    "steps": ["colab run --gpu T4 colab/unified_pipeline_demo.py"],
+    "passes": true
+  },
+  {
+    "id": 12,
+    "name": "observe-cwd-pass-through",
+    "description": "observeServer passes --cwd to McpStdioClient, enabling fingerprint/manifest/pin on servers in other directories",
+    "steps": ["mcp-trustcard fingerprint --cwd ~/Projects/repo-archaeologist -- python -m repo_archaeologist.mcp_server"],
+    "passes": true
+  },
+  {
+    "id": 13,
+    "name": "real-mcp-server-crypto-workflow",
+    "description": "Full trustcard crypto workflow on repo-archaeologist MCP server (4 tools): scan 78/100, fingerprint, manifest, sign, verify VERIFIED, pin",
+    "steps": ["mcp-trustcard scan --cwd ~/Projects/repo-archaeologist -- python -m repo_archaeologist.mcp_server"],
+    "passes": true
+  }
+]

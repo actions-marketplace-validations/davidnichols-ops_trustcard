@@ -1,5 +1,113 @@
 # Changelog
 
+## [3.0.3] — 2026-08-11
+
+Bug fix: `observeServer` now accepts and passes `cwd` through to `McpStdioClient`.
+Previously, local commands invoked via `-- <cmd> [args...]` always spawned in the
+proxy's working directory, ignoring `--cwd`. This broke fingerprint/manifest/pin
+for any local server that needed to run from its project root.
+
+### Fixed
+
+- **`lib/observe.js`** — `observeServer({ cwd })` now forwards `cwd` to
+  `McpStdioClient`, which passes it to `child_process.spawn`. All CLI
+  subcommands that support local commands (`fingerprint`, `manifest`, `pin`)
+  already threaded `cwd` through `runtimeOpts()` — the gap was in the library
+  function itself.
+
+### Tests
+
+- 514 total (unchanged from 3.0.2 — the fix is a pass-through, covered by
+  existing local-command tests that set `cwd` at the CLI layer).
+
+## [3.0.2] — 2026-07-28
+
+`manifest` and `pin` subcommands now support local commands via `-- <cmd> [args...]`,
+matching `fingerprint` (added in 3.0.1). Full crypto workflow now works end-to-end
+for local servers without npx.
+
+### Added
+
+- **`bin/mcp-trustcard.js`** — `cmdManifest` and `cmdPin` now use
+  `parseLocalCommand()` + `runtimeOpts()` to accept `-- <cmd> [args...]` with
+  `--cwd` and `--env` support. `cmdPin` uses the local command string as the
+  pin key when no server info is available.
+- **Colab notebook** — updated to 3.0.2 with full crypto workflow demo
+  (keygen → manifest → sign → verify → pin → fingerprint).
+
+## [3.0.1] — 2026-07-28
+
+`fingerprint` subcommand now supports local commands via `-- <cmd> [args...]`.
+Previously, `fingerprint` only worked with npm package specs (via `npx -y <spec>`).
+Local servers (e.g. `mcp-trustcard fingerprint -- node my-server.js`) were not
+supported.
+
+### Added
+
+- **`lib/fingerprint.js`** — `fingerprint()` now accepts `localCmd: { cmd, args,
+  cwd, env }`. When provided, package identity is skipped (local commands have
+  no npm package) and the server is observed directly.
+- **`bin/mcp-trustcard.js`** — `cmdFingerprint` now uses `parseLocalCommand()`
+  to detect `-- <cmd> [args...]` and threads `cwd`/`env` through.
+- **Colab notebook** — added `trustcard_colab_demo.ipynb` for external usability
+  without cloning the repo.
+
+## [3.0.0] — 2026-07-27
+
+Evidence substrate: the atomic primitive for MCP ecosystem observation. This
+release ships two major additions over 2.2.1 — per-agent auth scope enforcement
+(previously committed as 2.3.0 but unpublished) and the v3.0 evidence layer.
+
+### Added — Evidence substrate
+
+- **`lib/evidence.js`** — evidence record format: signed, content-addressed
+  observations with predicate vocabulary, subject identity, confidence, and
+  tamper-evident chaining via `manifestDigest`.
+- **`lib/evidence-predicates.js`** — controlled vocabulary of 20+ observation
+  predicates (`server-exists`, `server-responds`, `schema-duplicate`,
+  `tool-count-changed`, etc.) with URN-style namespacing.
+- **`lib/evidence-store.js`** — append-only JSONL store with day-partitioned
+  files, in-memory index, digest verification, contradiction detection, and
+  export to NDJSON.
+- **`lib/evidence-adapters.js`** — adapters that convert probe outputs
+  (existence checks, healthchecks, registry scans) into evidence records.
+- **`lib/existence.js`** — Layer 1 existence verification: resolves a server
+  spec to a package, repo, and runtime endpoint, classifying what exists vs
+  what claims to exist.
+- **`lib/client-http.js`** — HTTP/SSE MCP client for probing remote servers.
+- **CLI `evidence` subcommand** — `query`, `history`, `stats`, `verify`,
+  `export`, `contradictions` for inspecting evidence stores.
+- **`scripts/scan-ecosystem.mjs`** — universal discovery scanner that crawls
+  the npm registry for MCP servers and records existence evidence.
+- **`scripts/crawl-registry.mjs`** — registry crawler that enumerates
+  `@modelcontextprotocol/*` packages and MCP-tagged packages.
+
+### Added — Auth scope enforcement (from unpublished 2.3.0)
+
+- **`lib/auth.js`** — `DevIssuer` (HMAC-SHA256 JWT-like tokens for local dev),
+  `IdpIntrospector` (RFC 7662 OAuth 2.1 token introspection), `TokenValidator`,
+  `scopeSatisfies` (wildcard scope matching).
+- **`requiredScopes` in manifest** — tools can declare required OAuth scopes;
+  `checkCall` validates the caller's token against them.
+- **`requireScopes` Gate 2 rule** — policy predicate for programmatic scope
+  enforcement via the Guard.
+- **Proxy auth flags** — `--auth-secret`, `--auth-introspect`, `--auth-client-id`,
+  `--auth-client-secret`, `--auth-token-env`.
+- **CLI `auth-issue` and `auth-verify`** subcommands.
+
+### Tests
+
+- 456 total (326 original + 43 auth + 81 evidence + 34 store + 15 adapters):
+  evidence record format, predicate vocabulary, store append/verify/query/
+  export/contradictions, adapter conversion, auth scope matching, token
+  validation, introspection, proxy auth stripping.
+
+### Breaking changes
+
+None. All additions are new modules and CLI subcommands. Existing v2.x
+manifests, pins, and receipts are unchanged. `interfaceDigest()` remains
+byte-equal to `toolDigest()`.
+
 ## [2.3.0] — 2026-07-22
 
 Per-agent auth scope enforcement. Tools can now declare `requiredScopes` in

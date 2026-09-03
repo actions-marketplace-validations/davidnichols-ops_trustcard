@@ -4,6 +4,7 @@ import {
   InvocationPolicy,
   ScopedDecisions,
   denyTools,
+  allowTools,
   requireApprovalForDestructive,
   restrictToolToEnvironments,
   constrainArg,
@@ -64,17 +65,21 @@ test("forbidArg denies when a forbidden argument is present", () => {
   assert.equal(p.authorize({ tool: "search", args: { query: "x" } }).verdict, "allow");
 });
 
-test("first matching rule wins; a throwing predicate never widens access", () => {
+test("most restrictive matching rule wins; a throwing predicate fails closed", () => {
   const p = new InvocationPolicy({
     rules: [
       { name: "throws", when: () => { throw new Error("boom"); }, verdict: "deny" },
       denyTools(["delete_all"]),
+      allowTools(["search"]),
     ],
   });
-  // throwing rule is skipped (not a match), so delete_all is denied by the next rule
+  // delete_all is denied both by denyTools and by the throwing rule; deny wins
   assert.equal(p.authorize({ tool: "delete_all" }).verdict, "deny");
-  // and search falls through to default allow
-  assert.equal(p.authorize({ tool: "search" }).verdict, "allow");
+  // search matches the allow rule, but the throwing rule also matches and fails
+  // closed, so the result is deny — a broken predicate never widens access
+  const search = p.authorize({ tool: "search" });
+  assert.equal(search.verdict, "deny");
+  assert.ok(search.matched.includes("throws"), "throwing rule should be recorded as matched");
 });
 
 // --- Gate 2 in the Guard ------------------------------------------------------

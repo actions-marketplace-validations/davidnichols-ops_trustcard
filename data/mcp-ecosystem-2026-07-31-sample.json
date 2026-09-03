@@ -1,0 +1,4861 @@
+{
+  "name": "MCP Ecosystem Scan",
+  "description": "Reproducible ecosystem scan combining registry crawl, Layer 1 existence verification, and runtime health checks.",
+  "schemaVersion": "0.1",
+  "scannedAt": "2026-07-31T20:39:11.467Z",
+  "completedAt": "2026-07-31T20:46:40.546Z",
+  "registrySource": "data/mcp-registry-2026-07-31-sample.json",
+  "sampleSize": 100,
+  "summary": {
+    "totalScanned": 101,
+    "existence": {
+      "repositoryVerified": 30,
+      "packageVerified": 5,
+      "publisherVerified": 0
+    },
+    "transport": {
+      "stdio": 29,
+      "remote": 67,
+      "both": 4,
+      "unknown": 1
+    },
+    "runtime": {
+      "scanned": 98,
+      "failed": 3,
+      "avgScore": 59,
+      "handshakePass": 38,
+      "handshakeFail": 12,
+      "handshakeConfig": 47
+    }
+  },
+  "servers": [
+    {
+      "serverName": "ai.agentutility/mcp-retail",
+      "version": "0.2.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-retail@0.2.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-agentops",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-agentops@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-mediakit",
+      "version": "0.11.9",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-mediakit@0.11.9",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-edge-market",
+      "version": "0.15.6",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-edge-market@0.15.6",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.ankimcp/anki-mcp-server",
+      "version": "0.22.5",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/ankimcp/anki-mcp-server",
+      "npmSpec": "@ankimcp/anki-mcp-server@0.22.5",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 409,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-22T15:18:05Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 26,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-matchpoint",
+      "version": "0.1.4",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-matchpoint@0.1.4",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-wordmint",
+      "version": "0.16.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-wordmint@0.16.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-edge-finance",
+      "version": "0.18.8",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-edge-finance@0.18.8",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-browser-workflow",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-browser-workflow@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bolthub/registry",
+      "version": "0.1.6",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/signaltech-org/bolthub-sdk",
+      "npmSpec": "@bolthub/mcp-registry@0.1.6",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-25T02:03:11Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 57,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "WARN",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-rollforge",
+      "version": "0.1.5",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-rollforge@0.1.5",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "agency.kesey/pretrip",
+      "version": "1.0.1",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": "pretrip-mcp@1.0.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "1.0.1",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 81,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "pretrip",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-web-probe",
+      "version": "0.32.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-web-probe@0.32.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.autoblocks/ctxl",
+      "version": "0.0.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/autoblocksai/ctxl",
+      "npmSpec": "ctxl@0.0.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "0.0.2",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 54,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "WARN",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-compose",
+      "version": "0.13.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-compose@0.13.0",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenttrust/mcp-server",
+      "version": "1.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/agenttrust/mcp-server",
+      "npmSpec": "@agenttrust/mcp-server@1.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-04-09T21:54:58Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.autonomad/computeback",
+      "version": "1.1.3",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/Autonomad1/computeback-mcp",
+      "npmSpec": "@autonomad1/computeback-mcp@1.1.3",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-05-12T09:25:32Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 85,
+        "maxScore": 100,
+        "tools": 28,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "computeback",
+          "version": "1.1.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.adeu/adeu",
+      "version": "1.7.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/dealfluence/adeu",
+      "npmSpec": "@adeu/mcp-server@1.7.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 132,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-31T13:41:26Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 79,
+        "maxScore": 100,
+        "tools": 9,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "adeu-redlining-service",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-model-router",
+      "version": "0.1.1",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-model-router@0.1.1",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-locale",
+      "version": "0.8.7",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-locale@0.8.7",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.apithreshold/apithreshold",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-bestiary",
+      "version": "0.1.3",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-bestiary@0.1.3",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aetherwealth/mcp",
+      "version": "0.2.11",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": "@aetherwealth/mcp@0.2.11",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 77,
+        "maxScore": 100,
+        "tools": 48,
+        "handshake": "WARN",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "aether-wealth-mcp",
+          "version": "0.2.11"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "resources": {
+            "listChanged": false,
+            "subscribe": false
+          },
+          "prompts": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "WARN",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bizmuse/bizmuse",
+      "version": "0.1.6",
+      "transport": "stdio",
+      "repoUrl": null,
+      "npmSpec": "bizmuse-mcp@0.1.6",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "0.1.6",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 31,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-synthforge",
+      "version": "0.8.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-synthforge@0.8.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bolthub/mcp",
+      "version": "0.7.2",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/signaltech-org/bolthub-sdk",
+      "npmSpec": "@bolthub/mcp@0.7.2",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-25T02:03:11Z",
+        "repositoryArchived": false,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 88,
+        "maxScore": 100,
+        "tools": 22,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "bolthub",
+          "version": "0.7.2"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-prooflayer",
+      "version": "0.2.4",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-prooflayer@0.2.4",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aliengiraffe/spotdb",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/aliengiraffe/spotdb",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 21,
+        "repositoryLanguage": "Go",
+        "repositoryPushedAt": "2026-07-29T20:36:07Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    },
+    {
+      "serverName": "ai.agentutility/mcp-statline",
+      "version": "0.1.3",
+      "transport": "stdio",
+      "repoUrl": "https://github.com/rooz21/x402",
+      "npmSpec": "@agentutility/mcp-statline@0.1.3",
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": false,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 62,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG_REQUIRED",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG_REQUIRED",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "REQUIRED",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.biel/biel-ai",
+      "version": "2.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/TechDocsStudio/biel-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.biel.ai/v2/{project_slug}/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 3,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-22T07:24:58Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 1,
+        "handshake": "PASS",
+        "protocolVersion": "2025-11-25",
+        "serverInfo": {
+          "name": "biel-ai-mcp",
+          "version": "2.0.0"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ac.inference.sh/mcp",
+      "version": "2.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.inference.sh/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bloopo/bloopo",
+      "version": "0.1.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/BloopodotAI/bloopo-marketplace",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.bloopo.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-07-28T12:24:32Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.boolsai/scan",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Boolsai-ai/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://boolsai.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-19T13:30:20Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "boolsai-scan",
+          "title": "Boolsai Scan",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bezal/local-commerce",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://app.bezal.ai/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 13,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "bezal",
+          "version": "1.1.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentdm/agentdm",
+      "version": "2.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/agentdmai/agentdm",
+      "npmSpec": null,
+      "remoteUrl": "https://api.agentdm.ai/mcp/v1/grid",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.atdev/supershopping",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/alex-hoyeol-choi/headless-commerce",
+      "npmSpec": null,
+      "remoteUrl": "https://supershopping-mcp.atdev.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 8,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "supershopping",
+          "version": "3.4.2"
+        },
+        "capabilities": {
+          "experimental": {},
+          "logging": {},
+          "prompts": {
+            "listChanged": true
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": true
+          },
+          "tools": {
+            "listChanged": true
+          },
+          "extensions": {
+            "io.modelcontextprotocol/ui": {}
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.adside/adside",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.adside.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenticshelf/graffeo",
+      "version": "1.0.2",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.agenticshelf.ai/m/graffeo/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "AgenticShelf-Inventory",
+          "version": "1.28.1"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.adweave/meta-ads-mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.adweave.ai/meta-ads-mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.ai-akari/agent-trust-receipt",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/AInoAKARI/AInoAKARI",
+      "npmSpec": null,
+      "remoteUrl": "https://ai-akari.ai/mcp-trust",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-31T14:11:37Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 1,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "ai-akari-agent-trust-receipt",
+          "version": "2026.07.25.1"
+        },
+        "capabilities": {
+          "tools": {},
+          "resources": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.adadvisor/mcp-server",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.adadvisor.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentic-news/mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/u00dxk2/agentic-news",
+      "npmSpec": null,
+      "remoteUrl": "https://api.agentic-news.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.alphacreek/alphacreek-mcp",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.alphacreek.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "alphacreek-mcp",
+          "version": "1.0.1"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.beatbandit/beatbandit",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://beatbandit.ai/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.analyticslegends/sap-analytics",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://analyticslegends.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 15,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "analytics-legends",
+          "title": "Analytics Legends — SAP Analytics market intelligence",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {},
+          "resources": {},
+          "prompts": {},
+          "completions": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.afmr/discovery",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://afmr.ai/api/rpc",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "ai.afmr/discovery",
+          "title": "AFMR Discovery",
+          "version": "1.0.0",
+          "websiteUrl": "https://afmr.ai/"
+        },
+        "capabilities": {
+          "resources": {
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.benroberts/b4-index",
+      "version": "3.3.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://b4-index.vercel.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 5,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "b4-index",
+          "version": "3.3.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.anzenna/anzenna",
+      "version": "0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.anzenna.ai/sse",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenticfabricationnetwork/ufp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://agenticfabricationnetwork.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 9,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "ufp",
+          "version": "0.1.0"
+        },
+        "capabilities": {
+          "resources": {
+            "listChanged": true
+          },
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aient/mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/haf/glimt",
+      "npmSpec": null,
+      "remoteUrl": "https://aient.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.adramp/google-ads",
+      "version": "1.0.3",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.adramp.ai",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.abmeter/abmeter",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/abmeter/abmeter",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.abmeter.ai",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 77,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "mcp",
+          "version": "0.0.1"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "PASS",
+          "secretExposure": "UNKNOWN",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bittlebits/bittlebits",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/bittlebitsai/bittlebits-plugin",
+      "npmSpec": null,
+      "remoteUrl": "https://bittlebits.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-06-02T16:50:05Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.ai-portal/ai-portal",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://www.ai-portal.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "ai-portal",
+          "title": "AI-Portal — Enterprise GenAI Briefing",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bassethound/bassethound",
+      "version": "0.5.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.bassethound.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bowmark/bowmark",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Metroxe/bowmark",
+      "npmSpec": null,
+      "remoteUrl": "https://api.bowmark.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 2,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "bowmark",
+          "version": "7.0.2"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {},
+          "prompts": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aviado/health",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/kipmcc/aviado-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://aviado.ai/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 95,
+        "maxScore": 100,
+        "tools": 9,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "aviado",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {},
+          "prompts": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "WARN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.biddeed/biddeed-mcp",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/breverdbidder/cli-anything-biddeed",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.biddeed.ai/api/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-31T20:38:46Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aisecuritygateway/mcp-gateway",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.aisecuritygateway.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.augworlds/travel-world",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://travel.augworlds.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.alpic.test/test-mcp-server",
+      "version": "0.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://test.alpic.ai/",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.autorfp/mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/AutoRFP/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://{api_host}/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-05-18T02:12:07Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.assetlog/assetlog",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.assetlog.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.atlasverified/atlas-mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.atlasverified.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenticshelf/puroair",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.agenticshelf.ai/m/puroair/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "AgenticShelf-Inventory",
+          "version": "1.28.1"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.auteng/docs",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://auteng.ai/mcp/docs",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "auteng-docs",
+          "version": "1.26.0"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.baselight/baselight",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.baselight.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.ambix/ambix",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/ambix-ai/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.ambix.ai",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.betterpost/server",
+      "version": "2.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/betterpost/betterpost-plugin",
+      "npmSpec": null,
+      "remoteUrl": "https://betterpost.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "JavaScript",
+        "repositoryPushedAt": "2026-07-27T09:53:56Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 23,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "betterpost",
+          "version": "0.1.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.airshelf/catalog",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.airshelf.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "AirShelf",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          },
+          "resources": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenticterminal/directory",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/observer-protocol/at-directory",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.agenticterminal.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-29T17:55:47Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 6,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "at-directory",
+          "version": "0.0.1"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.augmentev/paseo",
+      "version": "0.1.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.augmentev.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.arclan/registry",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://arclan.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2024-11-05",
+        "serverInfo": {
+          "name": "arclan-registry",
+          "version": "0.1.0",
+          "description": "MCP server registry — find and report on validated MCP servers"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.authoryze/authoryze",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://authoryze.ai/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.arpi/arpi-mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/arpi-ai/arpi-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.arpi.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-07-08T04:48:36Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.axonagentic/neuroautomata",
+      "version": "0.29.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.neuroautomata.axonagentic.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bodenrichtwert/mcp",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.bodenrichtwert.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.artidrop/artidrop",
+      "version": "1.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://artidrop.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "artidrop",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ac.tandem/docs-mcp",
+      "version": "0.3.2",
+      "transport": "remote",
+      "repoUrl": "https://github.com/frumu-ai/tandem",
+      "npmSpec": null,
+      "remoteUrl": "https://tandem.ac/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 114,
+        "repositoryLanguage": "Rust",
+        "repositoryPushedAt": "2026-07-31T20:10:17Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 13,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "ac.tandem/docs-mcp",
+          "title": "Tandem Docs MCP",
+          "version": "0.3.2"
+        },
+        "capabilities": {
+          "tools": {},
+          "resources": {},
+          "prompts": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.auralogs/auralogs",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/auralogs-ai/auralogs-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.auralogs.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-06-10T05:45:45Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 88,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "auralogs",
+          "version": "0.1.0"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.boolsai/grep",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Boolsai-ai/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://grep.boolsai.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-19T13:30:20Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 4,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "boolsai-grep",
+          "title": "Boolsai Grep",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          },
+          "logging": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.backengine/backengine-mcp",
+      "version": "8.1.1",
+      "transport": "remote",
+      "repoUrl": "https://github.com/BackEngine-ai/backengine-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://backengine-prod.backengine.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-07-10T10:01:50Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agentrapay/agentra",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.agentrapay.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 93,
+        "maxScore": 100,
+        "tools": 6,
+        "handshake": "PASS",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "agentra",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "listChanged": false,
+            "subscribe": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "WARN",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.auteng/mcp",
+      "version": "1.0.1",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://auteng.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 7,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "auteng-docs",
+          "version": "1.26.0"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.auxen/auxen",
+      "version": "1.0.2",
+      "transport": "remote",
+      "repoUrl": "https://github.com/auxen-ai/auxen-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://api.auxen.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-30T15:33:50Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.appdeploy/deploy-app",
+      "version": "2.6.13",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api-v2.appdeploy.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.aarna/atars-mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.aarna.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 18,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "Crypto Technical Features",
+          "version": "1.27.0"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.argushq/enforcement-database",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/andrewjgaber-commits/empire-distribution",
+      "npmSpec": null,
+      "remoteUrl": "https://argushq.ai/api/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 5,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "mcp-typescript server on vercel",
+          "version": "0.1.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.1325/mcp",
+      "version": "0.1.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/1325ai/1325ai",
+      "npmSpec": null,
+      "remoteUrl": "https://agoclnqfyinwjxdmjnns.supabase.co/functions/v1/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.boolsai/signals",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Boolsai-ai/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://signals.boolsai.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-19T13:30:20Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 97,
+        "maxScore": 100,
+        "tools": 12,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "boolsai-signals",
+          "title": "Boolsai Signals",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "PASS",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.boolsai/directory",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Boolsai-ai/mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://directory.boolsai.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-05-19T13:30:20Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 19,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "boolsai-directory",
+          "title": "Boolsai Directory",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "agency.lona/trading",
+      "version": "2.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/mindsightventures/lona",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.lona.agency/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bluenexus/universal-mcp",
+      "version": "1.14.0",
+      "transport": "remote",
+      "repoUrl": null,
+      "npmSpec": null,
+      "remoteUrl": "https://api.bluenexus.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": null,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.basethread/basethread",
+      "version": "1.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/navbuildz/basethread-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.basethread.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-07-08T18:40:15Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 15,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "FAIL",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "FAIL",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bareun/bareun",
+      "version": "3.0.0",
+      "transport": "remote",
+      "repoUrl": "https://github.com/gih2yun/bareun-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://api.bareun.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": "2026-06-09T06:04:15Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.bankee/inferventis-mcp",
+      "version": "1.0.2",
+      "transport": "remote",
+      "repoUrl": "https://github.com/Bankee-ai/inferventis",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp-server-295985738387.europe-west1.run.app/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 20,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "mcp-server-platform",
+          "version": "1.0.0"
+        },
+        "capabilities": {
+          "tools": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.anomalyarmor/armor-mcp",
+      "version": "0.6.1",
+      "transport": "both",
+      "repoUrl": "https://github.com/anomalyarmor/agents",
+      "npmSpec": null,
+      "remoteUrl": "https://mcp.anomalyarmor.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 1,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-05-30T04:17:55Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.borealhost/mcp",
+      "version": "0.2.0",
+      "transport": "both",
+      "repoUrl": "https://github.com/alainsvrd/borealhost-mcp",
+      "npmSpec": null,
+      "remoteUrl": "https://borealhost.ai/mcp/",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 0,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-04-14T03:40:09Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 113,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "BorealHost",
+          "version": "1.27.0"
+        },
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.agenticaffiliate/affiliate-networks-mcp",
+      "version": "0.19.0",
+      "transport": "both",
+      "repoUrl": "https://github.com/bobberrisford/affiliatemcp",
+      "npmSpec": "affiliate-networks-mcp@0.19.0",
+      "remoteUrl": "https://mcp.agenticaffiliate.ai/mcp",
+      "existence": {
+        "repository_verified": true,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 4,
+        "repositoryLanguage": "TypeScript",
+        "repositoryPushedAt": "2026-07-31T13:22:25Z",
+        "repositoryArchived": false,
+        "packageExists": true,
+        "packageLatestVersion": "0.20.0",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 27,
+        "maxScore": 100,
+        "tools": 0,
+        "handshake": "CONFIG",
+        "protocolVersion": null,
+        "serverInfo": null,
+        "checks": {
+          "installability": "PASS",
+          "handshake": "CONFIG",
+          "schema": "UNKNOWN",
+          "destructive": "UNKNOWN",
+          "authentication": "UNKNOWN",
+          "secretExposure": "UNKNOWN",
+          "protocol": "UNKNOWN",
+          "latency": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "serverName": "ai.autonomad/travel",
+      "version": "1.4.0",
+      "transport": "both",
+      "repoUrl": "https://github.com/Autonomad1/autonomad1",
+      "npmSpec": "autonomad-travel@1.4.0",
+      "remoteUrl": "https://mcp.autonomad.ai/mcp",
+      "existence": {
+        "repository_verified": false,
+        "package_verified": true,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": false,
+        "repositoryStars": null,
+        "repositoryLanguage": null,
+        "repositoryPushedAt": null,
+        "repositoryArchived": null,
+        "packageExists": true,
+        "packageLatestVersion": "1.4.1",
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "score": 92,
+        "maxScore": 100,
+        "tools": 8,
+        "handshake": "PASS",
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "autonomad-travel",
+          "version": "1.4.0",
+          "title": "Autonomad Travel",
+          "description": "AI travel agent for Claude — search live flights (Duffel), hotels (LiteAPI + direct), Viator activities, and Ticketmaster/SeatGeek events, then complete the booking on autonomad.ai with a 1-month Premium trial on the first reservation.",
+          "websiteUrl": "https://www.autonomad.ai",
+          "icons": [
+            {
+              "src": "https://www.autonomad.ai/icon-192.png",
+              "sizes": [
+                "192x192"
+              ],
+              "mimeType": "image/png"
+            },
+            {
+              "src": "https://www.autonomad.ai/icon-512.png",
+              "sizes": [
+                "512x512"
+              ],
+              "mimeType": "image/png"
+            }
+          ]
+        },
+        "capabilities": {
+          "tools": {},
+          "resources": {}
+        },
+        "checks": {
+          "installability": "PASS",
+          "handshake": "PASS",
+          "schema": "PASS",
+          "destructive": "WARN",
+          "authentication": "PASS",
+          "secretExposure": "PASS",
+          "protocol": "PASS",
+          "latency": "PASS"
+        }
+      }
+    },
+    {
+      "serverName": "ai.ankimcp/anki-mcp-server-addon",
+      "version": "0.19.0",
+      "transport": "unknown",
+      "repoUrl": "https://github.com/ankimcp/anki-mcp-server-addon",
+      "npmSpec": null,
+      "remoteUrl": null,
+      "existence": {
+        "repository_verified": true,
+        "package_verified": false,
+        "publisher_verified": false
+      },
+      "existenceDetails": {
+        "repository": true,
+        "repositoryStars": 66,
+        "repositoryLanguage": "Python",
+        "repositoryPushedAt": "2026-07-21T08:19:06Z",
+        "repositoryArchived": false,
+        "packageExists": null,
+        "packageLatestVersion": null,
+        "publisherSource": "unknown-namespace"
+      },
+      "errors": [
+        "publisher: no verification method for this namespace"
+      ],
+      "runtime": {
+        "error": "no runnable spec",
+        "score": 0,
+        "tools": 0
+      }
+    }
+  ]
+}

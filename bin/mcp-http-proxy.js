@@ -19,7 +19,7 @@
 //
 // For SSE, the proxy buffers the stream, parses JSON-RPC messages, intercepts
 // tools/list and tools/call responses, and re-emits the SSE stream.
-import { createServer } from "node:http";
+import { createServer, request } from "node:http";
 import { readFileSync, writeFileSync } from "node:fs";
 import { buildManifest, diffManifest, checkCall } from "../lib/manifest.js";
 import { redact } from "../lib/redact.js";
@@ -76,6 +76,51 @@ function log(msg) {
   process.stderr.write(`[mcp-http-proxy] ${redact(msg)}\n`);
 }
 
+// Pass through GET (SSE stream) and DELETE (session close) requests to the
+// upstream without interception. These are part of the MCP streamable-http
+// transport and don't carry tool/call or tools/list payloads to inspect.
+// For GET SSE streams, we pipe the response through without buffering.
+async function proxyPassthrough(req, res) {
+  const opts = {
+    hostname: upstream.hostname,
+    port: upstream.port,
+    path: upstream.pathname + (upstream.search || ""),
+    method: req.method,
+    headers: {
+      ...upstreamHeaders,
+      ...req.headers,
+      Host: upstream.host,
+    },
+  };
+  // Remove content-type for GET (no body)
+  if (req.method === "GET") {
+    delete opts.headers["Content-Type"];
+    delete opts.headers["Content-Length"];
+  }
+
+  const upstreamReq = request(opts, (upstreamRes) => {
+    // Forward status and headers
+    res.writeHead(upstreamRes.statusCode, upstreamRes.headers);
+    // Pipe the response through (handles SSE streams and regular responses)
+    upstreamRes.pipe(res);
+  });
+
+  upstreamReq.on("error", (e) => {
+    log(`passthrough error: ${redact(e.message)}`);
+    if (!res.headersSent) {
+      res.writeHead(502, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "upstream error", detail: redact(e.message) }));
+    }
+  });
+
+  // For DELETE, send the request body through (if any)
+  if (req.method === "DELETE") {
+    req.pipe(upstreamReq);
+  } else {
+    upstreamReq.end();
+  }
+}
+
 // Forward a request to the upstream server, collect the response (handling SSE),
 // intercept tools/list and tools/call, and send the response back to the client.
 async function handleRequest(req, res) {
@@ -111,9 +156,15 @@ async function handleRequest(req, res) {
 
   // Forward to upstream
   const upstreamPath = upstream.pathname + upstream.search;
+  // Forward client's session ID header to upstream if present.
+  const fwdHeaders = { ...upstreamHeaders };
+  const clientSessionId = req.headers["mcp-session-id"];
+  if (clientSessionId) {
+    fwdHeaders["Mcp-Session-Id"] = clientSessionId;
+  }
   const upstreamReq = await fetch(`${upstream.origin}${upstreamPath}`, {
     method: "POST",
-    headers: upstreamHeaders,
+    headers: fwdHeaders,
     body: bodyStr,
   });
 
@@ -122,11 +173,17 @@ async function handleRequest(req, res) {
 
   if (contentType.includes("text/event-stream")) {
     // SSE streaming — buffer events, intercept tools/list, re-emit
-    res.writeHead(200, {
+    // Forward upstream session ID header if present.
+    const responseHeaders = {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
       "Connection": "keep-alive",
-    });
+    };
+    const sessionId = upstreamReq.headers.get("mcp-session-id");
+    if (sessionId) {
+      responseHeaders["Mcp-Session-Id"] = sessionId;
+    }
+    res.writeHead(200, responseHeaders);
 
     const reader = upstreamReq.body.getReader();
     const decoder = new TextDecoder();
@@ -142,7 +199,8 @@ async function handleRequest(req, res) {
         sseBuffer += text;
         collectedData += text;
 
-        // Process complete SSE events (separated by \n\n)
+        // Process complete SSE events (separated by \n\n, handling CRLF)
+        sseBuffer = sseBuffer.replace(/\r\n/g, "\n");
         let eventEnd;
         while ((eventEnd = sseBuffer.indexOf("\n\n")) >= 0) {
           const eventStr = sseBuffer.slice(0, eventEnd);
@@ -309,6 +367,14 @@ const server = createServer(async (req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ status: "ok", tools: manifest.tools.length, mode: strictMode ? "strict" : autoUpdate ? "auto-update" : "default" }));
     return;
+  }
+
+  // Pass through GET (SSE stream) and DELETE (session close) to upstream.
+  // These are part of the MCP streamable-http transport — GET opens a
+  // server-sent events stream for notifications, DELETE closes a session.
+  // The proxy doesn't need to inspect these; just forward them.
+  if (req.method === "GET" || req.method === "DELETE") {
+    return proxyPassthrough(req, res);
   }
 
   if (req.method !== "POST") {

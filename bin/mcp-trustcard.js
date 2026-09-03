@@ -22,9 +22,15 @@ import { McpStdioClient, PROTOCOL_VERSIONS } from "../lib/client.js";
 import { fingerprint } from "../lib/fingerprint.js";
 import { observeServer } from "../lib/observe.js";
 import { buildManifest, signManifest, verifyManifest, generatePublisherKeypair, bindingConsistency } from "../lib/provenance.js";
+import { buildDescriptor, signDescriptor, verifyDescriptor } from "../lib/descriptor.js";
+import { changeVector } from "../lib/change.js";
 import { diffToolsets, CHANGE_LEVEL } from "../lib/diff.js";
 import { PinStore } from "../lib/pin.js";
 import { printFingerprint, printDiff } from "../lib/report.js";
+import { EvidenceStore } from "../lib/evidence-store.js";
+import { EVIDENCE_LAYERS } from "../lib/evidence-predicates.js";
+import { BehaviorEngine, SandboxRuntime, InputGenerator, OutputComparator, RegressionCorpus, ReferenceObservation } from "../lib/behavior.js";
+import { resolve as resolvePath, dirname, isAbsolute } from "node:path";
 
 const exec = promisify(execCb);
 
@@ -44,7 +50,7 @@ function opt(name, fallback = undefined) {
   return i !== -1 ? argv[i + 1] : fallback;
 }
 function positional(skip = 1) {
-  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout"]);
+  const VALUE_FLAGS = new Set(["--manifest", "--out", "--key", "--pins", "--spec", "--json-out", "--batch", "--env-file", "--cwd", "--save-manifest", "--threshold", "--parallel", "--timeout", "--subject", "--predicate", "--since", "--until", "--layer", "--evidence-dir", "--server", "--corpus", "--seed", "--probe", "--tool", "--implementation", "--namespace", "--expires-in", "--claims", "--publisher-name"]);
   const out = [];
   for (let i = skip; i < argv.length; i++) {
     const a = argv[i];
@@ -66,6 +72,18 @@ Identity & provenance:
   mcp-trustcard verify <signed.json> [--spec <pkg>]
   mcp-trustcard diff <old.json> <new.json> [--verbose]
 
+Capability descriptor (protocol-neutral):
+  mcp-trustcard descriptor build <tool-or-manifest.json> --key pub.key.json [--tool <name>] [--out desc.json]
+  mcp-trustcard descriptor sign <desc.json> --key publisher.key.json [--out signed.json]
+  mcp-trustcard descriptor verify <desc.json> [--json]
+  mcp-trustcard descriptor diff <old.json> <new.json> [--json]
+  mcp-trustcard descriptor pin <desc.json> [--pins path]
+
+Behavioral verification:
+  mcp-trustcard behavior <manifest.json> [--server <spec>] [--corpus <dir>] [--json]
+                        [--seed <n>] [--timeout <ms>] [--probe <id>] [--verbose]
+  mcp-trustcard behavior diff <reference.json> <target.json>
+
 Continuity (TOFU pinning):
   mcp-trustcard pin <spec>          # trust-on-first-use
   mcp-trustcard unpin <serverKey>
@@ -82,6 +100,14 @@ Health scorecard (scanner):
   mcp-trustcard auth-issue --subject <id> --scopes <s1,s2> --secret <hex>  # issue a dev-mode token
   mcp-trustcard auth-verify <token> --secret <hex>  # verify a dev-mode token
   mcp-trustcard <spec>                         # shorthand for scan
+
+Evidence substrate (observatory):
+  mcp-trustcard evidence query --subject <name> [--predicate <p>] [--layer <n>] [--json]
+  mcp-trustcard evidence history --subject <name> [--since <date>]
+  mcp-trustcard evidence stats [--json]
+  mcp-trustcard evidence verify                 # integrity check all evidence
+  mcp-trustcard evidence export [--since <date>] [--json-out <file>]
+  mcp-trustcard evidence contradictions --subject <name>
 
 Options: --json  --no-color  --pins <path>  --env-file <f>  --cwd <dir>
          --strict  --threshold <n>  --parallel <n>  -h/--help`);
@@ -332,10 +358,17 @@ async function cmdGenManifest() {
 
   const local = parseLocalCommand(argv.slice(1));
   let cmd, args, specStr, scwd;
-  if (local) {
+
+  // Check for HTTP URL spec (remote server).
+  const posSpec = positional(1)[0];
+  const isRemote = posSpec && /^https?:\/\//i.test(posSpec);
+
+  if (isRemote) {
+    specStr = posSpec;
+  } else if (local) {
     cmd = local.cmd; args = local.args; specStr = `${cmd} ${args.join(" ")}`; scwd = cwd;
   } else {
-    const spec = positional(1)[0];
+    const spec = posSpec;
     if (!spec) { console.error("gen-manifest: missing <spec> or -- <cmd> [args...]"); process.exit(2); }
     const npmCandidates = ["npm", "/opt/homebrew/bin/npm", "/usr/local/bin/npm"];
     let npmBin = "npm";
@@ -347,7 +380,14 @@ async function cmdGenManifest() {
     cmd = "npx"; args = ["-y", spec]; specStr = spec;
   }
 
-  const client = new McpStdioClient({ cmd, args, env: injectedEnv, spawnTimeout: 45_000, cwd: scwd });
+  // For remote HTTP servers, use McpHttpClient; otherwise stdio.
+  let client;
+  if (isRemote) {
+    const { McpHttpClient } = await import("../lib/client-http.js");
+    client = new McpHttpClient({ url: posSpec, transport: "streamable-http", timeout: 30_000 });
+  } else {
+    client = new McpStdioClient({ cmd, args, env: injectedEnv, spawnTimeout: 45_000, cwd: scwd });
+  }
   try {
     await client.start();
     // Try all protocol versions — servers may not support the newest.
@@ -404,10 +444,26 @@ async function cmdGenManifest() {
 }
 
 async function cmdFingerprint() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
   const pins = new PinStore(opt("--pins"));
-  const card = await fingerprint(spec, { manifestPath: opt("--manifest"), pinStore: pins });
+
+  let card;
+  if (local) {
+    // Local command via `-- <cmd> [args...]`
+    const specStr = `${local.cmd} ${local.args.join(" ")}`;
+    card = await fingerprint(specStr, {
+      manifestPath: opt("--manifest"),
+      pinStore: pins,
+      localCmd: { cmd: local.cmd, args: local.args, cwd: cwd || undefined, env: injectedEnv },
+    });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    card = await fingerprint(spec, { manifestPath: opt("--manifest"), pinStore: pins });
+  }
+
   if (flag("--json")) console.log(JSON.stringify(card, null, 2));
   else printFingerprint(card, c);
   const failed = card.observation?.error || (card.provenance && !card.provenance.ok) || (card.binding && !card.binding.consistent) || card.drift?.status === "drifted";
@@ -415,9 +471,18 @@ async function cmdFingerprint() {
 }
 
 async function cmdManifest() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
-  const obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: {} });
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
+
+  let obs;
+  if (local) {
+    obs = await observeServer({ cmd: local.cmd, args: local.args, env: injectedEnv, cwd: cwd || undefined });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: injectedEnv });
+  }
   if (obs.error) { console.error(red(`probe failed: ${obs.error}`)); process.exit(1); }
   const keyPath = opt("--key");
   let publisher;
@@ -507,12 +572,21 @@ async function cmdDiff() {
 }
 
 async function cmdPin() {
-  const spec = positional(1)[0];
-  if (!spec) { usage(); process.exit(2); }
+  const { cwd, injectedEnv } = runtimeOpts();
+  const local = parseLocalCommand(argv.slice(1));
+  const posSpec = positional(1)[0];
   const pins = new PinStore(opt("--pins"));
-  const obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: {} });
+
+  let obs;
+  if (local) {
+    obs = await observeServer({ cmd: local.cmd, args: local.args, env: injectedEnv, cwd: cwd || undefined });
+  } else {
+    const spec = posSpec;
+    if (!spec) { usage(); process.exit(2); }
+    obs = await observeServer({ cmd: "npx", args: ["-y", spec], env: injectedEnv });
+  }
   if (obs.error) { console.error(red(`probe failed: ${obs.error}`)); process.exit(1); }
-  const key = pins.serverKey(obs.serverInfo ?? spec);
+  const key = pins.serverKey(obs.serverInfo ?? (local ? `${local.cmd} ${local.args.join(" ")}` : posSpec));
   pins.pinServer(key, obs);
   console.log(`${green("✓")} pinned ${bold(key)}`);
   console.log(`  toolset: ${obs.toolsetDigest}`);
@@ -712,6 +786,501 @@ function inspectPinStore(data, file) {
   }
 }
 
+// ─── Evidence substrate commands ──────────────────────────────────
+
+function evidenceDir() {
+  return opt("--evidence-dir") || "data/evidence";
+}
+
+async function cmdEvidence() {
+  const sub = argv[1];
+  if (!sub) {
+    console.log("Usage: mcp-trustcard evidence <query|history|stats|verify|export|contradictions>");
+    process.exit(2);
+  }
+
+  const dir = evidenceDir();
+  const store = new EvidenceStore(dir);
+
+  switch (sub) {
+    case "query": {
+      const subject = opt("--subject");
+      const predicate = opt("--predicate");
+      const layer = opt("--layer") !== undefined ? parseInt(opt("--layer"), 10) : undefined;
+      const since = opt("--since");
+      const until = opt("--until");
+      const asJson = flag("--json");
+
+      const filters = {};
+      if (subject) filters.subject = subject;
+      if (predicate) filters.predicate = predicate;
+      if (layer !== undefined && !isNaN(layer)) filters.layer = layer;
+      if (since) filters.since = since;
+      if (until) filters.until = until;
+
+      const records = store.query(filters);
+
+      if (asJson) {
+        console.log(JSON.stringify(records, null, 2));
+      } else {
+        if (records.length === 0) {
+          console.log(dim("No evidence records found."));
+          return;
+        }
+        console.log(bold(`Evidence records (${records.length}):`));
+        for (const r of records) {
+          const layerName = EVIDENCE_LAYERS[r.claim.layer] ?? "?";
+          const val = r.claim.value === null ? dim("null") : JSON.stringify(r.claim.value);
+          console.log(
+            `  ${r.timestamp}  ${blue(layerName.padEnd(10))}  ${r.claim.predicate.padEnd(35)}  ${val.slice(0, 60)}  conf=${r.claim.confidence}`
+          );
+        }
+      }
+      break;
+    }
+
+    case "history": {
+      const subject = opt("--subject");
+      if (!subject) {
+        console.error("--subject is required for history");
+        process.exit(2);
+      }
+      const since = opt("--since");
+      const records = store.query({ subject, since });
+
+      if (records.length === 0) {
+        console.log(dim(`No evidence history for "${subject}".`));
+        return;
+      }
+
+      console.log(bold(`Evidence history for "${subject}" (${records.length} records):`));
+      let lastDate = "";
+      for (const r of records) {
+        const date = r.timestamp.slice(0, 10);
+        const time = r.timestamp.slice(11, 19);
+        if (date !== lastDate) {
+          console.log(dim(`\n  ${date}`));
+          lastDate = date;
+        }
+        const layerName = EVIDENCE_LAYERS[r.claim.layer] ?? "?";
+        const val = r.claim.value === null ? dim("null (observation failed)") : JSON.stringify(r.claim.value);
+        console.log(`    ${time}  ${blue(layerName.padEnd(10))}  ${r.claim.predicate.padEnd(35)}  ${val.slice(0, 80)}`);
+        if (r.claim.payload?.error) {
+          console.log(dim(`              error: ${r.claim.payload.error}`));
+        }
+      }
+      break;
+    }
+
+    case "stats": {
+      const stats = store.stats();
+      const asJson = flag("--json");
+
+      if (asJson) {
+        console.log(JSON.stringify(stats, null, 2));
+        return;
+      }
+
+      if (stats.totalRecords === 0) {
+        console.log(dim("Evidence store is empty."));
+        return;
+      }
+
+      console.log(bold("Evidence Store Statistics"));
+      console.log(`  Total records:  ${stats.totalRecords}`);
+      console.log(`  Total files:    ${stats.totalFiles}`);
+      console.log(`  Subjects:       ${stats.bySubject}`);
+      console.log("");
+      console.log(bold("  By layer:"));
+      for (const [layer, count] of Object.entries(stats.byLayer).sort((a, b) => a[0] - b[0])) {
+        console.log(`    Layer ${layer} (${EVIDENCE_LAYERS[layer] ?? "?"}):  ${count}`);
+      }
+      console.log("");
+      console.log(bold("  By predicate (top 10):"));
+      const sortedPreds = Object.entries(stats.byPredicate).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      for (const [pred, count] of sortedPreds) {
+        console.log(`    ${pred.padEnd(40)}  ${count}`);
+      }
+      console.log("");
+      console.log(bold("  By observer:"));
+      for (const [obs, count] of Object.entries(stats.byObserver)) {
+        console.log(`    ${obs.padEnd(25)}  ${count}`);
+      }
+      break;
+    }
+
+    case "verify": {
+      console.log(bold("Verifying evidence store integrity..."));
+      const result = store.verify();
+      if (result.verified) {
+        console.log(green(`  OK — ${result.totalRecords} records verified, no errors.`));
+      } else {
+        console.log(red(`  FAIL — ${result.errors.length} error(s), ${result.duplicates.length} duplicate(s).`));
+        for (const err of result.errors.slice(0, 10)) {
+          console.log(red(`    ${err.file}:${err.line}  ${err.error}`));
+        }
+        if (result.duplicates.length > 0) {
+          console.log(red(`  Duplicates:`));
+          for (const dup of result.duplicates.slice(0, 10)) {
+            console.log(red(`    ${dup.id}  at ${dup.file}:${dup.line}`));
+          }
+        }
+        process.exit(1);
+      }
+      break;
+    }
+
+    case "export": {
+      const since = opt("--since");
+      const until = opt("--until");
+      const outFile = opt("--json-out");
+
+      const filters = {};
+      if (since) filters.since = since;
+      if (until) filters.until = until;
+
+      const records = store.export(filters);
+      const json = JSON.stringify({
+        exportedAt: new Date().toISOString(),
+        recordCount: records.length,
+        records,
+      }, null, 2);
+
+      if (outFile) {
+        writeFileSync(outFile, json);
+        console.log(green(`Exported ${records.length} records to ${outFile}`));
+      } else {
+        console.log(json);
+      }
+      break;
+    }
+
+    case "contradictions": {
+      const subject = opt("--subject");
+      if (!subject) {
+        console.error("--subject is required for contradictions");
+        process.exit(2);
+      }
+
+      const contradictions = store.contradictions(subject);
+      const preds = Object.keys(contradictions);
+
+      if (preds.length === 0) {
+        console.log(green(`No contradictions found for "${subject}".`));
+        return;
+      }
+
+      console.log(yellow(`Contradictions for "${subject}":`));
+      for (const [pred, recs] of Object.entries(contradictions)) {
+        console.log(yellow(`\n  ${pred}:`));
+        for (const r of recs) {
+          const val = r.claim.value === null ? dim("null") : JSON.stringify(r.claim.value);
+          console.log(`    ${r.timestamp}  value=${val}  conf=${r.claim.confidence}  method=${r.observer.method}`);
+        }
+      }
+      break;
+    }
+
+    default:
+      console.error(`Unknown evidence subcommand: "${sub}"`);
+      console.log("Usage: mcp-trustcard evidence <query|history|stats|verify|export|contradictions>");
+      process.exit(2);
+  }
+}
+
+function behaviorFindingKey(f) {
+  return `${f.tool}:${f.probe?.id}:${f.divergenceClass}:${f.mechanism}:${JSON.stringify(f.evidence).slice(0, 120)}`;
+}
+
+async function cmdBehaviorDiff(refPath, targetPath) {
+  if (!existsSync(refPath)) { console.error(`behavior diff: reference not found: ${refPath}`); process.exit(2); }
+  if (!existsSync(targetPath)) { console.error(`behavior diff: target not found: ${targetPath}`); process.exit(2); }
+  const refReport = loadJson(refPath);
+  const targetReport = loadJson(targetPath);
+
+  const refById = new Map((refReport.findings ?? []).map((f) => [behaviorFindingKey(f), f]));
+  const targetById = new Map((targetReport.findings ?? []).map((f) => [behaviorFindingKey(f), f]));
+
+  const added = (targetReport.findings ?? []).filter((f) => !refById.has(behaviorFindingKey(f)));
+  const removed = (refReport.findings ?? []).filter((f) => !targetById.has(behaviorFindingKey(f)));
+
+  const sameToolset = refReport.target?.toolsetDigest === targetReport.target?.toolsetDigest;
+  const diff = {
+    referenceSummary: refReport.summary ?? "unknown",
+    targetSummary: targetReport.summary ?? "unknown",
+    toolsetDigestMatch: sameToolset,
+    referenceToolsetDigest: refReport.target?.toolsetDigest ?? null,
+    targetToolsetDigest: targetReport.target?.toolsetDigest ?? null,
+    added: added.map((f) => ({ severity: f.severity, divergenceClass: f.divergenceClass, mechanism: f.mechanism, tool: f.tool, probe: f.probe?.id, evidence: f.evidence })),
+    removed: removed.map((f) => ({ severity: f.severity, divergenceClass: f.divergenceClass, mechanism: f.mechanism, tool: f.tool, probe: f.probe?.id })),
+  };
+
+  if (flag("--json")) {
+    console.log(JSON.stringify(diff, null, 2));
+  } else {
+    console.log(`Behavior diff: ${refPath} -> ${targetPath}`);
+    console.log(`Reference summary: ${diff.referenceSummary}`);
+    console.log(`Target summary:      ${diff.targetSummary}`);
+    console.log(`Toolset digest match: ${sameToolset}`);
+    console.log(`---`);
+    console.log(`Added findings (${added.length}):`);
+    for (const f of added) console.log(`  [${f.severity}] ${f.divergenceClass} (${f.mechanism}) on ${f.tool}:${f.probe?.id}`);
+    console.log(`Removed findings (${removed.length}):`);
+    for (const f of removed) console.log(`  [${f.severity}] ${f.divergenceClass} (${f.mechanism}) on ${f.tool}:${f.probe?.id}`);
+  }
+  process.exit(diff.targetSummary === "pass" && sameToolset ? 0 : 1);
+}
+
+async function cmdBehavior() {
+  if (argv[1] === "diff") return cmdBehaviorDiff(argv[2], argv[3]);
+  const { cwd, injectedEnv } = runtimeOpts();
+  const json = flag("--json");
+  const manifestPath = positional(1)[0];
+  if (!manifestPath) { console.error("behavior: missing <manifest.json>"); usage(); process.exit(2); }
+  let manifest;
+  try { manifest = loadJson(manifestPath); } catch (e) { console.error(`behavior: cannot read ${manifestPath}: ${e.message}`); process.exit(2); }
+
+  // Resolve the target server spec. The manifest may contain it directly, or
+  // the caller may override with --server or the `-- <cmd> [args...]` form.
+  let server = manifest.server ?? (manifest.cmd ? manifest : null);
+  const serverSpec = opt("--server");
+  if (serverSpec) {
+    server = { cmd: "npx", args: ["-y", serverSpec] };
+  }
+  const local = parseLocalCommand(argv.slice(1));
+  if (local) {
+    server = { cmd: local.cmd, args: local.args };
+    if (cwd) server.cwd = cwd;
+  }
+  if (!server || !server.cmd) {
+    console.error("behavior: manifest must include a 'server' object with 'cmd', or use --server / -- <cmd>");
+    process.exit(2);
+  }
+
+  const spawnTimeout = parseInt(opt("--timeout") ?? "30000", 10);
+  const callTimeout = Math.min(spawnTimeout, 30000);
+  const seed = parseInt(opt("--seed") ?? "0", 10);
+  const probeId = opt("--probe");
+  const corpusDir = opt("--corpus");
+  const verbose = flag("--verbose");
+
+  const baseDir = cwd ? resolvePath(cwd) : process.cwd();
+  const resolvedArgs = (server.args ?? []).map((a) => (isAbsolute(a) ? a : resolvePath(baseDir, a)));
+  const runtime = new SandboxRuntime({
+    cmd: server.cmd,
+    args: resolvedArgs,
+    env: { ...injectedEnv, ...(server.env ?? {}) },
+    cwd: cwd ? resolvePath(cwd) : undefined,
+    spawnTimeout,
+    callTimeout,
+    detached: server.detached ?? false,
+  });
+
+  // Load a saved reference observation if the manifest points to one.
+  let reference = null;
+  if (manifest.reference) {
+    const refPath = typeof manifest.reference === "string" ? manifest.reference : manifest.reference.path;
+    if (!existsSync(refPath)) { console.error(`behavior: reference not found: ${refPath}`); process.exit(2); }
+    const refJson = loadJson(refPath);
+    reference = new ReferenceObservation(refJson);
+  }
+
+  const probeFilter = probeId ? (p) => p.id === probeId || p.type === probeId : null;
+  const inputGenerator = new InputGenerator({ seed, probesPerTool: 10 });
+  const outputComparator = new OutputComparator();
+  const corpus = corpusDir ? new RegressionCorpus({ dir: corpusDir }) : null;
+  const engine = new BehaviorEngine({ runtime, inputGenerator, outputComparator, reference, corpus, probeFilter });
+
+  const report = await engine.run();
+
+  if (verbose && !json) {
+    for (const obs of report.observations) {
+      console.error(`probe ${obs.probe?.id} elapsed=${obs.elapsedMs}ms ok=${obs.ok}`);
+    }
+  }
+
+  if (json) {
+    console.log(JSON.stringify(report.toJSON(), null, 2));
+  } else {
+    console.log(report.toHuman());
+    if (corpusDir) console.log(`Corpus written to: ${corpusDir}`);
+  }
+  process.exit(report.summary === "pass" ? 0 : 1);
+}
+
+async function cmdDescriptor() {
+  const sub = argv[1];
+  switch (sub) {
+    case "build": return cmdDescriptorBuild();
+    case "sign": return cmdDescriptorSign();
+    case "verify": return cmdDescriptorVerify();
+    case "diff": return cmdDescriptorDiff();
+    case "pin": return cmdDescriptorPin();
+    default:
+      console.error("Unknown descriptor subcommand");
+      usage();
+      process.exit(2);
+  }
+}
+
+function parseOptionalJsonArg(arg, label) {
+  if (!arg) return null;
+  let value;
+  if (existsSync(arg)) {
+    try { value = loadJson(arg); } catch (e) { console.error(`${label}: failed to read ${arg}: ${e.message}`); process.exit(2); }
+  } else {
+    try { value = JSON.parse(arg); } catch (e) { console.error(`${label}: expected JSON or existing file, got "${arg}"`); process.exit(2); }
+  }
+  return value;
+}
+
+async function cmdDescriptorBuild() {
+  const filePath = positional(2)[0];
+  if (!filePath) { console.error("descriptor build requires <tool-or-manifest.json>"); usage(); process.exit(2); }
+  const keyPath = opt("--key");
+  if (!keyPath) { console.error("descriptor build requires --key <publisher.key.json>"); process.exit(2); }
+
+  let key;
+  try { key = loadJson(keyPath); } catch (e) { console.error(`key: ${e.message}`); process.exit(2); }
+  if (!key?.keyId || !key?.publicKey) { console.error("key file must contain keyId and publicKey"); process.exit(2); }
+
+  let raw;
+  try { raw = loadJson(filePath); } catch (e) { console.error(`descriptor build: ${e.message}`); process.exit(2); }
+
+  let tool;
+  if (raw && Array.isArray(raw.tools) && raw.tools.length > 0) {
+    const toolName = opt("--tool");
+    if (!toolName) { console.error("manifest contains multiple tools; select one with --tool <name>"); process.exit(2); }
+    tool = raw.tools.find((t) => t?.name === toolName);
+    if (!tool) { console.error(`tool "${toolName}" not found in manifest`); process.exit(2); }
+  } else {
+    tool = raw;
+  }
+
+  if (!tool || typeof tool !== "object" || !tool.name) { console.error("descriptor build: input is not a valid tool definition"); process.exit(2); }
+
+  const namespace = opt("--namespace") ?? tool.name;
+  const implementation = parseOptionalJsonArg(opt("--implementation"), "--implementation");
+  const claims = parseOptionalJsonArg(opt("--claims"), "--claims");
+
+  let expiresAt = null;
+  const expiresIn = opt("--expires-in");
+  if (expiresIn) {
+    const days = Number(expiresIn);
+    if (!Number.isFinite(days) || days <= 0) { console.error("--expires-in must be a positive number of days"); process.exit(2); }
+    expiresAt = new Date(Date.now() + days * 86400000).toISOString();
+  }
+
+  const publisher = {
+    keyId: key.keyId,
+    publicKey: key.publicKey,
+    publisher: opt("--publisher-name") ?? key.keyId,
+  };
+
+  const descriptor = buildDescriptor({ tool, namespace, implementation, publisher, expiresAt, claims });
+
+  const out = opt("--out");
+  if (out) writeFileSync(out, JSON.stringify(descriptor, null, 2) + "\n");
+
+  if (flag("--json")) {
+    if (!out) console.log(JSON.stringify(descriptor, null, 2));
+  } else {
+    console.log(`${green("✓")} descriptor built for ${bold(tool.name)}`);
+    console.log(`  descriptorDigest: ${dim(descriptor.descriptorDigest)}`);
+    console.log(`  interfaceDigest:  ${dim(descriptor.capability.interfaceDigest)}`);
+    console.log(`  implementation:   ${dim(descriptor.implementation.kind)}`);
+    console.log(`  namespace:        ${dim(namespace)}`);
+    console.log(`  issuedAt:         ${dim(descriptor.issuedAt)}${expiresAt ? `  expiresAt: ${dim(expiresAt)}` : ""}`);
+    if (out) console.log(`  written to:       ${dim(out)}`);
+  }
+}
+
+async function cmdDescriptorSign() {
+  const descPath = positional(2)[0];
+  const keyPath = opt("--key");
+  if (!descPath || !keyPath) { console.error("descriptor sign requires <desc.json> --key <publisher.key.json>"); process.exit(2); }
+  let descriptor, key;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor sign: ${e.message}`); process.exit(2); }
+  try { key = loadJson(keyPath); } catch (e) { console.error(`key: ${e.message}`); process.exit(2); }
+  if (!key?.privateKey) { console.error("key file must contain privateKey"); process.exit(2); }
+  const signed = signDescriptor(descriptor, key.privateKey);
+  const out = opt("--out");
+  if (out) writeFileSync(out, JSON.stringify(signed, null, 2) + "\n");
+  if (flag("--json")) {
+    if (!out) console.log(JSON.stringify(signed, null, 2));
+  } else {
+    console.log(`${green("✓")} signed descriptor with ${signed.signature.keyId}`);
+    if (out) console.log(`  written to: ${dim(out)}`);
+  }
+}
+
+async function cmdDescriptorVerify() {
+  const descPath = positional(2)[0];
+  if (!descPath) { console.error("descriptor verify requires <desc.json>"); process.exit(2); }
+  let descriptor;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor verify: ${e.message}`); process.exit(2); }
+  const result = verifyDescriptor(descriptor);
+  if (flag("--json")) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    console.log("");
+    console.log(`${bold("Descriptor verification")}: ${descPath}`);
+    console.log(dim("─".repeat(72)));
+    console.log(`${"Schema + signature".padEnd(26)} ${result.ok ? green("VERIFIED") : red("INVALID")}`);
+    for (const e of result.errors) console.log(`${"".padEnd(26)} ${red("✗")} ${dim(e)}`);
+    console.log("");
+  }
+  process.exit(result.ok ? 0 : 1);
+}
+
+function descriptorDiffInput(descriptor) {
+  if (!descriptor?.capability?.interface) { console.error("descriptor diff: input is not a valid descriptor"); process.exit(2); }
+  return {
+    tools: [descriptor.capability.interface],
+    implementation: descriptor.implementation ?? { kind: "unresolved" },
+    publisherKeyId: descriptor.provenance?.keyId ?? null,
+  };
+}
+
+async function cmdDescriptorDiff() {
+  const [oldPath, newPath] = positional(2);
+  if (!oldPath || !newPath) { console.error("descriptor diff requires <old.json> <new.json>"); process.exit(2); }
+  let oldDesc, newDesc;
+  try { oldDesc = loadJson(oldPath); } catch (e) { console.error(`descriptor diff: ${e.message}`); process.exit(2); }
+  try { newDesc = loadJson(newPath); } catch (e) { console.error(`descriptor diff: ${e.message}`); process.exit(2); }
+  const prior = descriptorDiffInput(oldDesc);
+  const current = descriptorDiffInput(newDesc);
+  const { vector, compatible, summary, interfaceDiff } = changeVector(prior, current);
+  if (flag("--json")) {
+    console.log(JSON.stringify({ vector, compatible, summary, interfaceDiff }, null, 2));
+  } else {
+    console.log(`${bold("Descriptor diff")}: ${oldPath} → ${newPath}`);
+    console.log(dim("─".repeat(72)));
+    console.log(`  interface:      ${vector.interface}`);
+    console.log(`  permission:     ${vector.permission}`);
+    console.log(`  implementation: ${vector.implementation}`);
+    console.log(`  provenance:     ${vector.provenance}`);
+    console.log(`  compatible:     ${compatible ? green("yes") : red("no")}`);
+    console.log(`  summary:        ${dim(summary)}`);
+    console.log("");
+  }
+  process.exit(compatible ? 0 : 1);
+}
+
+async function cmdDescriptorPin() {
+  const descPath = positional(2)[0];
+  if (!descPath) { console.error("descriptor pin requires <desc.json>"); process.exit(2); }
+  let descriptor;
+  try { descriptor = loadJson(descPath); } catch (e) { console.error(`descriptor pin: ${e.message}`); process.exit(2); }
+  if (!descriptor?.descriptorDigest) { console.error("descriptor pin: input is missing descriptorDigest"); process.exit(2); }
+  const pins = new PinStore(opt("--pins"));
+  const pin = pins.pinDescriptor(descriptor);
+  console.log(`${green("✓")} pinned descriptor ${bold(descriptor.descriptorDigest)}`);
+  console.log(`  namespace: ${pin.namespace ?? "(none)"}`);
+  console.log(`  interface: ${pin.interfaceDigest ?? "(none)"}`);
+  console.log(`  store:     ${dim(pins.path)}`);
+}
+
 async function main() {
   const cmd = argv[0];
   if (!cmd || cmd === "-h" || cmd === "--help" || cmd === "help") return usage();
@@ -731,6 +1300,9 @@ async function main() {
     case "pins": return cmdPins();
     case "auth-issue": return cmdAuthIssue();
     case "auth-verify": return cmdAuthVerify();
+    case "evidence": return cmdEvidence();
+    case "behavior": return cmdBehavior();
+    case "descriptor": return cmdDescriptor();
     default:
       if (!cmd.startsWith("-")) return cmdScan();
       usage();
